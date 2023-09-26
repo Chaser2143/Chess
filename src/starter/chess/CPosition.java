@@ -21,11 +21,11 @@ public class CPosition implements ChessPosition{
 
     @Override
     public int getRow() {
-        return 0;
+        return row;
     }
 
     @Override
     public int getColumn() {
-        return 0;
+        return column;
     }
 }
