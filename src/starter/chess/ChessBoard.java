@@ -26,6 +26,11 @@ public interface ChessBoard {
     ChessPiece getPiece(ChessPosition position);
 
     /**
+    Returns true if the position is in the bounds of the board. Else returns false.
+     */
+    Boolean inBounds(ChessPosition position);
+
+    /**
      * Sets the board to the default starting board
      * (How the game of chess normally starts)
      */

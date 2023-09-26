@@ -6,7 +6,6 @@ public class CPosition implements ChessPosition{
     int column;
 
     public CPosition(int row, int column){
-        //Constructor, i think this is right... right?
         setRow(row);
         setColumn(column);
     }

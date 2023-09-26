@@ -26,6 +26,27 @@ public class CBoard implements ChessBoard{
     }
 
     @Override
+    public Boolean inBounds(ChessPosition position) {
+        //Checks if a given position is within the bounds of the board
+        if ((inBoundsHelper(position.getRow())) && (inBoundsHelper(position.getColumn()))) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private Boolean inBoundsHelper(int position){
+        //Checks if an int is within the range of 0 to 7 inclusive (board boundaries)
+        if((0 <= position) && (position <= 7)) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
     public void resetBoard() {
         //TODO
     }
