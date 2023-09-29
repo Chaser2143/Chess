@@ -36,53 +36,34 @@ public class Knight implements ChessPiece{
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         moves.clear(); //Clear out any old moves
-
+        //Unfortunately I felt the best way to do this is to just check all 8 individual moves; shouldn't be too computationally expensive
+        //South Jumps
+        checkJump(moves, board, myPosition, getTeamColor(), +2,+1); //SE
+        checkJump(moves, board, myPosition, getTeamColor(), +2,-1); //SW
+        //North Jumps
+        checkJump(moves, board, myPosition, getTeamColor(), -2,+1); //NE
+        checkJump(moves, board, myPosition, getTeamColor(), -2,-1); //NW
+        //East Jumps
+        checkJump(moves, board, myPosition, getTeamColor(), +1,+2); //EastSouth
+        checkJump(moves, board, myPosition, getTeamColor(), +1,-2); //EastNorth
+        //West Jumps
+        checkJump(moves, board, myPosition, getTeamColor(), -1,+2); //WestSouth
+        checkJump(moves, board, myPosition, getTeamColor(), -1,-2); //WestNorth
         return moves;
     }
 
-    private void checkNorthOrSouth(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition myPosition, ChessGame.TeamColor color, int initDirection){
-        //Helper function, checks all moves North (input -1) or South(+1) of the rook;
-        //Give input direction to specify North or South
-        int moveDirection = initDirection;
+    private void checkJump(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition myPosition, ChessGame.TeamColor color, int moveRow, int moveCol){
+        //Helper function, Checks the given combination of movements (Row and Col Shift) (ONLY CHECKS A SINGLE MOVE)
+        //Leaves making a valid move up to the parent function (valid +2/+1 combos)
 
-        CPosition advancedPosition = new CPosition(myPosition.getRow()+moveDirection, myPosition.getColumn()); //Checks if there is anything 1 row ahead
+        CPosition advancedPosition = new CPosition(myPosition.getRow()+moveRow, myPosition.getColumn()+moveCol); //Checks if there is anything 1 row ahead
 
-
-        while(board.inBounds(advancedPosition)) { //Position is in bounds
+        if(board.inBounds(advancedPosition)) { //Position is in bounds
             ChessPiece spot = board.getPiece(advancedPosition);
-            if(null == spot){ //If the spot is empty, add it
+            if((null == spot) || (spot.getTeamColor() != color)){ //If the spot is empty, add it
                 CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
                 validMoves.add(availableMove);
-            } else if (spot.getTeamColor() != color) { //There is a piece in the spot, but it belongs to the opposite team
-                CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
-                validMoves.add(availableMove);
-                break; //Leave the while loop
             }
-            moveDirection = moveDirection + initDirection; //Go one more in that direction
-            advancedPosition = new CPosition(myPosition.getRow()+moveDirection, myPosition.getColumn());//Increase advanced Position
-        }
-    }
-
-    private void checkEastOrWest(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition myPosition, ChessGame.TeamColor color, int initDirection){
-        //Helper function, checks all moves West (input of -1) or East (input of +1) of the rook;
-        //Give input direction to specify East or West
-        int moveDirection = initDirection;
-
-        CPosition advancedPosition = new CPosition(myPosition.getRow(), myPosition.getColumn()+moveDirection); //Checks if there is anything 1 row ahead
-
-
-        while(board.inBounds(advancedPosition)) { //Position is in bounds
-            ChessPiece spot = board.getPiece(advancedPosition);
-            if(null == spot){ //If the spot is empty, add it
-                CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
-                validMoves.add(availableMove);
-            } else if (spot.getTeamColor() != color) { //There is a piece in the spot, but it belongs to the opposite team
-                CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
-                validMoves.add(availableMove);
-                break; //Leave the while loop
-            }
-            moveDirection = moveDirection + initDirection; //Go one more in that direction
-            advancedPosition = new CPosition(myPosition.getRow(), myPosition.getColumn()+moveDirection);//Increase advanced Position
         }
     }
 }
