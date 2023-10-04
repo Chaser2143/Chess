@@ -3,40 +3,26 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Pawn implements ChessPiece{
-    private final PieceType type = PieceType.PAWN;
-    private ArrayList<ChessMove> moves;
+public class Pawn extends CPiece{
     private Boolean hasMoved = false; //I need to remember to change this whenever I move a pawn or a king
 
-    private ChessGame.TeamColor color;
-
     public Pawn(ChessGame.TeamColor color){
-        moves = new ArrayList<>();
-        setColor(color);
+        super(color, PieceType.PAWN);
     }
 
     public Boolean hasMoved() {
         return hasMoved;
     }
 
-    private void setColor(ChessGame.TeamColor color) {
-        this.color = color;
-    }
-
-    @Override
-    public ChessGame.TeamColor getTeamColor() {
-        return color;
-    }
-
     @Override
     public PieceType getPieceType() {
-        return type;
+        return PieceType.PAWN;
     }
 
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         //Calls all functions to load the moves ArrayList with all possible moves
-        moves.clear(); //Clear out any old moves
+        ArrayList<ChessMove> moves = new ArrayList<>();
         checkForward(moves, board, myPosition, this.getTeamColor()); //Checks Single Forward Moves
         checkForwardDiagonal(moves, board, myPosition, this.getTeamColor());//Check Diagonal Attacks
         checkJumpStart(moves, board, myPosition, this.getTeamColor());//Check Jump +2 from start

@@ -3,39 +3,20 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Bishop implements ChessPiece {
-
-    private final PieceType type = PieceType.BISHOP;
-    private ArrayList<ChessMove> moves;
-
-    private ChessGame.TeamColor color;
+public class Bishop extends CPiece {
 
     public Bishop(ChessGame.TeamColor color) {
-        //King Constructor
-        moves = new ArrayList<>();
-        setColor(color);
-    }
-
-    private void setColor(ChessGame.TeamColor color) {
-        //Sets Team Color
-        this.color = color;
-    }
-
-    @Override
-    public ChessGame.TeamColor getTeamColor() {
-        //Returns Team Color
-        return color;
+        super(color, PieceType.BISHOP);
     }
 
     @Override
     public PieceType getPieceType() {
-        //Returns Piece Type
-        return type;
+        return PieceType.BISHOP;
     }
 
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        moves.clear(); //Clear out any old moves
+        ArrayList<ChessMove> moves = new ArrayList<>();
         checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, +1); //Checks NE Diagonal
         checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, +1); //Checks SE Diagonal
         checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, -1); //Checks SW Diagonal

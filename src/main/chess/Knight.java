@@ -3,39 +3,22 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Knight implements ChessPiece{
-
-    private final PieceType type = PieceType.KNIGHT;
-    private ArrayList<ChessMove> moves;
-
-    private ChessGame.TeamColor color;
+public class Knight extends CPiece{
 
     public Knight(ChessGame.TeamColor color){
-        //King Constructor
-        moves = new ArrayList<>();
-        setColor(color);
-    }
-
-    private void setColor(ChessGame.TeamColor color) {
-        //Sets Team Color
-        this.color = color;
-    }
-
-    @Override
-    public ChessGame.TeamColor getTeamColor() {
-        //Returns Team Color
-        return color;
+        //Knight Constructor
+        super(color, PieceType.KNIGHT);
     }
 
     @Override
     public PieceType getPieceType() {
         //Returns Piece Type
-        return type;
+        return PieceType.KNIGHT;
     }
 
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        moves.clear(); //Clear out any old moves
+        ArrayList<ChessMove> moves = new ArrayList<>();
         //Unfortunately I felt the best way to do this is to just check all 8 individual moves; shouldn't be too computationally expensive
         //South Jumps
         checkJump(moves, board, myPosition, getTeamColor(), -2,+1); //SE

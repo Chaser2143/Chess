@@ -3,39 +3,21 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Rook implements ChessPiece{
-
-    private final PieceType type = PieceType.ROOK;
-    private ArrayList<ChessMove> moves;
-
-    private ChessGame.TeamColor color;
+public class Rook extends CPiece{
 
     public Rook(ChessGame.TeamColor color){
         //King Constructor
-        moves = new ArrayList<>();
-        setColor(color);
+        super(color, PieceType.ROOK);
     }
-
-    private void setColor(ChessGame.TeamColor color) {
-        //Sets Team Color
-        this.color = color;
-    }
-
-    @Override
-    public ChessGame.TeamColor getTeamColor() {
-        //Returns Team Color
-        return color;
-    }
-
     @Override
     public PieceType getPieceType() {
         //Returns Piece Type
-        return type;
+        return PieceType.ROOK;
     }
 
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        moves.clear(); //Clear out any old moves
+        ArrayList<ChessMove> moves = new ArrayList<>();
         checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), +1); //Checks North Moves
         checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), -1); //Checks South Moves
         checkEastOrWest(moves, board, myPosition, this.getTeamColor(), +1); //Checks East Moves

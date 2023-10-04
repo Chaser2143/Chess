@@ -3,45 +3,30 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class King implements ChessPiece{ //TODOKing
+public class King extends CPiece{
 
-    private final PieceType type = PieceType.KING;
-    private ArrayList<ChessMove> moves;
     private Boolean hasMoved = false; //I need to remember to change this whenever I move a pawn or a king
 
-    private ChessGame.TeamColor color;
 
     public King(ChessGame.TeamColor color){
         //King Constructor
-        moves = new ArrayList<>();
-        setColor(color);
+        super(color, PieceType.KING);
     }
 
     public Boolean hasMoved() {
-        //Returns a bool of whether or not this piece has moved
+        //Returns a bool of whether this piece has moved
         return hasMoved;
-    }
-
-    private void setColor(ChessGame.TeamColor color) {
-        //Sets Team Color
-        this.color = color;
-    }
-
-    @Override
-    public ChessGame.TeamColor getTeamColor() {
-        //Returns Team Color
-        return color;
     }
 
     @Override
     public PieceType getPieceType() {
         //Returns Piece Type
-        return type;
+        return PieceType.KING;
     }
 
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        moves.clear(); //Get rid of any old moves
+        ArrayList<ChessMove> moves = new ArrayList<>();
         //There are only 8 single moves, just going to check all of them individually
         checkStep(moves, board, myPosition, getTeamColor(), +1, 0);//N
         checkStep(moves, board, myPosition, getTeamColor(), +1, +1);//NE

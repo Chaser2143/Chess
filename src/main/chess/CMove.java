@@ -3,19 +3,19 @@ package chess;
 public class CMove implements ChessMove{
     private ChessPosition startPos;
     private ChessPosition endPos;
-    private ChessPiece promotion;
+    private ChessPiece.PieceType promotion;
 
     public CMove(ChessPosition start, ChessPosition end){ //Overloaded constructor for no pawn promotion
         this(start, end, null);
     }
 
-    public CMove(ChessPosition start, ChessPosition end, ChessPiece promotion){//Constructor
+    public CMove(ChessPosition start, ChessPosition end, ChessPiece.PieceType promotion){//Constructor
         setStartPos(start);
         setEndPos(end);
         setPromotion(promotion);
     }
 
-    private void setPromotion(ChessPiece promotion) {
+    private void setPromotion(ChessPiece.PieceType promotion) {
         this.promotion = promotion;
     }
 
@@ -39,6 +39,6 @@ public class CMove implements ChessMove{
 
     @Override
     public ChessPiece.PieceType getPromotionPiece() {
-        return promotion.getPieceType();
+        return promotion;
     }
 }

@@ -3,39 +3,22 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Queen implements ChessPiece {
-
-    private final PieceType type = PieceType.QUEEN;
-    private ArrayList<ChessMove> moves;
-
-    private ChessGame.TeamColor color;
+public class Queen extends CPiece{
 
     public Queen(ChessGame.TeamColor color) {
         //King Constructor
-        moves = new ArrayList<>();
-        setColor(color);
-    }
-
-    private void setColor(ChessGame.TeamColor color) {
-        //Sets Team Color
-        this.color = color;
-    }
-
-    @Override
-    public ChessGame.TeamColor getTeamColor() {
-        //Returns Team Color
-        return color;
+        super(color, PieceType.QUEEN);
     }
 
     @Override
     public PieceType getPieceType() {
         //Returns Piece Type
-        return type;
+        return PieceType.QUEEN;
     }
 
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        moves.clear(); //Clear out any old moves
+        ArrayList<ChessMove> moves = new ArrayList<>();
         //Check Diagonals
         checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, +1); //Checks NE Diagonal
         checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, +1); //Checks SE Diagonal
