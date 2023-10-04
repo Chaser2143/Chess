@@ -7,7 +7,7 @@ public class CBoard implements ChessBoard{
     private int countingOffset = -1;
 
     public CBoard(){
-        board = new ChessPiece[7][7]; //2D array anyone? Counting starts at ZERO
+        board = new ChessPiece[8][8]; //2D array anyone? Counting starts at ZERO
     }
 
     @Override
@@ -50,15 +50,37 @@ public class CBoard implements ChessBoard{
     @Override
     public void resetBoard() {
         //Instatiates all pieces in proper location
+        clearBoard(); //Clear the Board just in case
 
         //Black Team
         //Pawns
-
+        for(int i=1; i<=8; i++){
+            addPiece(new CPosition(7,i), new Pawn(ChessGame.TeamColor.BLACK));
+        }
         //The Rest
+        addPiece(new CPosition(8,1), new Rook(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,2), new Knight(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,3), new Bishop(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,4), new Queen(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,5), new King(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,6), new Bishop(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,7), new Knight(ChessGame.TeamColor.BLACK));
+        addPiece(new CPosition(8,8), new Rook(ChessGame.TeamColor.BLACK));
 
         //White Team
         //Pawns
+        for(int i=1; i<=8; i++){
+            addPiece(new CPosition(2,i), new Pawn(ChessGame.TeamColor.WHITE));
+        }
         //The Rest
+        addPiece(new CPosition(1,1), new Rook(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,2), new Knight(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,3), new Bishop(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,4), new Queen(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,5), new King(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,6), new Bishop(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,7), new Knight(ChessGame.TeamColor.WHITE));
+        addPiece(new CPosition(1,8), new Rook(ChessGame.TeamColor.WHITE));
     }
 
     private void clearBoard(){
