@@ -27,4 +27,12 @@ public class CPosition implements ChessPosition{
     public int getColumn() {
         return column;
     }
+
+    private void incrementRow(){
+        row++;
+    }
+
+    private void incrementCol(){
+        column++;
+    }
 }

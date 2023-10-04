@@ -36,10 +36,10 @@ public class Bishop implements ChessPiece {
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         moves.clear(); //Clear out any old moves
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, +1); //Checks NE Diagonal
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, +1); //Checks SE Diagonal
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, -1); //Checks SW Diagonal
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, -1); //Checks NW Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, +1); //Checks NE Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, +1); //Checks SE Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, -1); //Checks SW Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, -1); //Checks NW Diagonal
         return moves;
     }
 

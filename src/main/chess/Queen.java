@@ -37,15 +37,15 @@ public class Queen implements ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         moves.clear(); //Clear out any old moves
         //Check Diagonals
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, +1); //Checks NE Diagonal
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, +1); //Checks SE Diagonal
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, -1); //Checks SW Diagonal
-        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, -1); //Checks NW Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, +1); //Checks NE Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, +1); //Checks SE Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), -1, -1); //Checks SW Diagonal
+        checkDiagonals(moves, board, myPosition, this.getTeamColor(), +1, -1); //Checks NW Diagonal
 
         //Check NSEW Moves
-        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), -1); //Checks North Moves
-        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), 1); //Checks South Moves
-        checkEastOrWest(moves, board, myPosition, this.getTeamColor(), 1); //Checks East Moves
+        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), +1); //Checks North Moves
+        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), -1); //Checks South Moves
+        checkEastOrWest(moves, board, myPosition, this.getTeamColor(), +1); //Checks East Moves
         checkEastOrWest(moves, board, myPosition, this.getTeamColor(), -1); //Checks West Moves
 
         return moves;

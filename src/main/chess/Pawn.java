@@ -52,9 +52,9 @@ public class Pawn implements ChessPiece{
 
         int forward = 0; //Denotes which way is a forward movement
         if(color == ChessGame.TeamColor.WHITE){
-            forward = -2;
+            forward = +2;
         } else if (color == ChessGame.TeamColor.BLACK) {
-            forward = 2;
+            forward = -2;
         }
 
         CPosition traveledPosition = new CPosition(myPosition.getRow()+(forward/2), myPosition.getColumn());
@@ -75,9 +75,9 @@ public class Pawn implements ChessPiece{
 
         int forward = 0; //Denotes which way is a forward movement
         if(color == ChessGame.TeamColor.WHITE){
-            forward = -1;
+            forward = +1;
         } else if (color == ChessGame.TeamColor.BLACK) {
-            forward = 1;
+            forward = -1;
         }
 
         ArrayList<CPosition> advancedPositions = new ArrayList<>(); //Data structure to avoid repeat code
@@ -102,9 +102,9 @@ public class Pawn implements ChessPiece{
 
         int forward = 0; //Denotes which way is a forward movement
         if(color == ChessGame.TeamColor.WHITE){
-            forward = -1;
+            forward = +1;
         } else if (color == ChessGame.TeamColor.BLACK) {
-            forward = 1;
+            forward = -1;
         }
 
         CPosition advancedPosition = new CPosition(myPosition.getRow()+forward, myPosition.getColumn()); //Checks if there is anything 1 row ahead

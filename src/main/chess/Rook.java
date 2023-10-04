@@ -36,9 +36,9 @@ public class Rook implements ChessPiece{
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         moves.clear(); //Clear out any old moves
-        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), -1); //Checks North Moves
-        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), 1); //Checks South Moves
-        checkEastOrWest(moves, board, myPosition, this.getTeamColor(), 1); //Checks East Moves
+        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), +1); //Checks North Moves
+        checkNorthOrSouth(moves, board, myPosition, this.getTeamColor(), -1); //Checks South Moves
+        checkEastOrWest(moves, board, myPosition, this.getTeamColor(), +1); //Checks East Moves
         checkEastOrWest(moves, board, myPosition, this.getTeamColor(), -1); //Checks West Moves
         return moves;
     }

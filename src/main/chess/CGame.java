@@ -41,7 +41,9 @@ public class CGame implements ChessGame{
 
     @Override
     public void setBoard(ChessBoard board) {
-
+        //Clears all the board's data (make a board clear function?)
+        //Calls Board reset function
+        //Sets the teamTurn to White
     }
 
     @Override

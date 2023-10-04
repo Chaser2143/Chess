@@ -43,14 +43,14 @@ public class King implements ChessPiece{ //TODOKing
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         moves.clear(); //Get rid of any old moves
         //There are only 8 single moves, just going to check all of them individually
-        checkStep(moves, board, myPosition, getTeamColor(), -1, 0);//N
-        checkStep(moves, board, myPosition, getTeamColor(), -1, +1);//NE
+        checkStep(moves, board, myPosition, getTeamColor(), +1, 0);//N
+        checkStep(moves, board, myPosition, getTeamColor(), +1, +1);//NE
         checkStep(moves, board, myPosition, getTeamColor(), 0, +1);//E
-        checkStep(moves, board, myPosition, getTeamColor(), +1, +1);//SE
-        checkStep(moves, board, myPosition, getTeamColor(), +1, 0);//S
-        checkStep(moves, board, myPosition, getTeamColor(), +1, -1);//SW
+        checkStep(moves, board, myPosition, getTeamColor(), -1, +1);//SE
+        checkStep(moves, board, myPosition, getTeamColor(), -1, 0);//S
+        checkStep(moves, board, myPosition, getTeamColor(), -1, -1);//SW
         checkStep(moves, board, myPosition, getTeamColor(), 0, -1);//W
-        checkStep(moves, board, myPosition, getTeamColor(), -1, -1);//NW
+        checkStep(moves, board, myPosition, getTeamColor(), +1, -1);//NW
 
         return moves;
     }
