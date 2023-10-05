@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Objects;
+
 public class CMove implements ChessMove{
     private ChessPosition startPos;
     private ChessPosition endPos;
@@ -40,5 +42,18 @@ public class CMove implements ChessMove{
     @Override
     public ChessPiece.PieceType getPromotionPiece() {
         return promotion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CMove cMove = (CMove) o;
+        return Objects.equals(startPos, cMove.startPos) && Objects.equals(endPos, cMove.endPos) && promotion == cMove.promotion;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startPos, endPos, promotion);
     }
 }

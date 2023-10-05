@@ -35,4 +35,6 @@ public interface ChessBoard {
      * (How the game of chess normally starts)
      */
     void resetBoard();
+
+    void clearBoard();
 }

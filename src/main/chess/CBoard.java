@@ -49,8 +49,7 @@ public class CBoard implements ChessBoard{
 
     @Override
     public void resetBoard() {
-        //Instatiates all pieces in proper location
-        clearBoard(); //Clear the Board just in case
+        //Instantiates all pieces in proper location
 
         //Black Team
         //Pawns
@@ -83,7 +82,8 @@ public class CBoard implements ChessBoard{
         addPiece(new CPosition(1,8), new Rook(ChessGame.TeamColor.WHITE));
     }
 
-    private void clearBoard(){
+    @Override
+    public void clearBoard(){
         //Clears all the board's data by setting it to null
         //I hope this is better than just instantiating a new board. I think it is.
         for(int i=0; i<=7; i++){
