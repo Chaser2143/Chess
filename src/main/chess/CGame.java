@@ -28,13 +28,30 @@ public class CGame implements ChessGame{
 
     @Override
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
+        ArrayList<ChessMove> validMoves = new ArrayList<>();
         if(board.getPiece(startPosition) != null) {//Make sure there is a piece in that position
-            var possibleMoves = board.getPiece(startPosition).pieceMoves(board, startPosition);//Get all the moves for the piece at that position
+            Collection<ChessMove> possibleMoves = board.getPiece(startPosition).pieceMoves(board, startPosition);//Get all the moves for the piece at that position
             for(ChessMove move : possibleMoves) {//for each move
-                //Make a fake board (temporary) (or just keep track of the piece moved and make the move, then check)
-                //call isInCheck
-                //If not in check, add it to valid Moves
+                ChessPiece takenLocation = board.getPiece(move.getEndPosition());//Keep track of the pieces moved
+                ChessPiece moving = board.getPiece(move.getStartPosition());
+
+                //Make the move (Fake)
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
+                }
+
+                //call isInCheck on our team
+                if(!isInCheck(getTeamTurn())){
+                    validMoves.add(move);//If not in check, add it to valid Moves
+                }
+
+                //Undo the move
+                board.addPiece(move.getStartPosition(), moving); //Put the OG piece back at the start position
+                board.addPiece(move.getEndPosition(), takenLocation); //Put the taken piece back at the end position
             }
+            return validMoves;
         }
         else{
             return null;
@@ -43,26 +60,53 @@ public class CGame implements ChessGame{
 
     @Override
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        //Get the valid moves for that start position
-        //If our move is in the return of valid Moves, make the move
-        //Else throw the InvalidMoveException
+        //Makes a chess move
+        try{
+            ChessPiece piece = board.getPiece(move.getStartPosition()); // Find the piece at that start position
+            if(move.getPromotionPiece() != null){ //If it is promoted, get the promoted piece
+                piece = getNewPiece(piece.getTeamColor(), move.getPromotionPiece());
+            }
+            board.addPiece(move.getEndPosition(), piece); //Move the piece to that spot
+            board.addPiece(move.getStartPosition(), null); //Set the spot where it was to null
+        }
+        catch(Exception E){
+            throw new InvalidMoveException("This is not a valid move");
+        }
     }
 
     @Override
     public boolean isInCheck(TeamColor teamColor) {
+        //Check if the given team is in check
+        TeamColor oppositeTeam;
+        if(teamColor == TeamColor.WHITE){
+            oppositeTeam = TeamColor.BLACK;
+        } else{
+            oppositeTeam = TeamColor.WHITE;
+        }
+        //Get my team's king's position
+        ChessPosition myKingLocation = board.findPiece(ChessPiece.PieceType.KING, teamColor);
+
         //Get all the piece moves of the opposite team
-        //See if any of them land on my king's piece location
-        //If there is one, then I'm in check, else im good
+        Collection<ChessMove> allMoves = board.getAllMoves(oppositeTeam);
+        //Check if myKingLocation is in it or not
+        for(ChessMove move : allMoves){
+            if(move.getEndPosition() == myKingLocation){
+                return true; //If it is, return true and stop
+            }
+        }
         return false;
     }
 
     @Override
     public boolean isInCheckmate(TeamColor teamColor) {
+        //Check all moves of every piece on this team. If I get null (they all result in check), then I am in checkmate
         return false;
     }
 
     @Override
     public boolean isInStalemate(TeamColor teamColor) {
+        //I have no possible moves, but I am not currently in check
+        //Either no valid moves, or no possible moves
         return false;
     }
 
@@ -76,5 +120,31 @@ public class CGame implements ChessGame{
     @Override
     public ChessBoard getBoard() {
         return board;
+    }
+
+    private ChessPiece getNewPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type){
+        switch (type){
+            case PAWN -> {
+                return new Pawn(pieceColor);
+            }
+            case ROOK -> {
+                return new Rook(pieceColor);
+            }
+            case KNIGHT -> {
+                return new Knight(pieceColor);
+            }
+            case KING -> {
+                return new King(pieceColor);
+            }
+            case QUEEN -> {
+                return new Queen(pieceColor);
+            }
+            case BISHOP -> {
+                return new Bishop(pieceColor);
+            }
+            default -> {
+                return null;
+            }
+        }
     }
 }
