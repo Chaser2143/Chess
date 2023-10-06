@@ -7,27 +7,16 @@ public class CMove implements ChessMove{
     private ChessPosition endPos;
     private ChessPiece.PieceType promotion;
 
+    public CMove(ChessPosition start, ChessPosition end, ChessPiece.PieceType promotion){//Constructor
+        startPos = start;
+        endPos = end;
+        this.promotion = promotion;
+    }
+
     public CMove(ChessPosition start, ChessPosition end){ //Overloaded constructor for no pawn promotion
         this(start, end, null);
     }
 
-    public CMove(ChessPosition start, ChessPosition end, ChessPiece.PieceType promotion){//Constructor
-        setStartPos(start);
-        setEndPos(end);
-        setPromotion(promotion);
-    }
-
-    private void setPromotion(ChessPiece.PieceType promotion) {
-        this.promotion = promotion;
-    }
-
-    private void setStartPos(ChessPosition startPos) {
-        this.startPos = startPos;
-    }
-
-    private void setEndPos(ChessPosition endPos) {
-        this.endPos = endPos;
-    }
 
     @Override
     public ChessPosition getStartPosition() {

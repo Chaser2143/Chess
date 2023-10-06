@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class Pawn extends CPiece{
     private Boolean hasMoved = false; //I need to remember to change this whenever I move a pawn or a king
@@ -22,19 +23,17 @@ public class Pawn extends CPiece{
     @Override
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         //Calls all functions to load the moves ArrayList with all possible moves
-        ArrayList<ChessMove> moves = new ArrayList<>();
+        HashSet<ChessMove> moves = new HashSet<>();
+        // System.out.println("Current Position Row : " + myPosition.getRow() + " , Col : " + myPosition.getColumn());
         checkForward(moves, board, myPosition, this.getTeamColor()); //Checks Single Forward Moves
         checkForwardDiagonal(moves, board, myPosition, this.getTeamColor());//Check Diagonal Attacks
-        checkJumpStart(moves, board, myPosition, this.getTeamColor());//Check Jump +2 from start
+        //checkJumpStart(moves, board, myPosition, this.getTeamColor());//Check Jump +2 from start
 
         return moves;
     }
 
     private void checkJumpStart(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition myPosition, ChessGame.TeamColor color){
         //Helper function, checks whether we have moved, and if not, if we can move forward 2 spaces
-        if(!hasMoved){ //If we have moved, stop now
-            return;
-        }
 
         int forward = 0; //Denotes which way is a forward movement
         if(color == ChessGame.TeamColor.WHITE){
@@ -50,7 +49,7 @@ public class Pawn extends CPiece{
             ChessPiece inBetween = board.getPiece(traveledPosition);
             ChessPiece spot = board.getPiece(advancedPosition);
             if((null == spot) && (null == inBetween)){ //Make sure the landing and intermediate spots are free
-                CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
+                ChessMove availableMove = new CMove(myPosition, advancedPosition);
                 validMoves.add(availableMove);
             }
         }
@@ -77,7 +76,11 @@ public class Pawn extends CPiece{
                 ChessPiece spot = board.getPiece(advancedPosition);
                 if ((null != spot) && (spot.getTeamColor() != color)) { //Something is there, and its on the opposite team
                     CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
-                    validMoves.add(availableMove);
+                    if (checkPromotion(color, availableMove)) { //Check If there is a promotion, if so, go for it
+                        makePromotionMoves(availableMove, validMoves);
+                    } else { //Else, just add the move
+                        validMoves.add(availableMove);
+                    }
                 }
             }
         }
@@ -99,8 +102,55 @@ public class Pawn extends CPiece{
             ChessPiece spot = board.getPiece(advancedPosition);
             if(null == spot){
                 CMove availableMove = new CMove(myPosition, advancedPosition); //Make it a move and add it
-                validMoves.add(availableMove);
+                if (checkPromotion(color, availableMove)) { //Check If there is a promotion, if so, go for it
+                    makePromotionMoves(availableMove, validMoves);
+                } else { //Else, just add the move
+                    validMoves.add(availableMove);
+                }
+                if(!hasMovedFromStart(color, myPosition)){ //If I haven't moved from start, and the first move works
+                    checkJumpStart(validMoves, board, myPosition, this.getTeamColor());
+                }
             }
         }
+    }
+
+    private boolean hasMovedFromStart(ChessGame.TeamColor teamColor, ChessPosition startPosition){
+        //Returns true if the pawn has moved from the start location
+        if(teamColor == ChessGame.TeamColor.WHITE){
+            if(startPosition.getRow() == 2){
+                return false;
+            }
+        } else if (teamColor == ChessGame.TeamColor.BLACK) {
+            if(startPosition.getRow() == 7){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkPromotion(ChessGame.TeamColor teamColor, ChessMove move){
+        //Returns true if a move involves a promotion, else false
+        ChessPosition endMove = move.getEndPosition();
+        if(teamColor == ChessGame.TeamColor.WHITE){
+            if(endMove.getRow() == 8){
+                return true;
+            }
+        } else if (teamColor == ChessGame.TeamColor.BLACK) {
+            if(endMove.getRow() == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Collection<ChessMove> makePromotionMoves(ChessMove move, Collection<ChessMove> validMoves){
+        //Returns a collection of chess moves for each promotion
+        ChessPosition start = move.getStartPosition();
+        ChessPosition end = move.getEndPosition();
+        validMoves.add(new CMove(start, end, PieceType.ROOK));
+        validMoves.add(new CMove(start, end, PieceType.QUEEN));
+        validMoves.add(new CMove(start, end, PieceType.BISHOP));
+        validMoves.add(new CMove(start, end, PieceType.KNIGHT));
+        return validMoves;
     }
 }

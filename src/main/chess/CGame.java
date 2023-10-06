@@ -29,21 +29,19 @@ public class CGame implements ChessGame{
     @Override
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ArrayList<ChessMove> validMoves = new ArrayList<>();
-        if(board.getPiece(startPosition) != null) {//Make sure there is a piece in that position
-            Collection<ChessMove> possibleMoves = board.getPiece(startPosition).pieceMoves(board, startPosition);//Get all the moves for the piece at that position
+        ChessPiece piece = board.getPiece(startPosition);
+        if(piece != null) {//Make sure there is a piece in that position
+            Collection<ChessMove> possibleMoves = piece.pieceMoves(board, startPosition);//Get all the moves for the piece at that position
             for(ChessMove move : possibleMoves) {//for each move
                 ChessPiece takenLocation = board.getPiece(move.getEndPosition());//Keep track of the pieces moved
                 ChessPiece moving = board.getPiece(move.getStartPosition());
 
                 //Make the move (Fake)
-                try {
-                    makeMove(move);
-                } catch (InvalidMoveException e) {
-                    throw new RuntimeException(e);
-                }
+                board.addPiece(move.getEndPosition(), moving); //Move the piece to that spot
+                board.addPiece(move.getStartPosition(), null); //Set the spot where it was to null
 
                 //call isInCheck on our team
-                if(!isInCheck(getTeamTurn())){
+                if(!isInCheck(piece.getTeamColor())){
                     validMoves.add(move);//If not in check, add it to valid Moves
                 }
 
@@ -61,17 +59,29 @@ public class CGame implements ChessGame{
     @Override
     public void makeMove(ChessMove move) throws InvalidMoveException {
         //Makes a chess move
-        try{
-            ChessPiece piece = board.getPiece(move.getStartPosition()); // Find the piece at that start position
-            if(move.getPromotionPiece() != null){ //If it is promoted, get the promoted piece
-                piece = getNewPiece(piece.getTeamColor(), move.getPromotionPiece());
+        ChessPiece piece = board.getPiece(move.getStartPosition()); // Find the piece at that start position
+        //Check if the move is in the valid moves list
+        if(piece != null) {
+            if (piece.getTeamColor() == getTeamTurn()) { //Check if it's our turn
+                Collection<ChessMove> validMoves = validMoves(move.getStartPosition());
+                if (validMoves.contains(move)) { //Move is valid
+                    if(move.getPromotionPiece() != null){ //If it has a promotion, make it now
+                        piece = getNewPiece(piece.getTeamColor(), move.getPromotionPiece());
+                    }
+                    board.addPiece(move.getEndPosition(), piece); //Move the piece to that spot
+                    board.addPiece(move.getStartPosition(), null); //Set the spot where it was to null
+                    //Set the team turn
+                    if(getTeamTurn() == TeamColor.WHITE){
+                        setTeamTurn(TeamColor.BLACK);
+                    }
+                    else{
+                        setTeamTurn(TeamColor.WHITE);
+                    }
+                    return;
+                }
             }
-            board.addPiece(move.getEndPosition(), piece); //Move the piece to that spot
-            board.addPiece(move.getStartPosition(), null); //Set the spot where it was to null
         }
-        catch(Exception E){
-            throw new InvalidMoveException("This is not a valid move");
-        }
+        throw new InvalidMoveException("This is not a valid move");
     }
 
     @Override
@@ -85,12 +95,17 @@ public class CGame implements ChessGame{
         }
         //Get my team's king's position
         ChessPosition myKingLocation = board.findPiece(ChessPiece.PieceType.KING, teamColor);
-
+        if(myKingLocation == null){ //This would only happen in a test environment
+            return false;
+        }
+//        System.out.println("King Location : " + myKingLocation.toString());
         //Get all the piece moves of the opposite team
         Collection<ChessMove> allMoves = board.getAllMoves(oppositeTeam);
         //Check if myKingLocation is in it or not
         for(ChessMove move : allMoves){
-            if(move.getEndPosition() == myKingLocation){
+//            System.out.println("Piece End Location : " + move.getEndPosition().toString());
+            if(move.getEndPosition().getRow() == myKingLocation.getRow() && move.getEndPosition().getColumn() == myKingLocation.getColumn()){
+//                System.out.println("Move putting king in check ; Start : " + move.getStartPosition().toString() + " End : " + move.getEndPosition().toString());
                 return true; //If it is, return true and stop
             }
         }
@@ -147,9 +162,8 @@ public class CGame implements ChessGame{
 
     @Override
     public void setBoard(ChessBoard board) {
-        //Sets the board and the rules to be ready for gameplay
-        board.clearBoard();//Clears all the board's data (make a board clear function?)
-        board.resetBoard();//Calls Board reset function
+        //Sets the games chessboard with the given board
+        this.board = board;
     }
 
     @Override

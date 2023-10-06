@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Objects;
+
 public class CPosition implements ChessPosition{
 
     int row;
@@ -34,5 +36,23 @@ public class CPosition implements ChessPosition{
 
     private void incrementCol(){
         column++;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CPosition cPosition = (CPosition) o;
+        return row == cPosition.row && column == cPosition.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString(){
+        return "(" + getRow() + "," + getColumn() + ")";
     }
 }

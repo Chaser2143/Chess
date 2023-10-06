@@ -76,8 +76,8 @@ public class CBoard implements ChessBoard{
     }
 
     private Boolean inBoundsHelper(int position){
-        //Checks if an int is within the range of 0 to 7 inclusive (board boundaries)
-        if((0 <= position) && (position <= 7)) {
+        //Checks if an int is within the range of 1 to 8 inclusive (board boundaries)
+        if((1 <= position) && (position <= 8)) {
             return true;
         }
         else{
