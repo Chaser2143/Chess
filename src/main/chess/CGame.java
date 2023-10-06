@@ -100,6 +100,13 @@ public class CGame implements ChessGame{
     @Override
     public boolean isInCheckmate(TeamColor teamColor) {
         //Check all moves of every piece on this team. If I get null (they all result in check), then I am in checkmate
+
+        //Get all valid moves of my team
+        Collection<ChessMove> allValidMoves = getAllValidMoves(teamColor);
+        //If I am in check and all valid moves is null, I am in check mate
+        if((isInCheck(teamColor)) && (allValidMoves.isEmpty())){
+            return true;
+        }
         return false;
     }
 
@@ -107,7 +114,35 @@ public class CGame implements ChessGame{
     public boolean isInStalemate(TeamColor teamColor) {
         //I have no possible moves, but I am not currently in check
         //Either no valid moves, or no possible moves
+
+        //Get all valid moves of my team
+        Collection<ChessMove> allValidMoves = getAllValidMoves(teamColor);
+        //If I am not in check, but valid moves is null, I am in stalemate
+        if((!isInCheck(teamColor)) && (allValidMoves.isEmpty())){
+            return true;
+        }
         return false;
+    }
+
+    private Collection<ChessMove> getAllValidMoves(TeamColor teamColor){
+        //Returns a collection of every valid move of the given teamColor
+        ArrayList<ChessMove> moves = new ArrayList<>();
+        for(int i=1; i<=8; i++) { //Iterate through the board
+            for (int j = 1; j <= 8; j++) {
+                ChessPosition tempPosition = new CPosition(i, j); //Make a position
+                ChessPiece tempPiece = board.getPiece(tempPosition);
+                if((tempPiece != null) && (tempPiece.getTeamColor() == teamColor))
+                { //Does that position have a piece that is on my team
+                    Collection<ChessMove> vMoveList = validMoves(tempPosition); //If so, get all its valid moves
+                    for (ChessMove vMove : vMoveList) {
+                        if (vMove != null) {
+                            moves.add(vMove); //Double verification, make sure not to add moves that are null
+                        }
+                    }
+                }
+            }
+        }
+        return moves;
     }
 
     @Override
