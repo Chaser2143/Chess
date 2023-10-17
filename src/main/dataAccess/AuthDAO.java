@@ -2,6 +2,7 @@ package dataAccess;
 
 import models.AuthToken;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 
@@ -53,5 +54,12 @@ public class AuthDAO implements DAO{
      */
     public void updateAuthToken(AuthToken auth) throws DataAccessException{
 
+    }
+
+    /**
+     * Returns all AuthTokens
+     */
+    public HashSet<AuthToken> getAll() throws DataAccessException{
+        return AuthDB;
     }
 }

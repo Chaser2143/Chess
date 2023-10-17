@@ -1,5 +1,6 @@
 package dataAccess;
 
+import models.AuthToken;
 import models.User;
 
 import java.util.HashSet;
@@ -49,5 +50,12 @@ public class UserDAO implements DAO{
      */
     public void updateUser(User user) throws DataAccessException{
 
+    }
+
+    /**
+     * Returns all Users
+     */
+    public HashSet<User> getAll() throws DataAccessException{
+        return UserDB;
     }
 }

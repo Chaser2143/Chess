@@ -1,6 +1,7 @@
 package dataAccess;
 
 import chess.CGame;
+import models.AuthToken;
 import models.Game;
 
 import java.util.HashSet;
@@ -53,5 +54,12 @@ public class GameDAO implements DAO{
      */
     public void updateGame(Game game) throws DataAccessException{
 
+    }
+
+    /**
+     * Returns all games
+     */
+    public HashSet<Game> getAll() throws DataAccessException{
+        return GameDB;
     }
 }
