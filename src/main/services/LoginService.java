@@ -5,6 +5,6 @@ import reqRes.LoginRes;
 
 public class LoginService {
     public LoginRes Login(LoginReq request){
-        return new LoginRes();
+        return null;
     }
 }

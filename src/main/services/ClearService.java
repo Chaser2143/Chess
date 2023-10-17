@@ -1,10 +1,18 @@
 package services;
 
-import reqRes.Request;
+import com.sun.net.httpserver.Request;
 import reqRes.Response;
 
+/**
+ * Service used to clear the database.
+ * Removes all users, games, and authtokens
+ */
 public class ClearService {
-    public Response ClearService(Request request){
+
+    /**
+     * Actually clears everything from the DB
+     */
+    public Response clear(){
         return new Response();
     }
 }
