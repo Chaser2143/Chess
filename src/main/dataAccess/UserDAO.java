@@ -5,6 +5,9 @@ import models.User;
 
 import java.util.HashSet;
 
+/**
+ * Data Accesser for User Model
+ */
 public class UserDAO implements DAO{
 
     HashSet<User> UserDB = new HashSet<>();

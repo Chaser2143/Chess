@@ -5,6 +5,9 @@ import reqRes.Response;
 
 import java.util.ArrayList;
 
+/**
+ * Interface for general DAO Classes
+ */
 public interface DAO {
 
     /**
