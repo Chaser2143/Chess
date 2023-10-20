@@ -3,5 +3,7 @@
 //Mark src/main/java as Sources root - DONE? I deleted it, i don't think I need it...
 //Mark src/main.resources as resources root - DONE?
 
+//Once the serialization stuff is in for the clearHandler, I should write some test cases for it and try it out.
+
 //CS240 Spark Ppt
 //https://docs.google.com/presentation/d/1Nvb0fUObt-An0nMOFEhgIufnSN6qpixF/edit#slide=id.p10

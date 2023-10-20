@@ -10,29 +10,38 @@ import java.util.HashSet;
  * DAO used for accessing all Games in the DB
  */
 public class GameDAO implements DAO{
+    public static GameDAO instance = new GameDAO();
 
     HashSet<Game> GameDB = new HashSet<>();
+
+    /**
+     * Singleton design, allows access to a single DB
+     * @return Game DB
+     */
+    public static GameDAO getInstance(){
+        return instance;
+    }
 
     /**
      * Clears all the Games in the DB
      */
     @Override
     public void clearAll() throws DataAccessException{
-
+        GameDB.clear();
     }
 
     /**
      * Adds a Game to the DB
      */
     public void addGame(Game game) throws DataAccessException{
-
+        GameDB.add(game);
     }
 
     /**
      * Deletes a Game from the DB
      */
     public void deleteGame(Game game) throws DataAccessException{
-
+        GameDB.remove(game);
     }
 
     /**

@@ -1,0 +1,3 @@
+https://github.com/softwareconstruction240/softwareconstruction/blob/main/chess/3-web-api/getting-started.md
+
+Incase anything breaks, here are the instructions

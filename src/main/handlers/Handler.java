@@ -26,7 +26,7 @@ public abstract class Handler {
      * - Return the Spark Response
      * @return the correct response object
      */
-    abstract public reqRes.Response processSparkRequest(spark.Request req);
+    abstract public spark.Response processSparkRequest(spark.Request req);
 
     /**
      * Deserializes a Spark request into a native request

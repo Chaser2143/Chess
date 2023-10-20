@@ -2,7 +2,6 @@ package dataAccess;
 
 import models.AuthToken;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 
@@ -11,28 +10,38 @@ import java.util.HashSet;
  */
 public class AuthDAO implements DAO{
 
+    public static AuthDAO instance = new AuthDAO();
+
     HashSet<AuthToken> AuthDB = new HashSet<>();
+
+    /**
+     * Singleton design, allows access to a single DB
+     * @return Auth DB
+     */
+    public static AuthDAO getInstance(){
+        return instance;
+    }
 
     /**
      * Clears all the Auth Tokens in the DB
      */
     @Override
     public void clearAll() throws DataAccessException {
-
+        AuthDB.clear();
     }
 
     /**
      * Adds an AuthToken to the DB
      */
     public void addAuthToken(AuthToken authToken) throws DataAccessException{
-
+        AuthDB.add(authToken);
     }
 
     /**
      * Deletes an AuthToken from the DB
      */
     public void deleteAuthToken(AuthToken authToken) throws DataAccessException{
-
+        AuthDB.remove(authToken);
     }
 
     /**
@@ -44,6 +53,7 @@ public class AuthDAO implements DAO{
 
     /**
      * Creates and returns a new AuthToken
+     * Should this add it to the DB too?
      */
     public AuthToken createAuthToken() throws DataAccessException{
         return new AuthToken("","");
@@ -52,8 +62,9 @@ public class AuthDAO implements DAO{
     /**
      * Updates a given AuthToken in the DB
      */
-    public void updateAuthToken(AuthToken auth) throws DataAccessException{
-
+    public void updateAuthToken(AuthToken oldAuth, AuthToken newAuth) throws DataAccessException{
+        AuthDB.remove(oldAuth);
+        AuthDB.add(newAuth);
     }
 
     /**

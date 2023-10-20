@@ -9,29 +9,38 @@ import java.util.HashSet;
  * Data Accesser for User Model
  */
 public class UserDAO implements DAO{
+    public static UserDAO instance = new UserDAO();
 
     HashSet<User> UserDB = new HashSet<>();
+
+    /**
+     * Singleton design, allows access to a single DB
+     * @return User DB
+     */
+    public static UserDAO getInstance(){
+        return instance;
+    }
 
     /**
      * Clears all the Users in the DB
      */
     @Override
     public void clearAll() throws DataAccessException{
-
+        UserDB.clear();
     }
 
     /**
      * Adds a user to the DB
      */
     public void addUser(User user) throws DataAccessException{
-
+        UserDB.add(user);
     }
 
     /**
      * Deletes a user from the DB
      */
     public void deleteUser(User user) throws DataAccessException{
-
+        UserDB.remove(user);
     }
 
     /**

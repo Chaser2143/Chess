@@ -6,11 +6,11 @@ package reqRes;
  * Holds all constant Failure Responses
  */
 public class Response {
-    String message;
-    String FourHundred = "Error: bad request";
-    String FourOOne = "Error: unauthorized";
-    String FourOThree = "Error: already taken";
-    String FiveHundred = "Error: ";
+    public static String message;
+    public static String FourHundred = "Error: bad request";
+    public static String FourOOne = "Error: unauthorized";
+    public static String FourOThree = "Error: already taken";
+    public static String FiveHundred = "Error: ";
 
     /**
      * Empty Constructor for successful responses
