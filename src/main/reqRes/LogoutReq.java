@@ -5,7 +5,7 @@ import models.AuthToken;
 /**
  * Serves as the Logout Request Class
  */
-public class LogoutReq {
+public class LogoutReq extends Request{
     private AuthToken authorization;
 
     /**

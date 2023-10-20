@@ -3,7 +3,7 @@ package reqRes;
 /**
  * Request Class for Register API
  */
-public class RegisterReq {
+public class RegisterReq extends Request{
     private String username;
     private String password;
     private String email;

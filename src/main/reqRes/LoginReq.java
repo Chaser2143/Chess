@@ -3,7 +3,7 @@ package reqRes;
 /**
  * Login Request Class
  */
-public class LoginReq {
+public class LoginReq extends Request{
     private String username;
     private String password;
 

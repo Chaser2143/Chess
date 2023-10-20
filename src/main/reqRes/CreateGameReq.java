@@ -5,7 +5,7 @@ import models.AuthToken;
 /**
  * Serves as the Request for the Create Game API
  */
-public class CreateGameReq {
+public class CreateGameReq extends Request{
     private AuthToken authorization;
     private String gameName;
 

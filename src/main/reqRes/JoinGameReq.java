@@ -5,7 +5,7 @@ import models.AuthToken;
 /**
  * Request for Join Game API
  */
-public class JoinGameReq {
+public class JoinGameReq extends Request{
     private AuthToken authorization;
     private String playerColor;
     private int gameID;

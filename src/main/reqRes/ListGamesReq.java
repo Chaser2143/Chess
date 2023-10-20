@@ -5,7 +5,7 @@ import models.AuthToken;
 /**
  * Serves as the request for List Games API
  */
-public class ListGamesReq {
+public class ListGamesReq extends Request{
 
     private AuthToken authorization;
 
