@@ -15,7 +15,7 @@ public class ClearService {
     /**
      * Actually clears everything from the DB
      */
-    public Response clear(){
+    public reqRes.Response clear(){
         try {
             AuthDAO.getInstance().clearAll();
             GameDAO.getInstance().clearAll();

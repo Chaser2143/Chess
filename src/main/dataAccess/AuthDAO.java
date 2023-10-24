@@ -3,6 +3,7 @@ package dataAccess;
 import models.AuthToken;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 
 /**
@@ -47,16 +48,29 @@ public class AuthDAO implements DAO{
     /**
      * Finds and returns an AuthToken in the DB
      */
-    public AuthToken getAuthToken() throws DataAccessException{
-        return new AuthToken("","");
+    public AuthToken getAuthToken(AuthToken AT) throws DataAccessException{
+        for(AuthToken A : AuthDB){
+            if (A.getAuthToken().equals(AT)){
+                return A;
+            }
+        }
+        return null;
     }
 
     /**
      * Creates and returns a new AuthToken
-     * Should this add it to the DB too?
      */
-    public AuthToken createAuthToken() throws DataAccessException{
-        return new AuthToken("","");
+    public AuthToken createAuthToken(String AuthToken, String Username) throws DataAccessException{
+        return new AuthToken(AuthToken,Username);
+    }
+
+    /**
+     * Generates a random Auth String
+     * @return String
+     * @throws DataAccessException if something goes horribly wrong
+     */
+    public String generateAuthString() throws DataAccessException{
+        return UUID.randomUUID().toString();
     }
 
     /**

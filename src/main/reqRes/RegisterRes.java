@@ -17,6 +17,10 @@ public class RegisterRes extends Response{
         this.authToken = authToken;
     }
 
+    public RegisterRes(String Error){
+        super(Error);
+    }
+
     /**
      * Gets the Username
      */

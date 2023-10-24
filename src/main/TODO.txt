@@ -1,1 +1,2 @@
 I have no idea where the libs file goes?
+Test Register, Login, and Logout services

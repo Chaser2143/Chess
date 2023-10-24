@@ -1,6 +1,7 @@
 package server;
 import handlers.ClearHandler;
 import handlers.Handler;
+import handlers.RegisterHandler;
 import spark.*;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Server {
         // Register handlers for each endpoint using the method reference syntax
 
         Spark.delete("/db", this::clearAll);
+        Spark.post("/user", this::register);
 
 //        Spark.post("/name/:name", this::addName);
 //        Spark.get("/", this::defaultHtml);
@@ -30,7 +32,12 @@ public class Server {
     }
 
     private Object clearAll(Request req, Response res){
-        Handler myHandler = ClearHandler.getInstance();
+        var myHandler = ClearHandler.getInstance();
+        return myHandler.processSparkRequest(req);
+    }
+
+    private Object register(Request req, Response res){
+        var myHandler = RegisterHandler.getInstance();
         return myHandler.processSparkRequest(req);
     }
 

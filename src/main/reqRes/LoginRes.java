@@ -4,18 +4,15 @@ package reqRes;
  * Serves as the response for the login API
  */
 public class LoginRes extends Response{
-    private String message;
     private String authToken;
     private String username;
 
     /**
      * Constructor for Login Response
-     * @param message Message for response
      * @param authToken Authtoken generated
      * @param username Username Associated
      */
-    public LoginRes(String message, String authToken, String username) {
-        super(message);
+    public LoginRes(String authToken, String username) {
         this.authToken = authToken;
         this.username = username;
     }

@@ -44,17 +44,34 @@ public class UserDAO implements DAO{
     }
 
     /**
-     * Finds and returns a user in the DB
+     * Finds and returns a user in the DB (Used for registration)
      */
-    public User getUser() throws DataAccessException{
-        return new User("","","");
+    public User getUser(String Username, String Password, String Email) throws DataAccessException{
+        for(User user:UserDB){
+            if(user.getUsername().equals(Username) && user.getPassword().equals(Password) && user.getEmail().equals(Email)){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds and returns a user in the DB (Used for Logging In)
+     */
+    public User getUser(String Username, String Password) throws DataAccessException{
+        for(User user:UserDB){
+            if(user.getUsername().equals(Username) && user.getPassword().equals(Password)){
+                return user;
+            }
+        }
+        return null;
     }
 
     /**
      * Creates and returns a new user
      */
-    public User createUser() throws DataAccessException{
-        return new User("","","");
+    public User createUser(String Username, String Password, String Email) throws DataAccessException{
+        return new User(Username,Password,Email);
     }
 
     /**

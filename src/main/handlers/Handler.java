@@ -1,6 +1,6 @@
 package handlers;
 
-import spark.Request;
+import com.google.gson.Gson;
 import reqRes.Response;
 
 /**
@@ -26,7 +26,14 @@ public abstract class Handler {
      * - Return the Spark Response
      * @return the correct response object
      */
-    abstract public spark.Response processSparkRequest(spark.Request req);
+    public String processSparkRequest(spark.Request req){
+        //Deserialize Request
+        reqRes.Request nativeReq = deserializeReq(req);
+        //Process
+        reqRes.Response nativeRes = processNativeRequest(nativeReq);
+        //Serialize Response & Return
+        return serializeRes(nativeRes);
+    }
 
     /**
      * Deserializes a Spark request into a native request
@@ -46,8 +53,14 @@ public abstract class Handler {
     /**
      * Take in a native response
      * Serializes to give spark response
+     *
      * @param res is native response
      * @return spark response
      */
-    abstract protected  spark.Response serializeRes(reqRes.Response res);
+    protected String serializeRes(Response res){
+        var serializer = new Gson();
+        var json = serializer.toJson(res);
+        System.out.println("JSON: " + json);
+        return json;
+    }
 }

@@ -1,5 +1,6 @@
 package handlers;
 
+import com.google.gson.Gson;
 import reqRes.Request;
 import reqRes.Response;
 import services.ClearService;
@@ -7,15 +8,8 @@ import services.ClearService;
 public class ClearHandler extends Handler{
     protected static ClearHandler instance = new ClearHandler();
 
-
-    @Override
-    public spark.Response processSparkRequest(spark.Request req) {
-        //Deserialize Request
-        reqRes.Request nativeReq = deserializeReq(req);
-        //Process
-        reqRes.Response nativeRes = processNativeRequest(nativeReq);
-        //Serialize Response & Return
-        return serializeRes(nativeRes);
+    public static ClearHandler getInstance(){
+        return instance;
     }
 
     /**
@@ -39,10 +33,5 @@ public class ClearHandler extends Handler{
     @Override
     protected Response processNativeRequest(Request req) {
         return new ClearService().clear();
-    }
-
-    @Override
-    protected spark.Response serializeRes(Response res) {
-        return null;
     }
 }
