@@ -11,4 +11,7 @@ public class LogoutRes extends Response{
     public LogoutRes(){
         super();
     }
+    public LogoutRes(String Error){
+        super(Error);
+    }
 }

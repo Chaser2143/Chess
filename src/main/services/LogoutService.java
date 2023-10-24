@@ -16,21 +16,21 @@ public class LogoutService {
      * @param request from Log Out API
      * @return LogOut Response
      */
-    public Response Logout(LogoutReq request) {
+    public LogoutRes Logout(LogoutReq request) {
         //Find the authtoken with that string
         //Delete it from the DB
         //If we cant find the auth, unauthorized
         try {
             var AuthDAOInst = AuthDAO.getInstance(); //Access DB
-            AuthToken AT = AuthDAOInst.getAuthToken(request.getAuthorization());
+            AuthToken AT = AuthDAOInst.getAuthToken(request.getAuthorization().getAuthToken(), request.getAuthorization().getUsername());
             if (AT != null) { //We found the user
                 AuthDAOInst.deleteAuthToken(AT); //Delete the Auth Token from the DB
-                return new Response(); //Return Success Response
+                return new LogoutRes(); //Return Success Response
             } else {
-                return new Response(Response.FourOOne); //Unauthorized Case
+                return new LogoutRes(Response.FourOOne); //Unauthorized Case
             }
         } catch (dataAccess.DataAccessException dae) {
-            return new Response(Response.FiveHundred + "There was a fatal error in logging out.");//Error Case
+            return new LogoutRes(Response.FiveHundred + "There was a fatal error in logging out.");//Error Case
         }
     }
 }

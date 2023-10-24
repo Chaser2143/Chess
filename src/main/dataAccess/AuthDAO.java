@@ -48,9 +48,9 @@ public class AuthDAO implements DAO{
     /**
      * Finds and returns an AuthToken in the DB
      */
-    public AuthToken getAuthToken(AuthToken AT) throws DataAccessException{
+    public AuthToken getAuthToken(String AT, String Username) throws DataAccessException{
         for(AuthToken A : AuthDB){
-            if (A.getAuthToken().equals(AT)){
+            if (A.getAuthToken().equals(AT) && A.getUsername().equals(Username)){
                 return A;
             }
         }

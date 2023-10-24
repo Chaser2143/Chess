@@ -18,6 +18,14 @@ public class LoginRes extends Response{
     }
 
     /**
+     * Error Login Response
+     * @param message Error
+     */
+    public LoginRes(String message){
+        super(message);
+    }
+
+    /**
      * Gets the Response Message
      * @return string
      */

@@ -19,7 +19,7 @@ public class LoginService {
      * @param request from Login API
      * @return Login Response with new authtoken
      */
-    public Response Login(LoginReq request){
+    public LoginRes Login(LoginReq request){
         try{
             var UserDAOInst = UserDAO.getInstance();
             User possibleUser = UserDAOInst.getUser(request.getUsername(), request.getPassword());
@@ -30,11 +30,11 @@ public class LoginService {
                 return new LoginRes(AT.getAuthToken(), AT.getUsername()); //Return Success Response
             }
             else{
-                return new Response(Response.FourOOne); //Unauthorized Case
+                return new LoginRes(Response.FourOOne); //Unauthorized Case
             }
         }
         catch(dataAccess.DataAccessException dae){
-            return new Response(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
+            return new LoginRes(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
         }
     }
 }

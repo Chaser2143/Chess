@@ -9,7 +9,10 @@ import org.junit.jupiter.api.*;
 import passoffTests.TestFactory;
 import passoffTests.obfuscatedTestClasses.TestServerFacade;
 import passoffTests.testClasses.TestModels;
+import reqRes.*;
 import services.ClearService;
+import services.LoginService;
+import services.RegisterService;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -79,6 +82,96 @@ public class serverTests {
         }
         catch(dataAccess.DataAccessException dae){
             Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("RegisterTest")
+    public void successRegister(){
+        var r = new RegisterService();
+        r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        try {
+            var UserDAOInst = UserDAO.getInstance();
+            var u = UserDAOInst.getUser("c","b","a@gmail.com");
+            if(u != null){
+                Assertions.assertTrue(true, "Successfully registered a user");
+            }
+            else{
+                Assertions.assertTrue(false, "Failed in registering user");
+            }
+        }
+        catch(dataAccess.DataAccessException dae){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("RegisterTest")
+    public void failRegister(){
+        var r = new RegisterService();
+        r.Register(new RegisterReq("", "b", "a@gmail.com")); //Register a User with incomplete fields
+
+        try {
+            var UserDAOInst = UserDAO.getInstance();
+            var u = UserDAOInst.getUser("","b","a@gmail.com");
+            if(u == null){
+                Assertions.assertTrue(true, "Didn't add user because of incomplete field");
+            }
+            else{
+                Assertions.assertTrue(false, "Something went wrong, Added user but shouldn't have");
+            }
+        }
+        catch(dataAccess.DataAccessException dae){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("LoginTest")
+    public void SuccessLoginFromRegister(){
+        var r = new RegisterService();
+        RegisterRes res = r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        //Check that these are in the DB
+        try {
+            var AuthDAOInst = AuthDAO.getInstance();
+
+            //Check that I get back an AT and Username
+            if(!res.getAuthToken().isEmpty() && !res.getUsername().isEmpty()){
+                if(AuthDAOInst.getAuthToken(res.getAuthToken(), res.getUsername()) != null){
+                    Assertions.assertTrue(true, "Valid Response, AuthToken in DB");
+                }
+                else{
+                    Assertions.assertTrue(false, "AuthToken not found in DB");
+                }
+            }
+            else {
+                Assertions.assertTrue(false, "Invalid Response");
+            }
+        }
+        catch(dataAccess.DataAccessException dae){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("LoginTest")
+    public void FailLogin(){
+        //Try to log in user that doesn't exist
+        var l = new LoginService();
+        LoginRes res = l.Login(new LoginReq("c", "b"));
+
+        //Check we got the right response back
+        if(res.getMessage().equals(Response.FourOOne)){
+            Assertions.assertTrue(true, "Successfully caught bad login");
+        }
+        else {
+            Assertions.assertTrue(false, "Failed; logged in bad user");
         }
     }
 

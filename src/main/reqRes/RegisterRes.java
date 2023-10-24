@@ -11,8 +11,7 @@ public class RegisterRes extends Response{
     /**
      * Instantiates a constructor for the response
      */
-    public RegisterRes(String username, String authToken, String message) {
-        super();
+    public RegisterRes(String username, String authToken) {
         this.username = username;
         this.authToken = authToken;
     }
