@@ -23,4 +23,12 @@ public class Response {
     public Response(String message){
         this.message = message;
     }
+
+    /**
+     * Gets the Response Message
+     * @return string
+     */
+    public String getMessage() {
+        return message;
+    }
 }

@@ -49,13 +49,6 @@ public class RegisterRes extends Response{
     }
 
     /**
-     * Gets the message
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
      * Sets the message
      */
     public void setMessage(String message) {

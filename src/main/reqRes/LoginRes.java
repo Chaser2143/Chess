@@ -26,14 +26,6 @@ public class LoginRes extends Response{
     }
 
     /**
-     * Gets the Response Message
-     * @return string
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
      * Sets the Response message
      * @param message becomes the new message
      */

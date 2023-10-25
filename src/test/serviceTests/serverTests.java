@@ -5,6 +5,7 @@ import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
+import models.AuthToken;
 import org.junit.jupiter.api.*;
 import passoffTests.TestFactory;
 import passoffTests.obfuscatedTestClasses.TestServerFacade;
@@ -12,6 +13,7 @@ import passoffTests.testClasses.TestModels;
 import reqRes.*;
 import services.ClearService;
 import services.LoginService;
+import services.LogoutService;
 import services.RegisterService;
 
 import java.util.Arrays;
@@ -32,41 +34,6 @@ public class serverTests {
     private static TestModels.TestCreateRequest createRequest;
     private static TestServerFacade serverFacade;
     private String existingAuth;
-
-
-//    @BeforeAll
-//    public static void init() {
-//        existingUser = new TestModels.TestUser();
-//        existingUser.username = "Joseph";
-//        existingUser.password = "Smith";
-//        existingUser.email = "urim@thummim.net";
-//
-//        newUser = new TestModels.TestUser();
-//        newUser.username = "testUsername";
-//        newUser.password = "testPassword";
-//        newUser.email = "testEmail";
-//
-//        createRequest = new TestModels.TestCreateRequest();
-//        createRequest.gameName = "testGame";
-//
-//        serverFacade = new TestServerFacade("localhost", TestFactory.getServerPort());
-//    }
-
-
-//    @BeforeEach
-//    public void setup() {
-//        serverFacade.clear();
-//
-//        TestModels.TestRegisterRequest registerRequest = new TestModels.TestRegisterRequest();
-//        registerRequest.username = existingUser.username;
-//        registerRequest.password = existingUser.password;
-//        registerRequest.email = existingUser.email;
-//
-//        //one user already logged in
-//        TestModels.TestLoginRegisterResult regResult = serverFacade.register(registerRequest);
-//        existingAuth = regResult.authToken;
-//    }
-
 
     @Test
     @Order(1)
@@ -172,6 +139,49 @@ public class serverTests {
         }
         else {
             Assertions.assertTrue(false, "Failed; logged in bad user");
+        }
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("LogoutTest")
+    public void SuccessLogout(){
+        //Try to log out user that is logged in
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        var l = new LogoutService();
+
+        LogoutRes res = l.Logout(new LogoutReq(new AuthToken(regRes.getAuthToken(), regRes.getUsername())));
+
+        var ADB = AuthDAO.getInstance();
+        //Check we got the right response back
+        try {
+            if (res.getMessage() == null && null == ADB.getAuthToken(regRes.getAuthToken(), regRes.getUsername())) {
+                Assertions.assertTrue(true, "Good request, successfully logged out");
+            } else {
+                Assertions.assertTrue(false, "Error request or failed log out");
+            }
+        }
+        catch(dataAccess.DataAccessException dae){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("LogoutTest")
+    public void FailLogout(){
+        //Try to log out user that doesn't exist
+        var l = new LogoutService();
+        LogoutRes res = l.Logout(new LogoutReq(new AuthToken("abc123", "badusr")));
+
+        //Check we got the right response back
+        if(res.getMessage().equals(Response.FourOOne)){
+            Assertions.assertTrue(true, "Successfully caught bad logout");
+        }
+        else {
+            Assertions.assertTrue(false, "Failed; logged out bad user");
         }
     }
 
