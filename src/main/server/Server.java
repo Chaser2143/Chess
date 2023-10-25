@@ -1,7 +1,5 @@
 package server;
-import handlers.ClearHandler;
-import handlers.Handler;
-import handlers.RegisterHandler;
+import handlers.*;
 import spark.*;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -24,41 +22,33 @@ public class Server {
 
         Spark.delete("/db", this::clearAll);
         Spark.post("/user", this::register);
-
-//        Spark.post("/name/:name", this::addName);
-//        Spark.get("/", this::defaultHtml);
-//        Spark.get("/name", this::listNames);
-//        Spark.delete("/name/:name", this::deleteName);
+        Spark.post("/session", this::login);
+        Spark.delete("/session", this::logout);
     }
 
     private Object clearAll(Request req, Response res){
         var myHandler = ClearHandler.getInstance();
-        return myHandler.processSparkRequest(req);
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
     }
 
     private Object register(Request req, Response res){
         var myHandler = RegisterHandler.getInstance();
-        return myHandler.processSparkRequest(req);
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
     }
 
-//    //OLD Example Functions
-//    private Object addName(Request req, Response res) {
-//        names.add(req.params(":name"));
-//        return listNames(req, res);
-//    }
-//
-//    private Object defaultHtml(Request req, Response res){
-//        return "index.html";
-//    }
-//
-//    private Object listNames(Request req, Response res) {
-//        res.type("application/json");
-//        return new Gson().toJson(Map.of("name", names));
-//    }
-//
-//    private Object deleteName(Request req, Response res) {
-//        names.remove(req.params(":name"));
-//        return listNames(req, res);
-//    }
+    private Object login(Request req, Response res){
+        var myHandler = LoginHandler.getInstance();
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
+    }
+
+    private Object logout(Request req, Response res){
+        var myHandler = LogoutHandler.getInstance();
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
+    }
+
 }
 

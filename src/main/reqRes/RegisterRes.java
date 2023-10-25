@@ -6,8 +6,6 @@ package reqRes;
 public class RegisterRes extends Response{
     private String username;
     private String authToken;
-    private String message;
-
     /**
      * Instantiates a constructor for the response
      */
@@ -46,12 +44,5 @@ public class RegisterRes extends Response{
      */
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
-    }
-
-    /**
-     * Sets the message
-     */
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

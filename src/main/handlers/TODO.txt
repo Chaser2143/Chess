@@ -1,3 +1,0 @@
-Clear Handler Needs Serialization Capabilities?
-Test Register Handler
-make login and logout handlers

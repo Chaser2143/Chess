@@ -109,7 +109,7 @@ public class serverTests {
 
             //Check that I get back an AT and Username
             if(!res.getAuthToken().isEmpty() && !res.getUsername().isEmpty()){
-                if(AuthDAOInst.getAuthToken(res.getAuthToken(), res.getUsername()) != null){
+                if(AuthDAOInst.getAuthToken(res.getAuthToken()) != null){
                     Assertions.assertTrue(true, "Valid Response, AuthToken in DB");
                 }
                 else{
@@ -152,12 +152,12 @@ public class serverTests {
 
         var l = new LogoutService();
 
-        LogoutRes res = l.Logout(new LogoutReq(new AuthToken(regRes.getAuthToken(), regRes.getUsername())));
+        LogoutRes res = l.Logout(new LogoutReq(regRes.getAuthToken()));
 
         var ADB = AuthDAO.getInstance();
         //Check we got the right response back
         try {
-            if (res.getMessage() == null && null == ADB.getAuthToken(regRes.getAuthToken(), regRes.getUsername())) {
+            if (res.getMessage() == null && null == ADB.getAuthToken(regRes.getAuthToken())) {
                 Assertions.assertTrue(true, "Good request, successfully logged out");
             } else {
                 Assertions.assertTrue(false, "Error request or failed log out");
@@ -174,7 +174,7 @@ public class serverTests {
     public void FailLogout(){
         //Try to log out user that doesn't exist
         var l = new LogoutService();
-        LogoutRes res = l.Logout(new LogoutReq(new AuthToken("abc123", "badusr")));
+        LogoutRes res = l.Logout(new LogoutReq("abc"));
 
         //Check we got the right response back
         if(res.getMessage().equals(Response.FourOOne)){

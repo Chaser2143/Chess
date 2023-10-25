@@ -2,6 +2,9 @@ package handlers;
 
 import com.google.gson.Gson;
 import reqRes.Response;
+import spark.*;
+
+import java.util.Objects;
 
 /**
  * Abstract Handler Class
@@ -26,13 +29,13 @@ public abstract class Handler {
      * - Return the Spark Response
      * @return the correct response object
      */
-    public String processSparkRequest(spark.Request req){
+    public spark.Response processSparkRequest(spark.Request req, spark.Response res){
         //Deserialize Request
         reqRes.Request nativeReq = deserializeReq(req);
         //Process
         reqRes.Response nativeRes = processNativeRequest(nativeReq);
         //Serialize Response & Return
-        return serializeRes(nativeRes);
+        return serializeRes(nativeRes, res);
     }
 
     /**
@@ -57,10 +60,25 @@ public abstract class Handler {
      * @param res is native response
      * @return spark response
      */
-    protected String serializeRes(Response res){
+    protected spark.Response serializeRes(Response res, spark.Response sRes){
         var serializer = new Gson();
+
+        //Set the response status
+        if(Objects.equals(res.getMessage(), Response.FourHundred)){
+            sRes.status(400);
+        } else if (Objects.equals(res.getMessage(), Response.FourOOne)) {
+            sRes.status(401);
+        } else if (Objects.equals(res.getMessage(), Response.FourOThree)) {
+            sRes.status(403);
+        } else if (res.getMessage() != null) {
+            sRes.status(500);
+        } else{
+            sRes.status(200);
+        }
+
         var json = serializer.toJson(res);
         System.out.println("JSON: " + json);
-        return json;
+        sRes.body(json);
+        return sRes;
     }
 }

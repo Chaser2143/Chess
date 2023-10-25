@@ -22,7 +22,7 @@ public class LogoutService {
         //If we cant find the auth, unauthorized
         try {
             var AuthDAOInst = AuthDAO.getInstance(); //Access DB
-            AuthToken AT = AuthDAOInst.getAuthToken(request.getAuthorization().getAuthToken(), request.getAuthorization().getUsername());
+            AuthToken AT = AuthDAOInst.getAuthToken(request.getAuthorization());
             if (AT != null) { //We found the user
                 AuthDAOInst.deleteAuthToken(AT); //Delete the Auth Token from the DB
                 return new LogoutRes(); //Return Success Response

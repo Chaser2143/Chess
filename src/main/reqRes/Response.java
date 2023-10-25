@@ -6,7 +6,7 @@ package reqRes;
  * Holds all constant Failure Responses
  */
 public class Response {
-    public static String message;
+    public String message;
     public static String FourHundred = "Error: bad request";
     public static String FourOOne = "Error: unauthorized";
     public static String FourOThree = "Error: already taken";

@@ -19,7 +19,8 @@ public class RegisterHandler extends Handler{
     protected reqRes.Request deserializeReq(Request req) {
         var serializer = new Gson();
         var objFromJson = serializer.fromJson(req.body(), Map.class);
-        return new RegisterReq(objFromJson.get("username").toString(), objFromJson.get("password").toString(), objFromJson.get("Email").toString());
+//        System.out.println(objFromJson);
+        return new RegisterReq((String)objFromJson.get("username"), (String)objFromJson.get("password"), (String)objFromJson.get("email"));
     }
 
     @Override
