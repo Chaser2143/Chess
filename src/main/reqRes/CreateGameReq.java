@@ -6,7 +6,7 @@ import models.AuthToken;
  * Serves as the Request for the Create Game API
  */
 public class CreateGameReq extends Request{
-    private AuthToken authorization;
+    private String authorization;
     private String gameName;
 
     /**
@@ -14,7 +14,7 @@ public class CreateGameReq extends Request{
      * @param authorization is the AuthToken for the new game
      * @param gameName is the name of the game
      */
-    public CreateGameReq(AuthToken authorization, String gameName) {
+    public CreateGameReq(String authorization, String gameName) {
         this.authorization = authorization;
         this.gameName = gameName;
     }
@@ -22,14 +22,14 @@ public class CreateGameReq extends Request{
     /**
      * @return the auth token
      */
-    public AuthToken getAuthorization() {
+    public String getAuthorization() {
         return authorization;
     }
 
     /**
      * @param authorization becomes the new Auth Token
      */
-    public void setAuthorization(AuthToken authorization) {
+    public void setAuthorization(String authorization) {
         this.authorization = authorization;
     }
 

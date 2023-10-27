@@ -11,4 +11,12 @@ public class JoinGameRes extends Response{
     public JoinGameRes(){
         super();
     }
+
+    /**
+     * Error Join Game Response
+     * @param message Error
+     */
+    public JoinGameRes(String message){
+        super(message);
+    }
 }

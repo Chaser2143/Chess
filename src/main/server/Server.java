@@ -24,6 +24,9 @@ public class Server {
         Spark.post("/user", this::register);
         Spark.post("/session", this::login);
         Spark.delete("/session", this::logout);
+        Spark.get("/game", this::listGames);
+        Spark.post("/game", this::createGame);
+        Spark.put("/game", this::joinGame);
     }
 
     private Object clearAll(Request req, Response res){
@@ -49,6 +52,25 @@ public class Server {
         spark.Response myRes = myHandler.processSparkRequest(req, res);
         return myRes.body();
     }
+
+    private Object listGames(Request req, Response res){
+        var myHandler = ListGamesHandler.getInstance();
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
+    }
+
+    private Object createGame(Request req, Response res){
+        var myHandler = CreateGameHandler.getInstance();
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
+    }
+
+    private Object joinGame(Request req, Response res){
+        var myHandler = JoinGameHandler.getInstance();
+        spark.Response myRes = myHandler.processSparkRequest(req, res);
+        return myRes.body();
+    }
+
 
 }
 

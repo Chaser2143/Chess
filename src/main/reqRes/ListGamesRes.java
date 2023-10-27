@@ -14,8 +14,15 @@ public class ListGamesRes extends Response{
      * Instantiates List Games Response
      */
     public ListGamesRes(){
-        super();
         games = new ArrayList<>();
+    }
+
+    /**
+     * Error Login Response
+     * @param message Error
+     */
+    public ListGamesRes(String message){
+        super(message);
     }
 
     /**
@@ -23,6 +30,6 @@ public class ListGamesRes extends Response{
      * @param game is game to add
      */
     public void addGame(Game game){
-
+        games.add(game);
     }
 }

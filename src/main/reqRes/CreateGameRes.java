@@ -11,8 +11,15 @@ public class CreateGameRes extends Response{
      * @param gameID is the id of the game
      */
     public CreateGameRes(int gameID) {
-        super();
         this.gameID = gameID;
+    }
+
+    /**
+     * Error Create Game Response
+     * @param message Error
+     */
+    public CreateGameRes(String message){
+        super(message);
     }
 
     /**

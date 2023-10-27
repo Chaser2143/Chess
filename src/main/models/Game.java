@@ -2,6 +2,8 @@ package models;
 
 import chess.CGame;
 
+import java.util.HashSet;
+
 /**
  * Represents the Game Model in the DB
  */
@@ -11,6 +13,7 @@ public class Game {
     private String blackUsername;
     private String gameName;
     private CGame game;
+    private HashSet<String> observers = new HashSet<>();
 
     /**
      * Constructor for the game
@@ -18,14 +21,21 @@ public class Game {
      * @param whiteUsername is the White Team username
      * @param blackUsername is the Black Team username
      * @param gameName is the name of the game
-     * @param game is the actual game
      */
-    public Game(int gameID, String whiteUsername, String blackUsername, String gameName, CGame game) {
+    public Game(int gameID, String whiteUsername, String blackUsername, String gameName) {
         this.gameID = gameID;
         this.whiteUsername = whiteUsername;
         this.blackUsername = blackUsername;
         this.gameName = gameName;
-        this.game = game;
+        this.game = new CGame();
+    }
+
+    public void addObserver(String username){
+        observers.add(username);
+    }
+
+    public void removeObserver(String username){
+        observers.remove(username);
     }
 
     /**

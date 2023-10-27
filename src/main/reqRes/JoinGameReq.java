@@ -6,7 +6,7 @@ import models.AuthToken;
  * Request for Join Game API
  */
 public class JoinGameReq extends Request{
-    private AuthToken authorization;
+    private String authorization;
     private String playerColor;
     private int gameID;
 
@@ -16,7 +16,7 @@ public class JoinGameReq extends Request{
      * @param playerColor is the player color
      * @param gameID is the id of the game
      */
-    public JoinGameReq(AuthToken authorization, String playerColor, int gameID) {
+    public JoinGameReq(String authorization, String playerColor, int gameID) {
         this.authorization = authorization;
         this.playerColor = playerColor;
         this.gameID = gameID;
@@ -25,14 +25,14 @@ public class JoinGameReq extends Request{
     /**
      * @return the auth token of the request
      */
-    public AuthToken getAuthorization() {
+    public String getAuthorization() {
         return authorization;
     }
 
     /**
      * @param authorization becomes the new auth token
      */
-    public void setAuthorization(AuthToken authorization) {
+    public void setAuthorization(String authorization) {
         this.authorization = authorization;
     }
 

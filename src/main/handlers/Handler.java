@@ -75,10 +75,11 @@ public abstract class Handler {
         } else{
             sRes.status(200);
         }
-
         var json = serializer.toJson(res);
-        System.out.println("JSON: " + json);
+//        System.out.println("JSON: " + json);
         sRes.body(json);
         return sRes;
+
+
     }
 }

@@ -7,13 +7,17 @@ import models.AuthToken;
  */
 public class ListGamesReq extends Request{
 
-    private AuthToken authorization;
+    private String authorization;
 
     /**
      * Constructor for List Games Request
      * @param auth is the auth token for the game
      */
-    public ListGamesReq(AuthToken auth){
+    public ListGamesReq(String auth){
         authorization = auth;
+    }
+
+    public String getAuthorization() {
+        return authorization;
     }
 }

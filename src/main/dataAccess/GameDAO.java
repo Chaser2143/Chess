@@ -14,12 +14,23 @@ public class GameDAO implements DAO{
 
     HashSet<Game> GameDB = new HashSet<>();
 
+    public static int gameID = 0;
+
     /**
      * Singleton design, allows access to a single DB
      * @return Game DB
      */
     public static GameDAO getInstance(){
         return instance;
+    }
+
+    /**
+     * Counter for gameID's
+     * @return int
+     */
+    public static int getNextID(){
+        gameID++;
+        return gameID;
     }
 
     /**
@@ -47,15 +58,22 @@ public class GameDAO implements DAO{
     /**
      * Finds and returns a game in the DB
      */
-    public Game getGame() throws DataAccessException{
-        return new Game(0,"","", "", new CGame());
+    public Game getGame(int gameID) throws DataAccessException{
+        for(Game G : GameDB){
+            if (G.getGameID() == gameID){
+                return G;
+            }
+        }
+        return null;
     }
 
     /**
      * Creates and returns a new Game
      */
-    public Game createGame() throws DataAccessException{
-        return new Game(0,"","", "", new CGame());
+    public int createGame(String gameName) throws DataAccessException{
+        Game newGame = new Game(GameDAO.getNextID(),"","", gameName);
+        GameDB.add(newGame);
+        return newGame.getGameID();
     }
 
     /**

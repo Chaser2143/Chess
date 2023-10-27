@@ -1,7 +1,15 @@
 package services;
 
+import dataAccess.AuthDAO;
+import dataAccess.GameDAO;
+import models.AuthToken;
+import models.Game;
+import reqRes.CreateGameRes;
 import reqRes.JoinGameReq;
 import reqRes.JoinGameRes;
+import reqRes.Response;
+
+import java.util.Objects;
 
 /**
  * Completes Join Game API Request
@@ -17,6 +25,50 @@ public class JoinGameService {
      * @return Join Game Response
      */
     public JoinGameRes JoinGame(JoinGameReq request){
-        return new JoinGameRes();
+        //Get Access to the DB
+        var AuthDAOInst = AuthDAO.getInstance();
+        var GameDAOInst = GameDAO.getInstance();
+        //Check the Auth Token is in the DB; else unauthorized
+        try {
+            Game game = GameDAOInst.getGame(request.getGameID());
+            if(game == null){
+                return new JoinGameRes(Response.FourHundred); //Bad Request, game doesn't exist
+            }
+            AuthToken A = AuthDAOInst.getAuthToken(request.getAuthorization());
+            if (A != null) { //Auth is legit
+                if (Objects.equals(request.getPlayerColor(), "WHITE")) {
+                    //Check if that color is taken or not, if not update it
+                    if(game.getWhiteUsername().isEmpty()) {
+                        game.setWhiteUsername(A.getUsername());
+                        return new JoinGameRes();
+                    }
+                    else{
+                        return new JoinGameRes(Response.FourOThree); //Already Taken
+                    }
+                }
+                else if (Objects.equals(request.getPlayerColor(), "BLACK")) {
+                        if(game.getBlackUsername().isEmpty()){
+                            game.setBlackUsername(A.getUsername());
+                            return new JoinGameRes();
+                        }
+                        else{
+                            return new JoinGameRes(Response.FourOThree); //Already taken
+                        }
+                    }
+                else if(request.getPlayerColor().isBlank()){ //Empty; Spectator case
+                    game.addObserver(A.getUsername());
+                    return new JoinGameRes();
+                }
+                else {
+                    return new JoinGameRes(Response.FourHundred); //Bad Request, no conditions met
+                }
+            }
+            else{ //return; else error
+                return new JoinGameRes(Response.FourOOne); //Unauthorized Case
+            }
+        }
+        catch(dataAccess.DataAccessException dae){
+            return new JoinGameRes(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
+        }
     }
 }
