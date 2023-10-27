@@ -38,7 +38,7 @@ public class JoinGameService {
             if (A != null) { //Auth is legit
                 if (Objects.equals(request.getPlayerColor(), "WHITE")) {
                     //Check if that color is taken or not, if not update it
-                    if(game.getWhiteUsername().isEmpty()) {
+                    if(game.getWhiteUsername() == null) {
                         game.setWhiteUsername(A.getUsername());
                         return new JoinGameRes();
                     }
@@ -47,7 +47,7 @@ public class JoinGameService {
                     }
                 }
                 else if (Objects.equals(request.getPlayerColor(), "BLACK")) {
-                        if(game.getBlackUsername().isEmpty()){
+                        if(game.getBlackUsername() == null){
                             game.setBlackUsername(A.getUsername());
                             return new JoinGameRes();
                         }

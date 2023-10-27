@@ -71,7 +71,7 @@ public class GameDAO implements DAO{
      * Creates and returns a new Game
      */
     public int createGame(String gameName) throws DataAccessException{
-        Game newGame = new Game(GameDAO.getNextID(),"","", gameName);
+        Game newGame = new Game(GameDAO.getNextID(),null,null, gameName);
         GameDB.add(newGame);
         return newGame.getGameID();
     }
