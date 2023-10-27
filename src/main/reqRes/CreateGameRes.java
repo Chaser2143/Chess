@@ -4,7 +4,7 @@ package reqRes;
  * Serves as the Response for the Create Game API
  */
 public class CreateGameRes extends Response{
-    private int gameID;
+    private Integer gameID = null;
 
     /**
      * Instantiates a new create game response
