@@ -17,7 +17,7 @@ public class RegisterService {
     public RegisterRes Register(RegisterReq request){
         try {
             //Are all our fields filled out?
-            if ((request.getUsername()!=null || request.getPassword()!=null || request.getEmail()!=null) &&(request.getUsername().isEmpty() || request.getPassword().isEmpty() || request.getEmail().isEmpty())) {
+            if ((request.getUsername()==null || request.getPassword()==null || request.getEmail()==null) || (request.getUsername().isEmpty() || request.getPassword().isEmpty() || request.getEmail().isEmpty())) {
                 return new RegisterRes(Response.FourHundred); //Bad Request
             }
 
