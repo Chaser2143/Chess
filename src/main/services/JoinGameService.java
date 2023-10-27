@@ -55,7 +55,7 @@ public class JoinGameService {
                             return new JoinGameRes(Response.FourOThree); //Already taken
                         }
                     }
-                else if(request.getPlayerColor().isBlank()){ //Empty; Spectator case
+                else if(request.getPlayerColor() == null || request.getPlayerColor().isEmpty()){ //Empty; Spectator case
                     game.addObserver(A.getUsername());
                     return new JoinGameRes();
                 }

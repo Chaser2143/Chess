@@ -17,6 +17,12 @@ public class CreateGameHandler extends Handler{
         return instance;
     }
 
+    /**
+     * Deserializes the spark request
+     * Retrieves Auth from header and gameName from body
+     * @param req is a spark request
+     * @return native request
+     */
     @Override
     protected Request deserializeReq(spark.Request req) {
         var serializer = new Gson();
@@ -24,6 +30,11 @@ public class CreateGameHandler extends Handler{
         return new CreateGameReq(req.headers("authorization"), (String) objFromJson.get("gameName"));
     }
 
+    /**
+     * Calls a new service to carry out the logic of the request
+     * @param req native request
+     * @return native response
+     */
     @Override
     protected Response processNativeRequest(Request req) {
         return new CreateGameService().CreateGame((CreateGameReq) req);

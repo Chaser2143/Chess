@@ -11,10 +11,7 @@ import passoffTests.TestFactory;
 import passoffTests.obfuscatedTestClasses.TestServerFacade;
 import passoffTests.testClasses.TestModels;
 import reqRes.*;
-import services.ClearService;
-import services.LoginService;
-import services.LogoutService;
-import services.RegisterService;
+import services.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -101,7 +98,7 @@ public class serverTests {
     @DisplayName("LoginTest")
     public void SuccessLoginFromRegister(){
         var r = new RegisterService();
-        RegisterRes res = r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
+        RegisterRes res = r.Register(new RegisterReq("a", "b", "a@gmail.com")); //Register a User not already in the DB
 
         //Check that these are in the DB
         try {
@@ -131,7 +128,7 @@ public class serverTests {
     public void FailLogin(){
         //Try to log in user that doesn't exist
         var l = new LoginService();
-        LoginRes res = l.Login(new LoginReq("c", "b"));
+        LoginRes res = l.Login(new LoginReq("z", "z"));
 
         //Check we got the right response back
         if(res.getMessage().equals(Response.FourOOne)){
@@ -143,12 +140,12 @@ public class serverTests {
     }
 
     @Test
-    @Order(7)
+    @Order(6)
     @DisplayName("LogoutTest")
     public void SuccessLogout(){
         //Try to log out user that is logged in
         var r = new RegisterService();
-        RegisterRes regRes = r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
+        RegisterRes regRes = r.Register(new RegisterReq("d", "b", "a@gmail.com")); //Register a User not already in the DB
 
         var l = new LogoutService();
 
@@ -169,7 +166,7 @@ public class serverTests {
     }
 
     @Test
-    @Order(8)
+    @Order(7)
     @DisplayName("LogoutTest")
     public void FailLogout(){
         //Try to log out user that doesn't exist
@@ -185,5 +182,155 @@ public class serverTests {
         }
     }
 
+    @Test
+    @Order(8)
+    @DisplayName("CreateGameTest")
+    public void SuccessfulCreateGame(){
+        //Try to create a game
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("e", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        var c = new CreateGameService();
+        var res = c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "newgame"));
+
+        //Check we got the right response back
+        if(res.getMessage() == null){
+            Assertions.assertTrue(true, "Successful create game");
+        }
+        else {
+            Assertions.assertTrue(false, "Failed to create game");
+        }
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("CreateGameTest")
+    public void FailCreateGame(){
+        //Try to create a game
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("f", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        var c = new CreateGameService();
+        var res = c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "")); //No Game Name
+
+        //Check we got the right response back
+        if(res.getMessage() != null){
+            Assertions.assertTrue(true, "Caught bad request");
+        }
+        else {
+            Assertions.assertTrue(false, "Created bad request");
+        }
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("JoinGameTest")
+    public void SuccessJoinGame(){
+        //Try to create a game
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("g", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        var c = new CreateGameService();
+        var createres = c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "a")); //No Game Name
+
+        var res = new JoinGameService().JoinGame(new JoinGameReq(regRes.getAuthToken(), "WHITE", createres.getGameID()));
+
+        //Check we got the right response back
+        if(res.getMessage() == null){
+            Assertions.assertTrue(true, "Joined game successfully");
+        }
+        else {
+            Assertions.assertTrue(false, "Failed to join game");
+        }
+    }
+
+    @Test
+    @Order(11)
+    @DisplayName("JoinGameTest")
+    public void FailJoinGame(){
+        //Try to create a game
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("h", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        var c = new CreateGameService();
+        var createres = c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "a"));
+
+        var res = new JoinGameService().JoinGame(new JoinGameReq(regRes.getAuthToken(), "white", createres.getGameID())); //Bad Capitalization
+
+        //Check we got the right response back
+        if(res.getMessage() != null){
+            Assertions.assertTrue(true, "Caught bad request");
+        }
+        else {
+            Assertions.assertTrue(false, "Joined with bad request");
+        }
+    }
+
+    @Test
+    @Order(12)
+    @DisplayName("ListGamesTest")
+    public void SuccessListGames(){
+        //Try to create a game
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("h", "d", "a@gmail.com")); //Register a User not already in the DB
+
+        var c = new CreateGameService();
+        c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "a"));
+        c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "b"));
+
+        var res = new ListGamesService().ListGames(new ListGamesReq(regRes.getAuthToken()));
+
+        //Check we got the right response back
+        if(res.getMessage() == null){
+            Assertions.assertTrue(true, "Listed games successfully");
+        }
+        else {
+            Assertions.assertTrue(false, "Failed to list games");
+        }
+    }
+
+    @Test
+    @Order(13)
+    @DisplayName("ListGamesTest")
+    public void FailListGames(){
+        //Try to create a game
+        var r = new RegisterService();
+        RegisterRes regRes = r.Register(new RegisterReq("j", "b", "a@gmail.com")); //Register a User not already in the DB
+
+        //Create a game
+        var c = new CreateGameService();
+        c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "a"));
+
+        var l = new LogoutService();
+        l.Logout(new LogoutReq(regRes.getAuthToken()));
+
+        //Try to list games with invalid auth
+        var res = new ListGamesService().ListGames(new ListGamesReq(regRes.getAuthToken()));
+
+        //Check we got the right response back
+        if(res.getMessage() != null){
+            Assertions.assertTrue(true, "Caught bad request");
+        }
+        else {
+            Assertions.assertTrue(false, "Joined with bad auth");
+        }
+    }
+
+    @Test
+    @Order(14)
+    @DisplayName("ClearServiceTest")
+    public void endClear(){
+        var c = new ClearService();
+        c.clear();
+
+        try {
+            Assertions.assertTrue(AuthDAO.getInstance().getAll().isEmpty(), "Auth DB not clear");
+            Assertions.assertTrue(UserDAO.getInstance().getAll().isEmpty(), "User DB not clear");
+            Assertions.assertTrue(GameDAO.getInstance().getAll().isEmpty(), "Game DB not clear");
+        }
+        catch(dataAccess.DataAccessException dae){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
 }
 
