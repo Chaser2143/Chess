@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-02T23:37:23.937132200Z</date>
+  <millis>1698968243937</millis>
+  <nanos>132200</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>server.Server</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>The DB Failed to initializejava.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5</message>
+</record>

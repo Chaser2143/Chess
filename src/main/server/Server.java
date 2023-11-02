@@ -1,9 +1,15 @@
 package server;
 import handlers.*;
 import spark.*;
+import dataAccess.Database;
 import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * Main Spark Server
@@ -13,9 +19,21 @@ public class Server {
         new Server().run();
     }
 
-    private void run() {
+    private void run(){
+        //Initialize a logger for the server stuff
+        Logger logger = initLogger();
+
         // Specify the port you want the server to listen on
         Spark.port(8080);
+
+        //Initialize the DB if it doesn't already exist
+        Database DB = new Database();
+        try {
+            DB.initDB();
+        }
+        catch(SQLException s){
+            logger.severe("The DB Failed to initialize" + s);//Configure Logging...
+        }
 
         // Register a directory for hosting static files
         Spark.staticFiles.location("/public");
@@ -99,6 +117,18 @@ public class Server {
         var myHandler = JoinGameHandler.getInstance();
         spark.Response myRes = myHandler.processSparkRequest(req, res);
         return myRes.body();
+    }
+
+    private Logger initLogger() {
+        Logger logger = Logger.getLogger("ChessLog");
+        try {
+            FileHandler fileHandler = new FileHandler("ChessLog.txt", true);
+            logger.addHandler(fileHandler);
+        }
+        catch(java.io.IOException ioException){
+            System.out.println("File Handler for the Logger is broken...");
+        }
+        return logger;
     }
 
 
