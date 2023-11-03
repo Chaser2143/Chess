@@ -4,6 +4,7 @@ import chess.CGame;
 import com.google.gson.Gson;
 import models.AuthToken;
 import models.Game;
+import models.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -32,15 +33,6 @@ public class GameDAO implements DAO{
     public static GameDAO getInstance(){
         return instance;
     }
-
-//    /** I believe this can be deleted
-//     * Counter for gameID's
-//     * @return int
-//     */
-//    public static int getNextID(){
-//        gameID++;
-//        return gameID;
-//    }
 
     /**
      * Clears all the Games in the DB
@@ -122,7 +114,27 @@ public class GameDAO implements DAO{
     /**
      * Returns all games
      */
-    public HashSet<Game> getAll() throws DataAccessException{
-        return new HashSet<Game>();
+    public HashSet<Game> getAll() throws DataAccessException, SQLException {
+        HashSet<Game> allGames = new HashSet<Game>();
+        //Retrieves all games from the DB
+        var statement = """
+        SELECT * FROM games""";
+        try (var preparedStatement = connection.prepareStatement(statement)){
+            try(var rs = preparedStatement.executeQuery()) { //Run the statement
+                while(rs.next()) {
+                    var gameID = rs.getInt("gameid");
+                    var whiteUserName = rs.getString("whiteUsername");
+                    var blackUserName = rs.getString("blackUsername");
+                    var gameName = rs.getString("gameName");
+                    var gameJSON = rs.getString("game");
+                    var game = new Gson().fromJson(gameJSON, CGame.class);
+                    var observersJSON = rs.getString("observers");
+                    var observers = new Gson().fromJson(observersJSON, HashSet.class);
+                    Game existingGame = new Game(gameID, whiteUserName, blackUserName, gameName, game, observers);
+                    allGames.add(existingGame);
+                }
+            }
+        }
+        return allGames;
     }
 }

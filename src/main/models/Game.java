@@ -30,6 +30,22 @@ public class Game {
         this.game = new CGame();
     }
 
+    /**
+     * Constructor for the game
+     * @param gameID is the game ID
+     * @param whiteUsername is the White Team username
+     * @param blackUsername is the Black Team username
+     * @param gameName is the name of the game
+     */
+    public Game(int gameID, String whiteUsername, String blackUsername, String gameName, CGame chessGame, HashSet<String> observers) {
+        this.gameID = gameID;
+        this.whiteUsername = whiteUsername;
+        this.blackUsername = blackUsername;
+        this.gameName = gameName;
+        this.game = chessGame;
+        this.observers = observers;
+    }
+
     public void addObserver(String username){
         observers.add(username);
     }

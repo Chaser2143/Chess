@@ -126,7 +126,21 @@ public class UserDAO implements DAO{
     /**
      * Returns all Users
      */
-    public HashSet<User> getAll() throws DataAccessException{
-        return new HashSet<User>();
+    public HashSet<User> getAll() throws DataAccessException, SQLException {
+        HashSet<User> allUsers = new HashSet<User>();
+        //Retrieves all games from the DB
+        var statement = """
+        SELECT * FROM users""";
+        try (var preparedStatement = connection.prepareStatement(statement)){
+            try(var rs = preparedStatement.executeQuery()) { //Run the statement
+                while(rs.next()) {
+                    var username = rs.getString("username");
+                    var password = rs.getString("password");
+                    var email = rs.getString("email");
+                    allUsers.add(new User(username, password, email));
+                }
+            }
+        }
+        return allUsers;
     }
 }

@@ -1,6 +1,9 @@
 package dataAccess;
 
+import chess.CGame;
+import com.google.gson.Gson;
 import models.AuthToken;
+import models.Game;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -112,17 +115,22 @@ public class AuthDAO implements DAO{
     }
 
     /**
-     * Updates a given AuthToken in the DB
-     */
-    public void updateAuthToken(AuthToken oldAuth, AuthToken newAuth) throws DataAccessException{
-//        AuthDB.remove(oldAuth);
-//        AuthDB.add(newAuth);
-    }
-
-    /**
      * Returns all AuthTokens
      */
-    public HashSet<AuthToken> getAll() throws DataAccessException{
-        return new HashSet<AuthToken>();
+    public HashSet<AuthToken> getAll() throws DataAccessException, SQLException {
+        HashSet<AuthToken> allTokens = new HashSet<AuthToken>();
+        //Retrieves all games from the DB
+        var statement = """
+        SELECT * FROM authtokens""";
+        try (var preparedStatement = connection.prepareStatement(statement)){
+            try(var rs = preparedStatement.executeQuery()) { //Run the statement
+                while(rs.next()) {
+                    var username = rs.getString("username");
+                    var authtoken = rs.getString("authtoken");
+                    allTokens.add(new AuthToken(authtoken, username));
+                }
+            }
+        }
+        return allTokens;
     }
 }

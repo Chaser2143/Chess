@@ -342,3 +342,19 @@
   <message>Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.connection" is null</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T20:20:36.433237600Z</date>
+  <millis>1699042836433</millis>
+  <nanos>237600</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>42</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+</log>

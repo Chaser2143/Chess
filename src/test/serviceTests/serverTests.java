@@ -44,7 +44,7 @@ public class serverTests {
             Assertions.assertTrue(UserDAO.getInstance().getAll().isEmpty(), "User DB not clear");
             Assertions.assertTrue(GameDAO.getInstance().getAll().isEmpty(), "Game DB not clear");
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
         }
     }
@@ -328,7 +328,7 @@ public class serverTests {
             Assertions.assertTrue(UserDAO.getInstance().getAll().isEmpty(), "User DB not clear");
             Assertions.assertTrue(GameDAO.getInstance().getAll().isEmpty(), "Game DB not clear");
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
         }
     }
