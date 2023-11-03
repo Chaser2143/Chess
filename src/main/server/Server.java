@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * Main Spark Server
  */
 public class Server {
+    public static Database DB = new Database(); //The DB can now be globally referenced
     public static void main(String[] args) {
         new Server().run();
     }
@@ -27,7 +28,6 @@ public class Server {
         Spark.port(8080);
 
         //Initialize the DB if it doesn't already exist
-        Database DB = new Database();
         try {
             DB.initDB();
         }
