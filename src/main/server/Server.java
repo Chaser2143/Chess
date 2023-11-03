@@ -16,13 +16,14 @@ import java.util.logging.Logger;
  */
 public class Server {
     public static Database DB = new Database(); //The DB can now be globally referenced
+
+    public static Logger logger = initLogger(); //Initialize a logger for the server stuff
+
     public static void main(String[] args) {
         new Server().run();
     }
 
     private void run(){
-        //Initialize a logger for the server stuff
-        Logger logger = initLogger();
 
         // Specify the port you want the server to listen on
         Spark.port(8080);
@@ -119,7 +120,7 @@ public class Server {
         return myRes.body();
     }
 
-    private Logger initLogger() {
+    private static Logger initLogger() {
         Logger logger = Logger.getLogger("ChessLog");
         try {
             FileHandler fileHandler = new FileHandler("ChessLog.txt", true);

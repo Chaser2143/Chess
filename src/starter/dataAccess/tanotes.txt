@@ -1,0 +1,4 @@
+call get connection at the start of every method
+optional end with return connection at the end of methods
+cannot have more than 1 connection open at a time
+close connection at end of service, DAO's can share connection

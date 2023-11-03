@@ -1,5 +1,7 @@
 package dataAccess;
 
+import server.Server;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,7 +27,6 @@ import java.util.LinkedList;
  */
 public class Database {
 
-    // FIXME: Change these fields, if necessary, to match your database configuration
     public static final String DB_NAME = "chess";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "1236";
@@ -46,12 +47,13 @@ public class Database {
             Connection connection;
             if (connections.isEmpty()) {
                 connection = DriverManager.getConnection(CONNECTION_URL, DB_USERNAME, DB_PASSWORD);
-//                connection.setCatalog(DB_NAME);
+                connection.setCatalog(DB_NAME);
             } else {
                 connection = connections.removeFirst();
             }
             return connection;
         } catch (SQLException e) {
+            Server.logger.severe(e.getMessage());
             throw new DataAccessException(e.getMessage());
         }
     }
@@ -80,8 +82,8 @@ public class Database {
             CREATE TABLE  IF NOT EXISTS authtokens (
                 username VARCHAR(255) NOT NULL,
                 authtoken VARCHAR(255) NOT NULL,
-                PRIMARY KEY (username)
-            )"""; //Do I set this as a primary key or a foreign key here?
+                PRIMARY KEY (authtoken)
+            )""";
 
             var createUserTable = """
             CREATE TABLE  IF NOT EXISTS users (
@@ -113,6 +115,7 @@ public class Database {
                 createTableStatement.executeUpdate();
             }
         } catch (DataAccessException e) {
+            Server.logger.severe(e.getMessage());
             throw new RuntimeException(e);
         }
     }

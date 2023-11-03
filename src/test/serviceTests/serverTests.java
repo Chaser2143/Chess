@@ -66,7 +66,7 @@ public class serverTests {
                 Assertions.assertTrue(false, "Failed in registering user");
             }
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
         }
     }
@@ -88,7 +88,7 @@ public class serverTests {
                 Assertions.assertTrue(false, "Something went wrong, Added user but shouldn't have");
             }
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
         }
     }
@@ -117,7 +117,7 @@ public class serverTests {
                 Assertions.assertTrue(false, "Invalid Response");
             }
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
         }
     }
@@ -160,7 +160,7 @@ public class serverTests {
                 Assertions.assertTrue(false, "Error request or failed log out");
             }
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
         }
     }

@@ -2,6 +2,8 @@ package dataAccess;
 
 import models.AuthToken;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -13,7 +15,11 @@ public class AuthDAO implements DAO{
 
     public static AuthDAO instance = new AuthDAO();
 
-    HashSet<AuthToken> AuthDB = new HashSet<>();
+    private Connection connection = null; //Represents the current connection to the DB. Should always be null unless this DAO is currently in use.
+
+    public void setConnection(Connection connection){
+        this.connection = connection;
+    }
 
     /**
      * Singleton design, allows access to a single DB
@@ -27,31 +33,63 @@ public class AuthDAO implements DAO{
      * Clears all the Auth Tokens in the DB
      */
     @Override
-    public void clearAll() throws DataAccessException {
-        AuthDB.clear();
+    public void clearAll() throws DataAccessException, SQLException {
+        //Delete all data from authtokens table
+        var deleteStatement = """
+                DELETE FROM authtokens""";
+        try (var preparedStatement = connection.prepareStatement(deleteStatement)){
+            preparedStatement.executeUpdate(); //Run the statement
+        }
     }
 
     /**
      * Adds an AuthToken to the DB
      */
-    public void addAuthToken(AuthToken authToken) throws DataAccessException{
-        AuthDB.add(authToken);
+    public void addAuthToken(AuthToken authToken) throws DataAccessException, SQLException {
+        //Inserts an authtoken into the DB
+        var statement = """
+        INSERT INTO authtokens (username, authtoken)
+        VALUES(?,?)""";
+        try (var preparedStatement = connection.prepareStatement(statement)){
+            preparedStatement.setString(1, authToken.getUsername());
+            preparedStatement.setString(2, authToken.getAuthToken());
+            preparedStatement.executeUpdate();
+        }
     }
 
     /**
      * Deletes an AuthToken from the DB
      */
-    public void deleteAuthToken(AuthToken authToken) throws DataAccessException{
-        AuthDB.remove(authToken);
+    public void deleteAuthToken(AuthToken authToken) throws DataAccessException, SQLException {
+        //Deletes an AuthToken from the DB
+        var statement = """
+        DELETE FROM authtokens
+            WHERE authtoken=? AND username=?""";
+        try (var preparedStatement = connection.prepareStatement(statement)){
+            preparedStatement.setString(1, authToken.getAuthToken());
+            preparedStatement.setString(2, authToken.getUsername()); //I think this is unnecessary cause auth tokens are a primary key... but oh well, better safe than sorry
+            preparedStatement.executeUpdate();
+        }
     }
 
     /**
      * Finds and returns an AuthToken in the DB
      */
-    public AuthToken getAuthToken(String AT) throws DataAccessException{
-        for(AuthToken A : AuthDB){
-            if (A.getAuthToken().equals(AT)){
-                return A;
+    public AuthToken getAuthToken(String AT) throws DataAccessException, SQLException {
+        if(AT.equals("none")){
+            return null;
+        }
+        //Retrieves an AuthToken from the DB
+        var retrieveStatement = """
+        SELECT username, authtoken
+            FROM authtokens
+            WHERE authtoken=?""";
+        try (var preparedStatement = connection.prepareStatement(retrieveStatement)){
+            preparedStatement.setString(1, AT);
+            try(var rs = preparedStatement.executeQuery()) { //Run the statement
+                while (rs.next()) {
+                    return new AuthToken(rs.getString("authtoken"), rs.getString("username"));
+                }
             }
         }
         return null;
@@ -77,14 +115,14 @@ public class AuthDAO implements DAO{
      * Updates a given AuthToken in the DB
      */
     public void updateAuthToken(AuthToken oldAuth, AuthToken newAuth) throws DataAccessException{
-        AuthDB.remove(oldAuth);
-        AuthDB.add(newAuth);
+//        AuthDB.remove(oldAuth);
+//        AuthDB.add(newAuth);
     }
 
     /**
      * Returns all AuthTokens
      */
     public HashSet<AuthToken> getAll() throws DataAccessException{
-        return AuthDB;
+        return new HashSet<AuthToken>();
     }
 }

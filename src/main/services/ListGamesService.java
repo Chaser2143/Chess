@@ -6,6 +6,7 @@ import reqRes.ListGamesReq;
 import reqRes.ListGamesRes;
 import reqRes.LoginRes;
 import reqRes.Response;
+import server.Server;
 
 /**
  * Completes List Games API Request
@@ -25,17 +26,18 @@ public class ListGamesService {
         try {
             if (AuthDAOInst.getAuthToken(request.getAuthorization()) != null) {
                 ListGamesRes res = new ListGamesRes();
-                var allGames = GameDAOInst.getAll();//Get all games
-                for(var game : allGames){ //Add it to the list formatted properly
-                    res.addGame(game);
-                }
+//                var allGames = GameDAOInst.getAll();//Get all games
+//                for(var game : allGames){ //Add it to the list formatted properly
+//                    res.addGame(game);
+//                }
                 return res;
             }
             else{ //return; else error
                 return new ListGamesRes(Response.FourOOne); //Unauthorized Case
             }
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
+            Server.logger.severe(e.getMessage());
             return new ListGamesRes(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
         }
     }

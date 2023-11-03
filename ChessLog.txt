@@ -1,15 +1,344 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
 <record>
-  <date>2023-11-02T23:37:23.937132200Z</date>
-  <millis>1698968243937</millis>
-  <nanos>132200</nanos>
+  <date>2023-11-03T17:12:33.514192500Z</date>
+  <millis>1699031553514</millis>
+  <nanos>192500</nanos>
   <sequence>0</sequence>
   <logger>ChessLog</logger>
   <level>SEVERE</level>
-  <class>server.Server</class>
-  <method>run</method>
-  <thread>1</thread>
-  <message>The DB Failed to initializejava.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5</message>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>46</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
 </record>
+<record>
+  <date>2023-11-03T17:12:42.688804800Z</date>
+  <millis>1699031562688</millis>
+  <nanos>804800</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>42</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
+</record>
+<record>
+  <date>2023-11-03T17:12:43.802829600Z</date>
+  <millis>1699031563802</millis>
+  <nanos>829600</nanos>
+  <sequence>2</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>46</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
+</record>
+<record>
+  <date>2023-11-03T17:12:52.619414100Z</date>
+  <millis>1699031572619</millis>
+  <nanos>414100</nanos>
+  <sequence>3</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>42</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
+</record>
+<record>
+  <date>2023-11-03T17:13:42.274251300Z</date>
+  <millis>1699031622274</millis>
+  <nanos>251300</nanos>
+  <sequence>4</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>46</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:15:05.936126800Z</date>
+  <millis>1699031705936</millis>
+  <nanos>126800</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>36</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:15:32.285727800Z</date>
+  <millis>1699031732285</millis>
+  <nanos>727800</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>45</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM authtokens
+    WHERE authtoken='none'' at line 2</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:41:05.223227Z</date>
+  <millis>1699033265223</millis>
+  <nanos>227000</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.RegisterService</class>
+  <method>Register</method>
+  <thread>38</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM users
+    WHERE username='username',password='password', email='email'' at line 2</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:42:47.876806200Z</date>
+  <millis>1699033367876</millis>
+  <nanos>806200</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.RegisterService</class>
+  <method>Register</method>
+  <thread>45</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',password='password', email='email'' at line 3</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:43:19.054598500Z</date>
+  <millis>1699033399054</millis>
+  <nanos>598500</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.RegisterService</class>
+  <method>Register</method>
+  <thread>45</thread>
+  <message>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', password='password', email='email'' at line 3</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:45:36.135511300Z</date>
+  <millis>1699033536135</millis>
+  <nanos>511300</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.RegisterService</class>
+  <method>Register</method>
+  <thread>45</thread>
+  <message>Illegal operation on empty result set.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:57:19.475545900Z</date>
+  <millis>1699034239475</millis>
+  <nanos>545900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LoginService</class>
+  <method>Login</method>
+  <thread>45</thread>
+  <message>Column 'email' not found.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T17:58:47.671029500Z</date>
+  <millis>1699034327671</millis>
+  <nanos>29500</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>36</thread>
+  <message>Generated keys not requested. You need to specify Statement.RETURN_GENERATED_KEYS to Statement.executeUpdate(), Statement.executeLargeUpdate() or Connection.prepareStatement().</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T18:19:31.128917400Z</date>
+  <millis>1699035571128</millis>
+  <nanos>917400</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LogoutService</class>
+  <method>Logout</method>
+  <thread>42</thread>
+  <message>Statement.executeQuery() cannot issue statements that do not produce result sets.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T18:20:09.811064Z</date>
+  <millis>1699035609811</millis>
+  <nanos>64000</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LogoutService</class>
+  <method>Logout</method>
+  <thread>45</thread>
+  <message>Unknown table 'username' in MULTI DELETE</message>
+</record>
+<record>
+  <date>2023-11-03T18:20:11.348803200Z</date>
+  <millis>1699035611348</millis>
+  <nanos>803200</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LogoutService</class>
+  <method>Logout</method>
+  <thread>36</thread>
+  <message>Unknown table 'username' in MULTI DELETE</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-03T18:28:00.566766200Z</date>
+  <millis>1699036080566</millis>
+  <nanos>766200</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>45</thread>
+  <message>Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.connection" is null</message>
+</record>
+<record>
+  <date>2023-11-03T18:28:21.567692Z</date>
+  <millis>1699036101567</millis>
+  <nanos>692000</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>46</thread>
+  <message>Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.connection" is null</message>
+</record>
+<record>
+  <date>2023-11-03T18:28:21.957095500Z</date>
+  <millis>1699036101957</millis>
+  <nanos>95500</nanos>
+  <sequence>2</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>46</thread>
+  <message>Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.connection" is null</message>
+</record>
+<record>
+  <date>2023-11-03T18:28:22.263641300Z</date>
+  <millis>1699036102263</millis>
+  <nanos>641300</nanos>
+  <sequence>3</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>45</thread>
+  <message>Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.connection" is null</message>
+</record>
+</log>

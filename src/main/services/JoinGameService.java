@@ -8,6 +8,7 @@ import reqRes.CreateGameRes;
 import reqRes.JoinGameReq;
 import reqRes.JoinGameRes;
 import reqRes.Response;
+import server.Server;
 
 import java.util.Objects;
 
@@ -67,7 +68,8 @@ public class JoinGameService {
                 return new JoinGameRes(Response.FourOOne); //Unauthorized Case
             }
         }
-        catch(dataAccess.DataAccessException dae){
+        catch(Exception e){
+            Server.logger.severe(e.getMessage());
             return new JoinGameRes(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
         }
     }
