@@ -100,7 +100,6 @@ public class Database {
                 whiteUsername VARCHAR(255),
                 blackUsername VARCHAR(255),
                 game LONGTEXT,
-                observers TEXT,
                 PRIMARY KEY (gameid)
             )""";
 

@@ -1,7 +1,8 @@
 package dataAccess;
 
-import chess.CGame;
+import chess.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import models.AuthToken;
 import models.Game;
 import models.User;
@@ -48,29 +49,40 @@ public class GameDAO implements DAO{
     }
 
     /**
-     * Adds a Game to the DB
-     */
-    public void addGame(Game game) throws DataAccessException{
-//        GameDB.add(game);
-    }
-
-    /**
-     * Deletes a Game from the DB
-     */
-    public void deleteGame(Game game) throws DataAccessException{
-//        GameDB.remove(game);
-    }
-
-    /**
      * Finds and returns a game in the DB
      */
-    public Game getGame(int gameID) throws DataAccessException{
-//        for(Game G : GameDB){
-//            if (G.getGameID() == gameID){
-//                return G;
-//            }
-//        }
+    public Game getGame(int gameID) throws DataAccessException, SQLException { //TODO Needs checked
+        //Retrieves a game from the DB
+        var retrieveStatement = """
+        SELECT *
+            FROM gamess
+            WHERE gameid=?""";
+        try (var preparedStatement = connection.prepareStatement(retrieveStatement)){
+            preparedStatement.setInt(1, gameID);
+            try(var rs = preparedStatement.executeQuery()) { //Run the statement
+                if (rs.next()) {
+                    var gameId = rs.getInt("gameid");
+                    var whiteUserName = rs.getString("whiteUsername");
+                    var blackUserName = rs.getString("blackUsername");
+                    var gameName = rs.getString("gameName");
+                    var gameJSON = rs.getString("game");
+                    var builder = new GsonBuilder();
+                    builder.registerTypeAdapter(CGame.class, new ChessGameAdapter());
+                    var game = builder.create().fromJson(gameJSON, CGame.class);
+                    return new Game(gameId, whiteUserName, blackUserName, gameName, game);
+                }
+            }
+        }
         return null;
+    }
+
+    /**
+     * Updates a given team (joins a user to a game in the DB)
+     * @param username is the username to join
+     * @param isWhite is whether to join to the white team or not
+     */
+    public void updateGameTeam(boolean isWhite, String username){
+
     }
 
     /**
@@ -105,13 +117,6 @@ public class GameDAO implements DAO{
     }
 
     /**
-     * Updates a given game in the DB
-     */
-    public void updateGame(Game game) throws DataAccessException{
-
-    }
-
-    /**
      * Returns all games
      */
     public HashSet<Game> getAll() throws DataAccessException, SQLException {
@@ -127,10 +132,10 @@ public class GameDAO implements DAO{
                     var blackUserName = rs.getString("blackUsername");
                     var gameName = rs.getString("gameName");
                     var gameJSON = rs.getString("game");
-                    var game = new Gson().fromJson(gameJSON, CGame.class);
-                    var observersJSON = rs.getString("observers");
-                    var observers = new Gson().fromJson(observersJSON, HashSet.class);
-                    Game existingGame = new Game(gameID, whiteUserName, blackUserName, gameName, game, observers);
+                    var builder = new GsonBuilder();
+                    builder.registerTypeAdapter(CGame.class, new ChessGameAdapter());
+                    var game = builder.create().fromJson(gameJSON, CGame.class);
+                    Game existingGame = new Game(gameID, whiteUserName, blackUserName, gameName, game);
                     allGames.add(existingGame);
                 }
             }

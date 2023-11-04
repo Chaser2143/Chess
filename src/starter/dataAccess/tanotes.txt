@@ -1,4 +1,5 @@
-call get connection at the start of every method
-optional end with return connection at the end of methods
-cannot have more than 1 connection open at a time
-close connection at end of service, DAO's can share connection
+Gson deserializer adapter, but board is nested...
+- Nest the adapters and you should be good to go
+
+How should I handle observers? (data format)
+- No persistent storage needed, just return a response and you're good

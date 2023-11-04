@@ -358,3 +358,191 @@
   <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T16:35:47.281142100Z</date>
+  <millis>1699115747281</millis>
+  <nanos>142100</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>dataAccess.Database</class>
+  <method>getConnection</method>
+  <thread>1</thread>
+  <message>Unknown database 'chess'</message>
+</record>
+<record>
+  <date>2023-11-04T16:35:47.325834200Z</date>
+  <millis>1699115747325</millis>
+  <nanos>834200</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>dataAccess.Database</class>
+  <method>initDB</method>
+  <thread>1</thread>
+  <message>Unknown database 'chess'</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T16:39:52.115492300Z</date>
+  <millis>1699115992115</millis>
+  <nanos>492300</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>42</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T16:43:54.239653500Z</date>
+  <millis>1699116234239</millis>
+  <nanos>653500</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>40</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+<record>
+  <date>2023-11-04T16:44:49.619528900Z</date>
+  <millis>1699116289619</millis>
+  <nanos>528900</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>52</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+<record>
+  <date>2023-11-04T16:45:37.112412200Z</date>
+  <millis>1699116337112</millis>
+  <nanos>412200</nanos>
+  <sequence>2</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>40</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T16:49:40.198903100Z</date>
+  <millis>1699116580198</millis>
+  <nanos>903100</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>39</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessGame</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T17:01:29.668828400Z</date>
+  <millis>1699117289668</millis>
+  <nanos>828400</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>45</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+<record>
+  <date>2023-11-04T17:01:33.875587200Z</date>
+  <millis>1699117293875</millis>
+  <nanos>587200</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>35</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T17:41:47.566761900Z</date>
+  <millis>1699119707566</millis>
+  <nanos>761900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>45</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T17:45:33.197348800Z</date>
+  <millis>1699119933197</millis>
+  <nanos>348800</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>47</thread>
+  <message>Interfaces can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Interface name: chess.ChessBoard</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-04T17:49:10.143819200Z</date>
+  <millis>1699120150143</millis>
+  <nanos>819200</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>36</thread>
+  <message>Abstract classes can't be instantiated! Register an InstanceCreator or a TypeAdapter for this type. Class name: chess.CPiece</message>
+</record>
+</log>

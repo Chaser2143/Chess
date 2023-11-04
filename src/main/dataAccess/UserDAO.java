@@ -57,13 +57,6 @@ public class UserDAO implements DAO{
     }
 
     /**
-     * Deletes a user from the DB
-     */
-    public void deleteUser(User user) throws DataAccessException{
-//        UserDB.remove(user);
-    }
-
-    /**
      * Finds and returns a user in the DB (Used for registration)
      */
     public User getUser(String Username, String Password, String Email) throws DataAccessException, SQLException {
@@ -114,13 +107,6 @@ public class UserDAO implements DAO{
      */
     public User createUser(String Username, String Password, String Email) throws DataAccessException{
         return new User(Username,Password,Email);
-    }
-
-    /**
-     * Updates a given user in the DB
-     */
-    public void updateUser(User user) throws DataAccessException{
-
     }
 
     /**

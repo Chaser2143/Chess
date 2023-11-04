@@ -71,7 +71,7 @@ public class ListGamesService {
                 Server.logger.severe(e.getMessage());
             }
             Server.logger.severe(exception.getMessage());
-            return new ListGamesRes(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
+            return new ListGamesRes(Response.FiveHundred + "There was a fatal error in listing the game.");//Error Case
         }
     }
 }

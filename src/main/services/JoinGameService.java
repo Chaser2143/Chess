@@ -44,7 +44,7 @@ public class JoinGameService {
             var GameDAOInst = GameDAO.getInstance();
             //Check the Auth Token is in the DB; else unauthorized
 
-            Game game = GameDAOInst.getGame(request.getGameID());
+            Game game = GameDAOInst.getGame(request.getGameID()); //TODO
             if(game == null){
                 return new JoinGameRes(Response.FourHundred); //Bad Request, game doesn't exist
             }
@@ -53,18 +53,8 @@ public class JoinGameService {
                 if (Objects.equals(request.getPlayerColor(), "WHITE")) {
                     //Check if that color is taken or not, if not update it
                     if(game.getWhiteUsername() == null) {
+                        //TODO Update the game here instead!!!!!
                         game.setWhiteUsername(A.getUsername());
-
-                        connection.commit(); //Commit the transaction
-
-                        //Close the connection
-                        connection.close();
-
-                        //Set all the connections in the DAO's to null
-                        AuthDAO.getInstance().setConnection(null);
-                        GameDAO.getInstance().setConnection(null);
-
-                        return new JoinGameRes();
                     }
                     else{
                         return new JoinGameRes(Response.FourOThree); //Already Taken
@@ -72,40 +62,29 @@ public class JoinGameService {
                 }
                 else if (Objects.equals(request.getPlayerColor(), "BLACK")) {
                         if(game.getBlackUsername() == null){
+                            //TODO Update the game here instead!!!!
                             game.setBlackUsername(A.getUsername());
-
-                            connection.commit(); //Commit the transaction
-
-                            //Close the connection
-                            connection.close();
-
-                            //Set all the connections in the DAO's to null
-                            AuthDAO.getInstance().setConnection(null);
-                            GameDAO.getInstance().setConnection(null);
-
-                            return new JoinGameRes();
                         }
                         else{
                             return new JoinGameRes(Response.FourOThree); //Already taken
                         }
                     }
                 else if(request.getPlayerColor() == null || request.getPlayerColor().isEmpty()){ //Empty; Spectator case
-                    game.addObserver(A.getUsername());
-
-                    connection.commit(); //Commit the transaction
-
-                    //Close the connection
-                    connection.close();
-
-                    //Set all the connections in the DAO's to null
-                    AuthDAO.getInstance().setConnection(null);
-                    GameDAO.getInstance().setConnection(null);
-
-                    return new JoinGameRes();
+                    //Empty; Spectator case, we don't actually do anything here
                 }
                 else {
                     return new JoinGameRes(Response.FourHundred); //Bad Request, no conditions met
                 }
+                //Catch all response for successful join
+                connection.commit(); //Commit the transaction
+
+                //Close the connection
+                connection.close();
+
+                //Set all the connections in the DAO's to null
+                AuthDAO.getInstance().setConnection(null);
+                GameDAO.getInstance().setConnection(null);
+                return new JoinGameRes();
             }
             else{ //return; else error
                 return new JoinGameRes(Response.FourOOne); //Unauthorized Case
@@ -122,7 +101,7 @@ public class JoinGameService {
                 Server.logger.severe(e.getMessage());
             }
             Server.logger.severe(exception.getMessage());
-            return new JoinGameRes(Response.FiveHundred + "There was a fatal error in logging in.");//Error Case
+            return new JoinGameRes(Response.FiveHundred + "There was a fatal error in joining the game.");//Error Case
         }
     }
 }

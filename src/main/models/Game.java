@@ -13,7 +13,6 @@ public class Game {
     private String blackUsername;
     private String gameName;
     private CGame game;
-    private HashSet<String> observers = new HashSet<>();
 
     /**
      * Constructor for the game
@@ -37,21 +36,12 @@ public class Game {
      * @param blackUsername is the Black Team username
      * @param gameName is the name of the game
      */
-    public Game(int gameID, String whiteUsername, String blackUsername, String gameName, CGame chessGame, HashSet<String> observers) {
+    public Game(int gameID, String whiteUsername, String blackUsername, String gameName, CGame chessGame) {
         this.gameID = gameID;
         this.whiteUsername = whiteUsername;
         this.blackUsername = blackUsername;
         this.gameName = gameName;
         this.game = chessGame;
-        this.observers = observers;
-    }
-
-    public void addObserver(String username){
-        observers.add(username);
-    }
-
-    public void removeObserver(String username){
-        observers.remove(username);
     }
 
     /**

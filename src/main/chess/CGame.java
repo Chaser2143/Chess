@@ -12,6 +12,7 @@ public class CGame implements ChessGame{
         //Initializes a new Chess Game
         teamTurn = TeamColor.WHITE;
         board = new CBoard();
+        board.resetBoard();
         setBoard(board); //Set up the board
 
     }
