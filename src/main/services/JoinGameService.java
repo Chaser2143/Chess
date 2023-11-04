@@ -44,7 +44,7 @@ public class JoinGameService {
             var GameDAOInst = GameDAO.getInstance();
             //Check the Auth Token is in the DB; else unauthorized
 
-            Game game = GameDAOInst.getGame(request.getGameID()); //TODO
+            Game game = GameDAOInst.getGame(request.getGameID());
             if(game == null){
                 return new JoinGameRes(Response.FourHundred); //Bad Request, game doesn't exist
             }
@@ -53,8 +53,7 @@ public class JoinGameService {
                 if (Objects.equals(request.getPlayerColor(), "WHITE")) {
                     //Check if that color is taken or not, if not update it
                     if(game.getWhiteUsername() == null) {
-                        //TODO Update the game here instead!!!!!
-                        game.setWhiteUsername(A.getUsername());
+                        GameDAOInst.updateGameTeam(true, A.getUsername(), game.getGameID());
                     }
                     else{
                         return new JoinGameRes(Response.FourOThree); //Already Taken
@@ -62,8 +61,7 @@ public class JoinGameService {
                 }
                 else if (Objects.equals(request.getPlayerColor(), "BLACK")) {
                         if(game.getBlackUsername() == null){
-                            //TODO Update the game here instead!!!!
-                            game.setBlackUsername(A.getUsername());
+                            GameDAOInst.updateGameTeam(false, A.getUsername(), game.getGameID());
                         }
                         else{
                             return new JoinGameRes(Response.FourOThree); //Already taken

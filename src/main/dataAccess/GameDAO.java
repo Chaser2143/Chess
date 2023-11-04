@@ -55,7 +55,7 @@ public class GameDAO implements DAO{
         //Retrieves a game from the DB
         var retrieveStatement = """
         SELECT *
-            FROM gamess
+            FROM games
             WHERE gameid=?""";
         try (var preparedStatement = connection.prepareStatement(retrieveStatement)){
             preparedStatement.setInt(1, gameID);
@@ -81,8 +81,25 @@ public class GameDAO implements DAO{
      * @param username is the username to join
      * @param isWhite is whether to join to the white team or not
      */
-    public void updateGameTeam(boolean isWhite, String username){
-
+    public void updateGameTeam(boolean isWhite, String username, int gameID) throws SQLException {
+        //Joins a user to a game
+        String statement;
+        if (isWhite) { //White username
+            statement = """
+                    UPDATE games
+                        SET whiteUsername=?
+                        WHERE gameid=?""";
+        } else { //Black Username
+            statement = """
+                    UPDATE games
+                        SET blackUsername=?
+                        WHERE gameid=?""";
+        }
+        try (var preparedStatement = connection.prepareStatement(statement)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, gameID);
+            preparedStatement.executeUpdate(); //Run the statement
+        }
     }
 
     /**
