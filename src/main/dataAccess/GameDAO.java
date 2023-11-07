@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -107,26 +108,24 @@ public class GameDAO implements DAO{
      */
     public int createGame(String gameName) throws DataAccessException, SQLException {
         int generatedPrimaryKey = 0; //0 means something went wrong
-        if (gameName.matches("[a-zA-Z]+")) {
 
-            //Create a new Chess Game
-            CGame newGame = new CGame();
+        //Create a new Chess Game
+        CGame newGame = new CGame();
 
-            //Serialize the Chess Game to put it in the DB
-            var json = new Gson().toJson(newGame);
+        //Serialize the Chess Game to put it in the DB
+        var json = new Gson().toJson(newGame);
 
-            //Insert into DB
-            var statement = "INSERT INTO games (gameName, game) VALUES(?, ?)";
-            try (var preparedStatement = connection.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, gameName);
-                preparedStatement.setString(2, json);
-                preparedStatement.executeUpdate();
+        //Insert into DB
+        var statement = "INSERT INTO games (gameName, game) VALUES(?, ?)";
+        try (var preparedStatement = connection.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, gameName);
+            preparedStatement.setString(2, json);
+            preparedStatement.executeUpdate();
 
-                // Get the generated primary key
-                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        generatedPrimaryKey = generatedKeys.getInt(1);
-                    }
+            // Get the generated primary key
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedPrimaryKey = generatedKeys.getInt(1);
                 }
             }
         }
@@ -136,8 +135,8 @@ public class GameDAO implements DAO{
     /**
      * Returns all games
      */
-    public HashSet<Game> getAll() throws DataAccessException, SQLException {
-        HashSet<Game> allGames = new HashSet<Game>();
+    public ArrayList<Game> getAll() throws DataAccessException, SQLException {
+        ArrayList<Game> allGames = new ArrayList<>();
         //Retrieves all games from the DB
         var statement = """
         SELECT * FROM games""";
