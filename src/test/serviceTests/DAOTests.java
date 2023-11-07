@@ -58,7 +58,7 @@ public class DAOTests {
 
     }
 
-    //AUTHDAO TESTS
+    //AUTHDAO - POSITIVE CASES -  TESTS
     @Test
     @Order(1)
     @DisplayName("ClearAllAuth")
@@ -327,5 +327,178 @@ public class DAOTests {
         }
     }
 
+    //AUTHDAO - NEGATIVE CASES - TESTS
+
+    @Test
+    @Order(19)
+    @DisplayName("addAuthTokenN")
+    public void addAuthTokenN(){
+        try {
+            AuthDAOInst.addAuthToken(new AuthToken("abcdefg", "test123"));
+            AuthDAOInst.addAuthToken(new AuthToken("abcdefg", "test123"));
+            Assertions.assertTrue(false, "Test ran with no errors, but I added two of the same auth tokens");
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error as expected");
+        }
+    }
+
+    @Test
+    @Order(20)
+    @DisplayName("deleteAuthTokenN")
+    public void deleteAuthTokenN(){
+        try {
+            AuthDAOInst.deleteAuthToken(new AuthToken("abcd", "test123"));
+            Assertions.assertTrue(true, "Test ran with no errors, deleted an authtoken that doesn't exist but query is still valid");
+        }
+        catch(Exception e){
+            Assertions.assertTrue(false, "Test threw an error as expected");
+        }
+    }
+
+    @Test
+    @Order(21)
+    @DisplayName("getAuthTokenN")
+    public void getAuthTokenN(){
+        try {
+            var AT = AuthDAOInst.getAuthToken("abcdefghijk");
+            if(AT.getAuthToken() != null) {
+                Assertions.assertTrue(false, "Found a non existing auth token");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error - expected behavior");
+        }
+    }
+
+    @Test
+    @Order(22)
+    @DisplayName("getAllAuthN")
+    public void getAllAuthN(){
+        try {
+            var allAuths = AuthDAOInst.getAll();
+            if(allAuths.isEmpty()) {
+                Assertions.assertTrue(true, "No auths in db");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    //USERDAO -- NEGATIVE CASES - TESTS
+
+    @Test
+    @Order(22)
+    @DisplayName("addUserN")
+    public void addUserN(){
+        try {
+            UserDAOInst.addUser(new User("a", "a", "a"));
+            UserDAOInst.addUser(new User("a", "a", "a"));
+            Assertions.assertTrue(false, "Created a duplicate user");
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error");
+        }
+    }
+
+    @Test
+    @Order(23)
+    @DisplayName("getUserLongN")
+    public void getUserLongN(){
+        try {
+            var user = UserDAOInst.getUser("a", "b", "c");
+            if(user.getUsername() != null) {
+                Assertions.assertTrue(false, "User found that doesn't exist");
+            }
+            else{
+                Assertions.assertTrue(true, "Null returned");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error");
+        }
+    }
+
+    @Test
+    @Order(24)
+    @DisplayName("getUserShortN")
+    public void getUserShortN(){
+        try {
+            var user = UserDAOInst.getUser("a", "b");
+            if(user.getUsername() != null) {
+                Assertions.assertTrue(false, "User found that doesn't exist");
+            }
+            else{
+                Assertions.assertTrue(true, "Null returned");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error");
+        }
+    }
+
+    @Test
+    @Order(25)
+    @DisplayName("getAllUserN")
+    public void getAllUserN(){
+        try {
+            var allUsers = UserDAOInst.getAll();
+            if(allUsers.isEmpty()) {
+                Assertions.assertTrue(true, "No users in dn");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
+
+    //GAMEDAO -- NEGATIVE CASES -- TESTS
+
+    @Test
+    @Order(26)
+    @DisplayName("createGameN")
+    public void createGameN(){
+        try {
+            int gameid = GameDAOInst.createGame(null);
+            Assertions.assertTrue(false, "Test ran with no errors");
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(27)
+    @DisplayName("getGameN")
+    public void getGameN(){
+        try {
+            var game = GameDAOInst.getGame(1);
+            if(game.getGame() == null) {
+                Assertions.assertTrue(true, "No game found");
+            }
+            else{
+                Assertions.assertTrue(false, "Game found that doesn't exist");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(true, "Test threw an error and failed");
+        }
+    }
+
+    @Test
+    @Order(28)
+    @DisplayName("getAllGameN")
+    public void getAllGameN(){
+        try {
+            var allGames = GameDAOInst.getAll();
+            if(allGames.isEmpty()) {
+                Assertions.assertTrue(true, "No games exist");
+            }
+        }
+        catch(Exception e){
+            Assertions.assertTrue(false, "Test threw an error and failed");
+        }
+    }
 
 }
