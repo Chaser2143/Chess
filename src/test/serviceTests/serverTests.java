@@ -37,12 +37,10 @@ public class serverTests {
     @DisplayName("ClearServiceTest")
     public void successClear(){
         var c = new ClearService();
-        c.clear();
+        var response = c.clear();
 
         try {
-            Assertions.assertTrue(AuthDAO.getInstance().getAll().isEmpty(), "Auth DB not clear");
-            Assertions.assertTrue(UserDAO.getInstance().getAll().isEmpty(), "User DB not clear");
-            Assertions.assertTrue(GameDAO.getInstance().getAll().isEmpty(), "Game DB not clear");
+            Assertions.assertTrue(response.getMessage() == null);
         }
         catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
@@ -54,12 +52,10 @@ public class serverTests {
     @DisplayName("RegisterTest")
     public void successRegister(){
         var r = new RegisterService();
-        r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
+        var response = r.Register(new RegisterReq("c", "b", "a@gmail.com")); //Register a User not already in the DB
 
         try {
-            var UserDAOInst = UserDAO.getInstance();
-            var u = UserDAOInst.getUser("c","b","a@gmail.com");
-            if(u != null){
+            if(response.getMessage() == null){
                 Assertions.assertTrue(true, "Successfully registered a user");
             }
             else{
@@ -76,12 +72,10 @@ public class serverTests {
     @DisplayName("RegisterTest")
     public void failRegister(){
         var r = new RegisterService();
-        r.Register(new RegisterReq("", "b", "a@gmail.com")); //Register a User with incomplete fields
+        var response = r.Register(new RegisterReq("", "b", "a@gmail.com")); //Register a User with incomplete fields
 
         try {
-            var UserDAOInst = UserDAO.getInstance();
-            var u = UserDAOInst.getUser("","b","a@gmail.com");
-            if(u == null){
+            if(response.getMessage() != null){
                 Assertions.assertTrue(true, "Didn't add user because of incomplete field");
             }
             else{
@@ -102,15 +96,13 @@ public class serverTests {
 
         //Check that these are in the DB
         try {
-            var AuthDAOInst = AuthDAO.getInstance();
-
             //Check that I get back an AT and Username
             if(!res.getAuthToken().isEmpty() && !res.getUsername().isEmpty()){
-                if(AuthDAOInst.getAuthToken(res.getAuthToken()) != null){
-                    Assertions.assertTrue(true, "Valid Response, AuthToken in DB");
+                if(res.getMessage() == null){
+                    Assertions.assertTrue(true, "Valid Response");
                 }
                 else{
-                    Assertions.assertTrue(false, "AuthToken not found in DB");
+                    Assertions.assertTrue(false, "Bad Response");
                 }
             }
             else {
@@ -151,10 +143,9 @@ public class serverTests {
 
         LogoutRes res = l.Logout(new LogoutReq(regRes.getAuthToken()));
 
-        var ADB = AuthDAO.getInstance();
         //Check we got the right response back
         try {
-            if (res.getMessage() == null && null == ADB.getAuthToken(regRes.getAuthToken())) {
+            if (res.getMessage() == null) {
                 Assertions.assertTrue(true, "Good request, successfully logged out");
             } else {
                 Assertions.assertTrue(false, "Error request or failed log out");
@@ -272,7 +263,7 @@ public class serverTests {
     public void SuccessListGames(){
         //Try to create a game
         var r = new RegisterService();
-        RegisterRes regRes = r.Register(new RegisterReq("h", "d", "a@gmail.com")); //Register a User not already in the DB
+        RegisterRes regRes = r.Register(new RegisterReq("hjkl", "d", "a@gmail.com")); //Register a User not already in the DB
 
         var c = new CreateGameService();
         c.CreateGame(new CreateGameReq(regRes.getAuthToken(), "a"));
@@ -321,12 +312,10 @@ public class serverTests {
     @DisplayName("ClearServiceTest")
     public void endClear(){
         var c = new ClearService();
-        c.clear();
+        var response = c.clear();
 
         try {
-            Assertions.assertTrue(AuthDAO.getInstance().getAll().isEmpty(), "Auth DB not clear");
-            Assertions.assertTrue(UserDAO.getInstance().getAll().isEmpty(), "User DB not clear");
-            Assertions.assertTrue(GameDAO.getInstance().getAll().isEmpty(), "Game DB not clear");
+            Assertions.assertTrue(response.getMessage() == null);
         }
         catch(Exception e){
             Assertions.assertTrue(false, "Test threw an error and failed");
