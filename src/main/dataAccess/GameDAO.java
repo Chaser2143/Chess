@@ -104,7 +104,7 @@ public class GameDAO implements DAO{
     }
 
     /**
-     * Creates and returns a new Game
+     * Creates and returns a new Game, also adds game to DB
      */
     public int createGame(String gameName) throws DataAccessException, SQLException {
         int generatedPrimaryKey = 0; //0 means something went wrong
