@@ -1,7 +1,5 @@
 package reqRes;
 
-import models.AuthToken;
-
 /**
  * Request for Join Game API
  */

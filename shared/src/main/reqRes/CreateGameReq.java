@@ -1,7 +1,5 @@
 package reqRes;
 
-import models.AuthToken;
-
 /**
  * Serves as the Request for the Create Game API
  */

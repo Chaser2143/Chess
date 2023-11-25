@@ -2,7 +2,6 @@ package handlers;
 
 import com.google.gson.Gson;
 import reqRes.Response;
-import spark.*;
 
 import java.util.Objects;
 

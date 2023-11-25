@@ -4,7 +4,6 @@ import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import reqRes.ListGamesReq;
 import reqRes.ListGamesRes;
-import reqRes.LoginRes;
 import reqRes.Response;
 import server.Server;
 

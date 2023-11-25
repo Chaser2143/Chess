@@ -2,8 +2,6 @@ package models;
 
 import chess.CGame;
 
-import java.util.HashSet;
-
 /**
  * Represents the Game Model in the DB
  */

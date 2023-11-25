@@ -1,6 +1,5 @@
 package services;
 
-import com.sun.net.httpserver.Request;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;

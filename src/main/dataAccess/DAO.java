@@ -1,10 +1,6 @@
 package dataAccess;
 
-import models.AuthToken;
-import reqRes.Response;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Interface for general DAO Classes

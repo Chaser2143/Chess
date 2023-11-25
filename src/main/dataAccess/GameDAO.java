@@ -3,16 +3,13 @@ package dataAccess;
 import chess.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import models.AuthToken;
 import models.Game;
-import models.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * DAO used for accessing all Games in the DB

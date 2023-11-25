@@ -1,7 +1,5 @@
 package reqRes;
 
-import models.AuthToken;
-
 /**
  * Serves as the request for List Games API
  */

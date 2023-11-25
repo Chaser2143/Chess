@@ -1,9 +1,7 @@
 package services;
 
 import dataAccess.AuthDAO;
-import dataAccess.UserDAO;
 import models.AuthToken;
-import models.User;
 import reqRes.*;
 import server.Server;
 

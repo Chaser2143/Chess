@@ -1,12 +1,8 @@
 package handlers;
 
-import com.google.gson.Gson;
 import reqRes.Request;
 import reqRes.Response;
-import server.Server;
 import services.ClearService;
-
-import java.sql.Connection;
 
 public class ClearHandler extends Handler{
     protected static ClearHandler instance = new ClearHandler();

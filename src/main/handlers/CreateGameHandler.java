@@ -2,7 +2,6 @@ package handlers;
 
 import com.google.gson.Gson;
 import reqRes.CreateGameReq;
-import reqRes.LoginReq;
 import reqRes.Request;
 import reqRes.Response;
 import services.CreateGameService;

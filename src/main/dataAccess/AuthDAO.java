@@ -1,9 +1,6 @@
 package dataAccess;
 
-import chess.CGame;
-import com.google.gson.Gson;
 import models.AuthToken;
-import models.Game;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -2,11 +2,9 @@ package handlers;
 
 import com.google.gson.Gson;
 import reqRes.LoginReq;
-import reqRes.RegisterReq;
 import reqRes.Request;
 import reqRes.Response;
 import services.LoginService;
-import services.RegisterService;
 
 import java.util.Map;
 

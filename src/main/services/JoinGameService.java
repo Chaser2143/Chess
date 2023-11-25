@@ -4,7 +4,6 @@ import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import models.AuthToken;
 import models.Game;
-import reqRes.CreateGameRes;
 import reqRes.JoinGameReq;
 import reqRes.JoinGameRes;
 import reqRes.Response;
