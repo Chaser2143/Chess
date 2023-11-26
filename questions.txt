@@ -1,0 +1,17 @@
+How do we get auth tokens and stuff through? (ChessClient + ServerFacade)
+
+How should the responses come back in the client stuff? (ServerFacade)
+
+When would I need to use a serializer to get stuff? This scares me (ServerFacade)
+
+
+
+------------------------------------
+Q: How do we set our http request body? Like when we are registering how do I send the username password and email to the server?
+A: You can create a RegisterRequest object and then serialize (gson toJson) it to the request body
+
+
+
+
+
+
