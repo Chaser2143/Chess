@@ -12,7 +12,7 @@ public class Repl {
     }
 
     public void run() {
-        System.out.println("Welcome Message Here");
+        System.out.println("Welcome to 240 Chess. Type Help to get started.");
         System.out.print(client.help());
 
         Scanner scanner = new Scanner(System.in);
@@ -32,7 +32,12 @@ public class Repl {
     }
 
     private void printPrompt() {
-        System.out.print("\n" + RESET_TEXT_COLOR + ">>> " + SET_TEXT_COLOR_GREEN);
+        if(client.state == State.SIGNEDOUT){
+            System.out.print("\n" + SET_TEXT_COLOR_LIGHT_GREY + " [LOGGED_OUT] >>> " + SET_TEXT_COLOR_GREEN);
+        }
+        else{
+            System.out.print("\n" + SET_TEXT_COLOR_LIGHT_GREY + " [LOGGED_IN] >>> " + SET_TEXT_COLOR_GREEN);
+        }
     }
 
 }

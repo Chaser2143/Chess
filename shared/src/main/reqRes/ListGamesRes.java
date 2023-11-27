@@ -17,6 +17,10 @@ public class ListGamesRes extends Response{
         games = new ArrayList<>();
     }
 
+    public ArrayList<Game> getGames() {
+        return games;
+    }
+
     /**
      * Error Login Response
      * @param message Error

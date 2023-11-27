@@ -1,12 +1,16 @@
 package ui;
 
+import chess.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import exception.ResponseException;
+import models.Game;
 import reqRes.*;
 
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ServerFacade {
@@ -39,9 +43,13 @@ public class ServerFacade {
         return this.makeRequest("DELETE", path, null, Map.class, Auth);
     }
 
-    public Map listGames(String Auth) throws ResponseException {
+    public ListGamesRes listGames(String Auth) throws ResponseException { //STUCK!
         var path = "/game";
-        return this.makeRequest("GET", path, null, Map.class, Auth);
+        var response = this.makeRequest("GET", path, null, ListGamesRes.class, Auth);
+        return response;
+//        var builder = new GsonBuilder();
+//        builder.registerTypeAdapter(Response.class, new ResponseAdapter());
+//        return builder.create().fromJson(String.valueOf(response), ListGamesRes.class);
     }
 
     public Map createGame(String Auth, String GameName) throws ResponseException {
@@ -100,13 +108,14 @@ public class ServerFacade {
             try (InputStream respBody = http.getInputStream()) {
                 InputStreamReader reader = new InputStreamReader(respBody);
                 if (responseClass != null) {
-                    response = new Gson().fromJson(reader, responseClass);
+                    var builder = new GsonBuilder();
+                    builder.registerTypeAdapter(ChessBoard.class, new ChessBoardAdapter());
+                    response = builder.create().fromJson(reader, responseClass);
                 }
             }
         }
         return response;
     }
-
 
     private boolean isSuccessful(int status) {
         return status / 100 == 2;
