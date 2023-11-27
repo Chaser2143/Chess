@@ -128,7 +128,7 @@ public class ChessClient {
         }
         CBoard b = new CBoard();
         b.resetBoard();
-        drawBoard.main(b);//Draw the default board in both directions
+//        drawBoard.main(b);//Draw the default board in both directions
         return "Enter game state here";
     }
 

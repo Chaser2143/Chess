@@ -1,6 +1,8 @@
 package ui;
 
 import chess.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +20,9 @@ public class drawBoard {
     private static Boolean alternate = true;
 
 
-    public static void main(CBoard board) {
+    public static void main(String[] args) {
+        CBoard board = new CBoard();
+        board.resetBoard();
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
         alternate = true;
         out.print(ERASE_SCREEN);
@@ -86,7 +90,7 @@ public class drawBoard {
     private static void drawBlackTicTacToeBoard(PrintStream out, CBoard board) {
 
         for (int boardRow = 0; boardRow < BOARD_SIZE_IN_SQUARES; ++boardRow) {
-            drawRowOfSquares(out, board, boardRow);
+            drawRowOfSquares(out, board, boardRow, false);
             drawHeader(out, String.valueOf(8-boardRow));//Draw Letter
             out.println();
         }
@@ -95,13 +99,13 @@ public class drawBoard {
     private static void drawWhiteTicTacToeBoard(PrintStream out, CBoard board) {
 
         for (int boardRow = 0; boardRow < BOARD_SIZE_IN_SQUARES; ++boardRow) {
-            drawRowOfSquares(out, board, boardRow);
+            drawRowOfSquares(out, board, boardRow, true);
             drawHeader(out, String.valueOf(boardRow+1));//Draw Letter
             out.println();
         }
     }
 
-    private static void drawRowOfSquares(PrintStream out, CBoard board, int boardRow) {
+    private static void drawRowOfSquares(PrintStream out, CBoard board, int boardRow, boolean whitePerspective) {
 
         for (int squareRow = 0; squareRow < SQUARE_SIZE_IN_CHARS; ++squareRow) {
             alternate = !alternate;
@@ -120,7 +124,7 @@ public class drawBoard {
                     int suffixLength = SQUARE_SIZE_IN_CHARS - prefixLength - 1;
 
                     out.print(EMPTY.repeat(prefixLength));
-                    printPlayer(out, alternate ? SET_BG_COLOR_LIGHT_GREY : SET_BG_COLOR_WHITE, board, boardRow, boardCol);
+                    printPlayer(out, alternate ? SET_BG_COLOR_LIGHT_GREY : SET_BG_COLOR_WHITE, board, boardRow, boardCol, whitePerspective);
                     out.print(EMPTY.repeat(suffixLength));
                 }
                 setBlack(out);
@@ -143,7 +147,7 @@ public class drawBoard {
         out.print(SET_TEXT_COLOR_BLACK);
     }
 
-    private static void printPlayer(PrintStream out, String Background, CBoard board, int row, int col) {
+    private static void printPlayer(PrintStream out, String Background, CBoard board, int row, int col, Boolean whitePerspective) {
         //Pass in board location and the actual board
         //Check if anything is at that spot
         //Remember to space your characters
@@ -151,7 +155,15 @@ public class drawBoard {
         out.print(SET_TEXT_COLOR_BLACK);
         String player = "   ";
 
-        ChessPiece p = board.getPiece(new CPosition(row, col));
+        ChessPiece p = null;
+
+        if(!whitePerspective) {
+            p = board.getPiece(new CPosition(row + 1, col + 1));
+        }
+        else{
+            p = board.getPiece(new CPosition(8-row, 8-col));
+        }
+
         if(p != null){ //We have something to print
             if(p.getTeamColor() == ChessGame.TeamColor.WHITE){
                 out.print(SET_TEXT_COLOR_BLUE); //Set their color!
@@ -160,7 +172,26 @@ public class drawBoard {
                 out.print(SET_TEXT_COLOR_RED);
             }
 
-//            switch p.getPieceType();
+            switch (p.getPieceType()){
+                case KING -> {
+                    out.print(" K ");
+                }
+                case QUEEN -> {
+                    out.print(" Q ");
+                }
+                case PAWN -> {
+                    out.print(" P ");
+                }
+                case BISHOP -> {
+                    out.print(" B ");
+                }
+                case ROOK -> {
+                    out.print(" R ");
+                }
+                case KNIGHT -> {
+                    out.print(" N ");
+                }
+            }
             return;
         }
         out.print(player);
