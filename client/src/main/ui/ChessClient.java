@@ -21,6 +21,8 @@ public class ChessClient {
 
     private String currentAuthToken; //Store the Authtoken String here somewhere...
 
+    private String currentUserName;
+
     public ChessClient(String serverUrl) {
         server = new ServerFacade(serverUrl);
         this.serverUrl = serverUrl;
@@ -63,6 +65,7 @@ public class ChessClient {
     public String login(String... params) throws ResponseException{
         var response = server.login(params[0], params[1]);
         if(!response.isEmpty()){
+            currentUserName = params[0]; //Set the username
             currentAuthToken = (String) response.get("authToken");
             System.out.println("Set new AuthToken : " + currentAuthToken);
             state = State.SIGNEDIN; //Set the state
@@ -79,6 +82,7 @@ public class ChessClient {
     public String register(String... params) throws ResponseException{
         var response = server.register(params[0], params[1], params[2]);
         if(!response.isEmpty()){
+            currentUserName = params[0]; //Set the username
             currentAuthToken = (String) response.get("authToken");
             System.out.println("Set new AuthToken : " + currentAuthToken);
             state = State.SIGNEDIN; //Set the state
@@ -96,6 +100,7 @@ public class ChessClient {
         assertSignedIn();
         server.logout(currentAuthToken);
         currentAuthToken = null; //Get rid of current Auth
+        currentUserName = null; //Set username
         state = State.SIGNEDOUT; //Set the state
         return help();
     }
@@ -126,10 +131,14 @@ public class ChessClient {
         else{ //Joining a game
             server.joinGame(currentAuthToken, params[1].toUpperCase(), Integer.valueOf(params[0]));
         }
-        CBoard b = new CBoard();
-        b.resetBoard();
-        drawBoard.main(b);//Draw the default board in both directions
-        return "Enter game state here";
+
+        //I would guess I enter the GameUI right here.
+        var GameUI = new ReplGameUI(currentAuthToken, currentUserName, params.length == 1 ? "" : params[1].toUpperCase(), Integer.valueOf(params[0]));
+        GameUI.run();
+//        CBoard b = new CBoard();
+//        b.resetBoard();
+//        drawBoard.main(b);//Draw the default board in both directions
+        return "Successfully exited GameUI";
     }
 
     /**
@@ -149,84 +158,6 @@ public class ChessClient {
         }
     }
 
-//
-//    public String signIn(String... params) throws ResponseException {
-//        if (params.length >= 1) {
-//            state = State.SIGNEDIN;
-//            visitorName = String.join("-", params);
-//            ws = new WebSocketFacade(serverUrl, notificationHandler);
-//            ws.enterPetShop(visitorName);
-//            return String.format("You signed in as %s.", visitorName);
-//        }
-//        throw new ResponseException(400, "Expected: <yourname>");
-//    }
-//
-//    public String rescuePet(String... params) throws ResponseException {
-//        assertSignedIn();
-//        if (params.length >= 2) {
-//            var name = params[0];
-//            var type = PetType.valueOf(params[1].toUpperCase());
-//            var friendArray = Arrays.copyOfRange(params, 2, params.length);
-//            var friends = new ArrayFriendList(friendArray);
-//            var pet = new Pet(0, name, type, friends);
-//            pet = server.addPet(pet);
-//            return String.format("You rescued %s. Assigned ID: %d", pet.name(), pet.id());
-//        }
-//        throw new ResponseException(400, "Expected: <name> <CAT|DOG|FROG> [<friend name>]*");
-//    }
-//
-//    public String listPets() throws ResponseException {
-//        assertSignedIn();
-//        var pets = server.listPets();
-//        var result = new StringBuilder();
-//        var gson = new Gson();
-//        for (var pet : pets) {
-//            result.append(gson.toJson(pet)).append('\n');
-//        }
-//        return result.toString();
-//    }
-//
-//    public String adoptPet(String... params) throws ResponseException {
-//        assertSignedIn();
-//        if (params.length == 1) {
-//            var id = Integer.parseInt(params[0]);
-//            var pet = getPet(id);
-//            if (pet != null) {
-//                server.deletePet(id);
-//                return String.format("%s says %s", pet.name(), pet.sound());
-//            }
-//        }
-//        throw new ResponseException(400, "Expected: <pet id>");
-//    }
-//
-//    public String adoptAllPets() throws ResponseException {
-//        assertSignedIn();
-//        var buffer = new StringBuilder();
-//        for (var pet : server.listPets()) {
-//            buffer.append(String.format("%s says %s%n", pet.name(), pet.sound()));
-//        }
-//
-//        server.deleteAllPets();
-//        return buffer.toString();
-//    }
-//
-//    public String signOut() throws ResponseException {
-//        assertSignedIn();
-//        ws.leavePetShop(visitorName);
-//        ws = null;
-//        state = State.SIGNEDOUT;
-//        return String.format("%s left the shop", visitorName);
-//    }
-//
-//    private Pet getPet(int id) throws ResponseException {
-//        for (var pet : server.listPets()) {
-//            if (pet.id() == id) {
-//                return pet;
-//            }
-//        }
-//        return null;
-//    }
-//
     public String help() {
         if (state == State.SIGNEDOUT) {
             return """

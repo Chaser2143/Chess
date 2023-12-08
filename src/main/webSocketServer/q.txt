@@ -1,0 +1,17 @@
+What should the WebSocketHandler @OnWebSocket things do?
+
+What connects the facade and the handler?
+
+Whats up with the game services listed? Where should they go? I'm not really sure what other methods from previous phases its referring to
+
+Ik http connections can be upgraded to ws connections, are we doing that here?
+AKA do I need to edit my http server class at all, or will I just start using the WS stuff when I do game specific things?
+
+Kind of confused on the client WS stuff
+- Whats the endpoint?
+- What is the messageHandler.whole?
+- How does the Client's WSFacade connect to the Server's WSHandler?
+- What is the GameHandler interface for? So sorry, just really want to understand whats going on...
+
+Once all this stuff is done and tested, I'll just drop the facade into the client stuff and go from there?
+I guess the WS is accessing the DB so it needs to interact with the server somewhere...
