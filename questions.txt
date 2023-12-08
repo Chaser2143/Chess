@@ -1,8 +1,0 @@
-Fix adapter for list games
-When you try to join a game to see the Game UI, do we use the cached board?
-
-
-
-
-
-

@@ -1562,3 +1562,131 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-27T23:18:51.846557900Z</date>
+  <millis>1701127131846</millis>
+  <nanos>557900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LogoutService</class>
+  <method>Logout</method>
+  <thread>46</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-27T23:18:51.991680600Z</date>
+  <millis>1701127131991</millis>
+  <nanos>680600</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>37</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-27T23:18:52.103540200Z</date>
+  <millis>1701127132103</millis>
+  <nanos>540200</nanos>
+  <sequence>2</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>38</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-27T23:20:37.379630700Z</date>
+  <millis>1701127237379</millis>
+  <nanos>630700</nanos>
+  <sequence>3</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.RegisterService</class>
+  <method>Register</method>
+  <thread>49</thread>
+  <message>Duplicate entry 'a' for key 'users.PRIMARY'</message>
+</record>
+<record>
+  <date>2023-11-27T23:50:20.014278400Z</date>
+  <millis>1701129020014</millis>
+  <nanos>278400</nanos>
+  <sequence>4</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LogoutService</class>
+  <method>Logout</method>
+  <thread>47</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-27T23:50:20.169296600Z</date>
+  <millis>1701129020169</millis>
+  <nanos>296600</nanos>
+  <sequence>5</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>45</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-27T23:50:20.297795Z</date>
+  <millis>1701129020297</millis>
+  <nanos>795000</nanos>
+  <sequence>6</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>39</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-11-28T00:22:36.603451300Z</date>
+  <millis>1701130956603</millis>
+  <nanos>451300</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.LogoutService</class>
+  <method>Logout</method>
+  <thread>46</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-28T00:22:36.729339100Z</date>
+  <millis>1701130956729</millis>
+  <nanos>339100</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.ListGamesService</class>
+  <method>ListGames</method>
+  <thread>37</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+<record>
+  <date>2023-11-28T00:22:36.850029100Z</date>
+  <millis>1701130956850</millis>
+  <nanos>29100</nanos>
+  <sequence>2</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>services.CreateGameService</class>
+  <method>CreateGame</method>
+  <thread>38</thread>
+  <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
+</record>
+</log>

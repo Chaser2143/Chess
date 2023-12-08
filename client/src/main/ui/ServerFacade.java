@@ -43,13 +43,10 @@ public class ServerFacade {
         return this.makeRequest("DELETE", path, null, Map.class, Auth);
     }
 
-    public ListGamesRes listGames(String Auth) throws ResponseException { //STUCK!
+    public ListGamesRes listGames(String Auth) throws ResponseException {
         var path = "/game";
         var response = this.makeRequest("GET", path, null, ListGamesRes.class, Auth);
         return response;
-//        var builder = new GsonBuilder();
-//        builder.registerTypeAdapter(Response.class, new ResponseAdapter());
-//        return builder.create().fromJson(String.valueOf(response), ListGamesRes.class);
     }
 
     public Map createGame(String Auth, String GameName) throws ResponseException {

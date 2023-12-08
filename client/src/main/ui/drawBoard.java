@@ -20,9 +20,7 @@ public class drawBoard {
     private static Boolean alternate = true;
 
 
-    public static void main(String[] args) {
-        CBoard board = new CBoard();
-        board.resetBoard();
+    public static void main(CBoard board) {
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
         alternate = true;
         out.print(ERASE_SCREEN);

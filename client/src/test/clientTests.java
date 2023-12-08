@@ -153,8 +153,5 @@ public class clientTests {
     public void failedJoinGame(){ //Bad Auth
         Assertions.assertThrows(ResponseException.class, () -> SF.joinGame("", "WHITE", 0)); //Bad Credentials
     }
-
-
-
 }
 
