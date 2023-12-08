@@ -4,7 +4,7 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 
-import javax.websocket.*;
+import org.eclipse.jetty.websocket.api.Session;
 
 public class WebSocketHandler {
     private WebSocketSessions sessions; //this holds all the actual sessions

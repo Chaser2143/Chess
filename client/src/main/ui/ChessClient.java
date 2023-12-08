@@ -131,6 +131,12 @@ public class ChessClient {
         else{ //Joining a game
             server.joinGame(currentAuthToken, params[1].toUpperCase(), Integer.valueOf(params[0]));
         }
+        //Open a WebSocket connection with the server (using the /connect endpoint) so it can send and receive gameplay messages.
+
+        //Send either a JOIN_PLAYER or JOIN_OBSERVER WebSocket message to the server.
+
+
+        // Transition to the gameplay UI. The gameplay UI draws the chess board and allows the user perform the gameplay commands described in the previous section.
 
         //I would guess I enter the GameUI right here.
         var GameUI = new ReplGameUI(currentAuthToken, currentUserName, params.length == 1 ? "" : params[1].toUpperCase(), Integer.valueOf(params[0]));

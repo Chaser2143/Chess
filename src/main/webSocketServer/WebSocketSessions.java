@@ -1,5 +1,5 @@
 package webSocketServer;
-import javax.websocket.*;
+import org.eclipse.jetty.websocket.api.Session;
 import java.util.HashMap;
 
 public class WebSocketSessions {
