@@ -3,6 +3,7 @@ import handlers.*;
 import spark.*;
 import dataAccess.Database;
 import com.google.gson.Gson;
+import webSocketServer.WebSocketHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ public class Server {
     public static Database DB = new Database(); //The DB can now be globally referenced
 
     public static Logger logger = initLogger(); //Initialize a logger for the server stuff
+
+    private final WebSocketHandler webSocketHandler = new WebSocketHandler();
 
     public static void main(String[] args) {
         new Server().run();
@@ -40,6 +43,8 @@ public class Server {
         Spark.staticFiles.location("/public");
 
         // Register handlers for each endpoint using the method reference syntax
+
+        Spark.webSocket("/connect", webSocketHandler);//Add WS endpoint and WS Handler here
 
         Spark.delete("/db", this::clearAll);
         Spark.post("/user", this::register);

@@ -1,5 +1,7 @@
 package ui;
 
+import exception.ResponseException;
+
 import java.util.Scanner;
 
 import static ui.EscapeSequences.*;
@@ -7,8 +9,14 @@ import static ui.EscapeSequences.*;
 public class ReplGameUI {
     private GameUI gameClient;
 
-    public ReplGameUI(String AuthToken, String UserName, String Team, int GameID) {
+    public ReplGameUI(String AuthToken, String UserName, String Team, int GameID) throws ResponseException {
         gameClient = new GameUI(AuthToken, UserName, Team, GameID);
+        if(Team.isEmpty()){ //Joined as observer case
+            gameClient.joinAsObserver(AuthToken, GameID);
+        }
+        else{ //Joined game case
+
+        }
     }
 
     public void run() {

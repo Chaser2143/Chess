@@ -1,1 +1,4 @@
-Where do I get the chess board to start with in the ChessClient when I join a game?
+Get join game to work all the way through (everything wired up) w/ redrawing board on the message recieve load game and everything
+Then the rest should be cake ;)
+
+implement sending a string all the way through first, then deal with all the GSON serialization stuff

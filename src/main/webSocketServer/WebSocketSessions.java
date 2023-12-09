@@ -11,6 +11,13 @@ public class WebSocketSessions {
     private static HashMap<Integer, HashMap<String, Session>> sessionMap = new HashMap<Integer, HashMap<String, Session>>(); //Singleton Design
 
     /**
+     * Temp method for testing
+     */
+    public HashMap<Integer, HashMap<String, Session>> getSessionMap(){
+        return sessionMap;
+    }
+
+    /**
      * Given the proper parameters, adds a session to a specific game
      */
     public void addSessionToGame(int gameID, String userName, Session session){

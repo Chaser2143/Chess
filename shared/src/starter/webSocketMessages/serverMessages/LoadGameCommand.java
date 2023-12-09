@@ -12,4 +12,8 @@ public class LoadGameCommand extends ServerMessage{
         super(ServerMessageType.LOAD_GAME);
         this.game = game;
     }
+
+    public CGame getGame() {
+        return game;
+    }
 }

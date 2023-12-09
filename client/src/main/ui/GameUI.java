@@ -12,7 +12,7 @@ import java.util.Arrays;
  * related parts of this project
  */
 public class GameUI implements GameHandler {
-    private WebSocketFacade wsFacade = new WebSocketFacade(); //Has a WebSocketFacade
+    private WebSocketFacade wsFacade;
 
     private String UserName;
     private String Team;
@@ -24,6 +24,11 @@ public class GameUI implements GameHandler {
         this.UserName = UserName;
         this.Team = Team;
         this.GameID = GameID;
+        try {
+            wsFacade = new WebSocketFacade(this); //Has a WebSocketFacade
+        } catch (ResponseException ex){
+            System.out.println("A fatal error occurred in creating a web socket. ERROR: " + ex.getMessage());
+        }
     }
 
     public String eval(String input) {
@@ -32,6 +37,7 @@ public class GameUI implements GameHandler {
             var cmd = (tokens.length > 0) ? tokens[0] : "help";
             var params = Arrays.copyOfRange(tokens, 1, tokens.length);
             return switch (cmd) {
+//                case "test" -> sendBasic();
                 case "redraw" -> redraw(params);
                 case "leave" -> leave(params);
                 case "makemove" -> makeMove(params);
@@ -40,9 +46,24 @@ public class GameUI implements GameHandler {
                 case "quit" -> "quit";
                 default -> help();
             };
-        } catch (ResponseException ex) {
+        } catch (Exception ex) {
             return String.join("\n", "An error occurred, please try again with valid parameters.", ex.getMessage(), help()); //This will basically throw an error whenever something doesn't work...
         }
+    }
+
+    /**
+     * Communicates with the web socket to join as an observer
+     */
+    public void joinAsObserver(String Authtoken, int gameID) throws ResponseException{
+        wsFacade.joinObserver(AuthToken, gameID);
+    }
+
+    /**
+     * Basic test for WS (sends a string around the world)
+     */
+    public String sendBasic() throws ResponseException{
+        wsFacade.sendStringTest();
+        return "Test String Sent";
     }
 
     /**
@@ -64,7 +85,7 @@ public class GameUI implements GameHandler {
         return null;
     }
 
-    public String resign(String... params) throws ResponseException{
+    public String resign(String... params) throws Exception{
         return null;
     }
 
@@ -85,11 +106,12 @@ public class GameUI implements GameHandler {
 
     @Override
     public void updateGame(CGame game) {
+//        System.out.println("Board received in GameUI");
 
     }
 
     @Override
     public void printMessage(String message) {
-
+        System.out.println("Message Received in GameUI: " + message);
     }
 }

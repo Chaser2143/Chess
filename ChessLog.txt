@@ -1690,3 +1690,71 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
   <message>Cannot invoke "String.equals(Object)" because "AT" is null</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-09T17:23:51.279765400Z</date>
+  <millis>1702142631279</millis>
+  <nanos>765400</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>dataAccess.Database</class>
+  <method>getConnection</method>
+  <thread>1</thread>
+  <message>Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.</message>
+</record>
+<record>
+  <date>2023-12-09T17:23:51.324274900Z</date>
+  <millis>1702142631324</millis>
+  <nanos>274900</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>dataAccess.Database</class>
+  <method>initDB</method>
+  <thread>1</thread>
+  <message>Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>

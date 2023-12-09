@@ -110,7 +110,7 @@ public class ChessClient {
      * Calls the server list API to get all the game data, and displays the games in a numbered list, including the game name and players (not observers) in the game.
      * The numbering for the list should be independent of the game IDs.
      */
-    public String listGames() throws ResponseException{ //STUCK!
+    public String listGames() throws ResponseException{
         assertSignedIn();
         ListGamesRes response = server.listGames(currentAuthToken);
         gameList = response.getGames();
