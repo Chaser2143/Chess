@@ -1,11 +1,14 @@
 package ui;
 
+import chess.CBoard;
 import chess.CGame;
 import clientWebSocket.GameHandler;
 import clientWebSocket.WebSocketFacade;
 import exception.ResponseException;
+import models.Game;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * As I understand it, I will make methods in here (maybe even a repl) to implement all of the game - websocket
@@ -18,6 +21,8 @@ public class GameUI implements GameHandler {
     private String Team;
     private String AuthToken;
     private int GameID;
+
+    private CGame cachedGame;
 
     public GameUI(String AuthToken, String UserName, String Team, int GameID){
         this.AuthToken = AuthToken;
@@ -106,8 +111,9 @@ public class GameUI implements GameHandler {
 
     @Override
     public void updateGame(CGame game) {
-//        System.out.println("Board received in GameUI");
-
+        System.out.println("Board received in GameUI");
+        drawBoard.main((CBoard) game.getBoard(), Objects.equals(Team, "WHITE") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+        this.cachedGame = game; //Save cached game
     }
 
     @Override

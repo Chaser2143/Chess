@@ -20,18 +20,18 @@ public class drawBoard {
     private static Boolean alternate = true;
 
 
-    public static void main(CBoard board) {
+    public static void main(CBoard board, Boolean whiteDirection) {
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
         alternate = true;
         out.print(ERASE_SCREEN);
 
         //Pass in the board to both of these eventually
-
-        drawWhite(out, board);
-
-        out.println();
-
-        drawBlack(out, board);
+        if(whiteDirection) {
+            drawWhite(out, board);
+        }
+        else {
+            drawBlack(out, board);
+        }
 
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_WHITE);

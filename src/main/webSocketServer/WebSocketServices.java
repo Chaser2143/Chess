@@ -12,12 +12,14 @@ import models.Game;
 import reqRes.Response;
 import server.Server;
 import webSocketMessages.serverMessages.LoadGameCommand;
+import webSocketMessages.serverMessages.NotificationCommand;
 import webSocketMessages.userCommands.*;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.sql.Connection;
 
 import static webSocketServer.WebSocketHandler.broadcastMessage;
+import static webSocketServer.WebSocketHandler.sendMessage;
 
 public class WebSocketServices {
     public void joinPlayer(JoinPlayerCommand command){
@@ -45,7 +47,14 @@ public class WebSocketServices {
             if ((AT != null) && (game != null)){
                 sessions.addSessionToGame(game.getGameID(), AT.getUsername(), session); //Basically is just adding you to the session list
                 LoadGameCommand LGC = new LoadGameCommand(game.getGame());
-                broadcastMessage(game.getGameID(), new Gson().toJson(LGC), AT.getUsername());//Broadcast the game out
+                NotificationCommand NC = new NotificationCommand(AT.getUsername() + " started observing the game.");
+
+                //Server sends a LOAD_GAME message back to the root client.
+//                broadcastMessage(game.getGameID(), new Gson().toJson(LGC), AT.getUsername());//Broadcast the game out
+                sendMessage(session, new Gson().toJson(LGC)); //Send the game back to root client
+
+                //Server sends a Notification message to all other clients in that game informing them the root client joined as an observer.
+                broadcastMessage(game.getGameID(), new Gson().toJson(NC), AT.getUsername());//Broadcast the notification out
             }
 
             connection.commit(); //Commit the transaction

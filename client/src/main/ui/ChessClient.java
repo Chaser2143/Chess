@@ -141,9 +141,6 @@ public class ChessClient {
         //I would guess I enter the GameUI right here.
         var GameUI = new ReplGameUI(currentAuthToken, currentUserName, params.length == 1 ? "" : params[1].toUpperCase(), Integer.valueOf(params[0]));
         GameUI.run();
-//        CBoard b = new CBoard();
-//        b.resetBoard();
-//        drawBoard.main(b);//Draw the default board in both directions
         return "Successfully exited GameUI";
     }
 
