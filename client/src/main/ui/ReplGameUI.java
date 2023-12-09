@@ -1,5 +1,6 @@
 package ui;
 
+import chess.ChessGame;
 import exception.ResponseException;
 
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class ReplGameUI {
             gameClient.joinAsObserver(AuthToken, GameID);
         }
         else{ //Joined game case
-
+            gameClient.joinAsPlayer(AuthToken, GameID, Team.equals("WHITE") ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK);
         }
     }
 

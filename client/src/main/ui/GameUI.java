@@ -2,6 +2,7 @@ package ui;
 
 import chess.CBoard;
 import chess.CGame;
+import chess.ChessGame;
 import clientWebSocket.GameHandler;
 import clientWebSocket.WebSocketFacade;
 import exception.ResponseException;
@@ -61,6 +62,13 @@ public class GameUI implements GameHandler {
      */
     public void joinAsObserver(String Authtoken, int gameID) throws ResponseException{
         wsFacade.joinObserver(AuthToken, gameID);
+    }
+
+    /**
+     * Communicates with the web socket to join as a player
+     */
+    public void joinAsPlayer(String Authtoken, int gameID, ChessGame.TeamColor team) throws ResponseException{
+        wsFacade.joinPlayer(AuthToken, gameID, team);
     }
 
     /**

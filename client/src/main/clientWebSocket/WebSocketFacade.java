@@ -92,8 +92,8 @@ public class WebSocketFacade extends Endpoint {
         sendMessage("Hello World!");
     }
 
-    public void joinPlayer(String authToken, Integer gameID, ChessGame.TeamColor team, String playerColor) throws ResponseException{
-        var commandMSG = new JoinPlayerCommand(authToken, gameID, team, playerColor); //1. Create command message
+    public void joinPlayer(String authToken, Integer gameID, ChessGame.TeamColor team) throws ResponseException{
+        var commandMSG = new JoinPlayerCommand(authToken, gameID, team); //1. Create command message
         //Serialize this and then send as message (Do as String first)
         sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }

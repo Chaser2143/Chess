@@ -16,11 +16,11 @@ public class WebSocketHandler {
     public void onConnect(Session session){
         //I could add sessions here if I wanted...
     }
-//
-//    @OnWebSocketClose
-//    public void onClose(Session session, int statusCode, String str){
-//    }
-//
+
+    @OnWebSocketClose
+    public void onClose(Session session, int statusCode, String str){
+    }
+
     @OnWebSocketError
     public void onError(Throwable throwable){
         System.out.println("Error in WSH : " + throwable.getMessage());
@@ -30,7 +30,7 @@ public class WebSocketHandler {
     public void onMessage(Session session, String commandMSGJson) throws IOException {
         UserGameCommand UGC = new Gson().fromJson(commandMSGJson, UserGameCommand.class);
         switch (UGC.getCommandType()) {//Determine message type & Route to services
-            case JOIN_PLAYER -> services.joinPlayer(new Gson().fromJson(commandMSGJson, JoinPlayerCommand.class));
+            case JOIN_PLAYER -> services.joinPlayer(sessions, session, new Gson().fromJson(commandMSGJson, JoinPlayerCommand.class));
             case JOIN_OBSERVER -> services.joinObserver(sessions, session, new Gson().fromJson(commandMSGJson, JoinObserverCommand.class));
             case RESIGN -> services.resignGame(new Gson().fromJson(commandMSGJson, ResignCommand.class));
             case LEAVE -> services.leaveGame(new Gson().fromJson(commandMSGJson, LeaveCommand.class));
