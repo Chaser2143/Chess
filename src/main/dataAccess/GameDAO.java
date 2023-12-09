@@ -101,6 +101,24 @@ public class GameDAO implements DAO{
     }
 
     /**
+     * Given a gameID and a game, update that game
+     */
+    public void updateGame(int gameID, CGame game) throws SQLException {
+        //Joins a user to a game
+        String statement;
+        statement = """
+                UPDATE games
+                    SET game=?
+                    WHERE gameid=?""";
+        var jsonGame = new Gson().toJson(game);
+        try (var preparedStatement = connection.prepareStatement(statement)) {
+            preparedStatement.setString(1, jsonGame);
+            preparedStatement.setInt(2, gameID);
+            preparedStatement.executeUpdate(); //Run the statement
+        }
+    }
+
+    /**
      * Creates and returns a new Game, also adds game to DB
      */
     public int createGame(String gameName) throws DataAccessException, SQLException {

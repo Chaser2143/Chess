@@ -1,8 +1,14 @@
 package webSocketServer;
+import chess.ChessBoard;
+import chess.ChessBoardAdapter;
+import chess.ChessMove;
+import chess.ChessMoveAdapter;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 import org.eclipse.jetty.websocket.api.Session;
+import webSocketMessages.serverMessages.LoadGameCommand;
 import webSocketMessages.userCommands.*;
 
 import java.io.IOException;
@@ -23,7 +29,7 @@ public class WebSocketHandler {
 
     @OnWebSocketError
     public void onError(Throwable throwable){
-        System.out.println("Error in WSH : " + throwable.getMessage());
+        System.out.println("Error in WSH : " + throwable.getMessage() + " " + throwable.getStackTrace());
     }
 
     @OnWebSocketMessage
@@ -34,9 +40,16 @@ public class WebSocketHandler {
             case JOIN_OBSERVER -> services.joinObserver(sessions, session, new Gson().fromJson(commandMSGJson, JoinObserverCommand.class));
             case RESIGN -> services.resignGame(new Gson().fromJson(commandMSGJson, ResignCommand.class));
             case LEAVE -> services.leaveGame(new Gson().fromJson(commandMSGJson, LeaveCommand.class));
-            case MAKE_MOVE -> services.makeMove(new Gson().fromJson(commandMSGJson, MakeMoveCommand.class));
+            case MAKE_MOVE -> makeMoveDeserializer(sessions, session, commandMSGJson);
             default -> onError(new Exception("Unknown User Game Command Type"));
         }
+    }
+
+    private void makeMoveDeserializer(WebSocketSessions sessions, Session session, String rawJson){
+        var builder = new GsonBuilder();
+        builder.registerTypeAdapter(ChessMove.class, new ChessMoveAdapter());
+        MakeMoveCommand MMC = builder.create().fromJson(rawJson, MakeMoveCommand.class);
+        services.makeMove(sessions, session, MMC);
     }
 
     /**

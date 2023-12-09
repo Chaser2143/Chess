@@ -1,12 +1,11 @@
 package ui;
 
-import chess.CBoard;
-import chess.CGame;
-import chess.ChessGame;
+import chess.*;
 import clientWebSocket.GameHandler;
 import clientWebSocket.WebSocketFacade;
 import exception.ResponseException;
 import models.Game;
+import webSocketMessages.userCommands.MakeMoveCommand;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -44,7 +43,7 @@ public class GameUI implements GameHandler {
             var params = Arrays.copyOfRange(tokens, 1, tokens.length);
             return switch (cmd) {
 //                case "test" -> sendBasic();
-                case "redraw" -> redraw(params);
+                case "redraw" -> redraw();
                 case "leave" -> leave(params);
                 case "makemove" -> makeMove(params);
                 case "resign" -> resign(params);
@@ -82,8 +81,9 @@ public class GameUI implements GameHandler {
     /**
      * Redraws the chess board upon the user’s request.
      */
-    public String redraw(String... params) throws ResponseException{
-        return null;
+    public String redraw() throws ResponseException{
+        drawBoard.main((CBoard) cachedGame.getBoard(), Objects.equals(Team, "WHITE") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+        return "Redrawing Board.";
     }
 
     /**
@@ -95,24 +95,89 @@ public class GameUI implements GameHandler {
     }
 
     public String makeMove(String... params) throws ResponseException{
+        assertPlaying();
+        if(params.length != 4 && params.length != 5){ //4 is regular, 5 is with promotion
+            throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+        }
+
+        int startCol;
+        switch(params[0]){ //Watch Offset Here
+            case "a" -> startCol = 1;
+            case "b" -> startCol = 2;
+            case "c" -> startCol = 3;
+            case "d" -> startCol = 4;
+            case "e" -> startCol = 5;
+            case "f" -> startCol = 6;
+            case "g" -> startCol = 7;
+            case "h" -> startCol = 8;
+            default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+        }
+
+        int startRow = Integer.valueOf(params[1]);
+
+        CPosition start = new CPosition(startRow, startCol);
+
+        int endCol;
+        switch(params[2]){ //Watch Offset Here
+            case "a" -> endCol = 1;
+            case "b" -> endCol = 2;
+            case "c" -> endCol = 3;
+            case "d" -> endCol = 4;
+            case "e" -> endCol = 5;
+            case "f" -> endCol = 6;
+            case "g" -> endCol = 7;
+            case "h" -> endCol = 8;
+            default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+        }
+
+        int endRow = Integer.valueOf(params[3]);
+
+        CPosition end = new CPosition(endRow, endCol);
+
+        if(params.length == 5){
+            ChessPiece.PieceType p;
+            switch(params[4]){ //Watch Offset Here
+                case "r" -> p = ChessPiece.PieceType.ROOK;
+                case "q" -> p = ChessPiece.PieceType.QUEEN;
+                case "b" -> p = ChessPiece.PieceType.BISHOP;
+                case "n" -> p = ChessPiece.PieceType.KNIGHT;
+                case "p" -> p = ChessPiece.PieceType.PAWN;
+
+                default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+            }
+
+            wsFacade.makeMove(AuthToken, GameID, new CMove(start, end, p));
+        }
+        else{
+            wsFacade.makeMove(AuthToken, GameID, new CMove(start, end));
+        }
         return null;
     }
 
     public String resign(String... params) throws Exception{
+        assertPlaying();
         return null;
     }
 
     public String showMoves(String... params) throws ResponseException{
+        assertPlaying();
         return null;
     }
 
     public String help() {
+        if(Team.isEmpty()){
+            return """
+                redraw - redraws the chess board
+                leave - leave the current game
+                help - with possible commands
+                """;
+        }
         return """
                 redraw - redraws the chess board
                 leave - leave the current game
-                makemove <piece><row><column> - moves the given piece to this row and column
+                makemove <startColumn> <startRow> <endColumn> <endRow> - moves the given piece to this row and column
                 resign - forfeit the game
-                showmoves <piece><row><column> - highlights the legal moves for a given piece
+                showmoves <piece> <column> <row> - highlights the legal moves for a given piece
                 help - with possible commands
                 """;
     }
@@ -127,5 +192,11 @@ public class GameUI implements GameHandler {
     @Override
     public void printMessage(String message) {
         System.out.println("Message Received in GameUI: " + message);
+    }
+
+    private void assertPlaying() throws ResponseException {
+        if (Team.isEmpty()) {
+            throw new ResponseException(400, "You must sign in");
+        }
     }
 }

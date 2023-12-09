@@ -1,4 +1,5 @@
 package clientWebSocket;
+import chess.CMove;
 import chess.ChessBoard;
 import chess.ChessBoardAdapter;
 import chess.ChessGame;
@@ -103,8 +104,9 @@ public class WebSocketFacade extends Endpoint {
         sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }
 
-    public void makeMove(String... params){
-
+    public void makeMove(String authToken, Integer gameID, CMove Move) throws ResponseException{
+        var commandMSG = new MakeMoveCommand(authToken, gameID, Move); //1. Create command message
+        sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }
 
     public void leaveGame(String... params){

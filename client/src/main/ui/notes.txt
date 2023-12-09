@@ -1,1 +1,5 @@
-Add a flag to prohibit observers from trying to make moves
+Send a notification back to user on error (invalid input)
+
+if you do anything wrong you get kicked/ban hammered from the game... lol
+
+Move positions and corresponding board reality (display vs whats actually up) is off, so you get kicked on your moves.
