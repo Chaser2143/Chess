@@ -1914,3 +1914,35 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T22:02:11.765733100Z</date>
+  <millis>1702332131765</millis>
+  <nanos>733100</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>webSocketServer.WebSocketServices</class>
+  <method>makeMove</method>
+  <thread>38</thread>
+  <message>java.lang.ArrayIndexOutOfBoundsException: Index -1001 out of bounds for length 8</message>
+</record>
+<record>
+  <date>2023-12-11T22:03:29.795944500Z</date>
+  <millis>1702332209795</millis>
+  <nanos>944500</nanos>
+  <sequence>1</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>webSocketServer.WebSocketServices</class>
+  <method>makeMove</method>
+  <thread>39</thread>
+  <message>java.lang.ArrayIndexOutOfBoundsException: Index -1001 out of bounds for length 8</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>

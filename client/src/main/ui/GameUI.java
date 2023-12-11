@@ -44,7 +44,7 @@ public class GameUI implements GameHandler {
             return switch (cmd) {
 //                case "test" -> sendBasic();
                 case "redraw" -> redraw();
-                case "leave" -> leave(params);
+                case "leave" -> leave();
                 case "makemove" -> makeMove(params);
                 case "resign" -> resign(params);
                 case "showmoves" -> showMoves(params);
@@ -93,8 +93,9 @@ public class GameUI implements GameHandler {
      * Removes the user from the game (whether they are playing or observing the game).
      * The client transitions back to the Post-Login UI.
      */
-    public String leave(String... params) throws ResponseException{
-        return null;
+    public String leave() throws ResponseException{
+        wsFacade.leaveGame(AuthToken, GameID);
+        return "Leave Repl Here";
     }
 
     public String makeMove(String... params) throws ResponseException{
@@ -105,38 +106,12 @@ public class GameUI implements GameHandler {
             throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
         }
 
-        int startCol;
-        switch (params[0]) { //Watch Offset Here
-            case "a" -> startCol = 1;
-            case "b" -> startCol = 2;
-            case "c" -> startCol = 3;
-            case "d" -> startCol = 4;
-            case "e" -> startCol = 5;
-            case "f" -> startCol = 6;
-            case "g" -> startCol = 7;
-            case "h" -> startCol = 8;
-            default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
-        }
-
+        int startCol = getCol(params[0]);
         int startRow = Integer.valueOf(params[1]);
-
         CPosition start = new CPosition(startRow, startCol);
 
-        int endCol;
-        switch(params[2]){ //Watch Offset Here
-            case "a" -> endCol = 1;
-            case "b" -> endCol = 2;
-            case "c" -> endCol = 3;
-            case "d" -> endCol = 4;
-            case "e" -> endCol = 5;
-            case "f" -> endCol = 6;
-            case "g" -> endCol = 7;
-            case "h" -> endCol = 8;
-            default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
-        }
-
+        int endCol = getCol(params[2]);
         int endRow = Integer.valueOf(params[3]);
-
         CPosition end = new CPosition(endRow, endCol);
 
         if(params.length == 5){
@@ -150,13 +125,28 @@ public class GameUI implements GameHandler {
 
                 default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
             }
-
             wsFacade.makeMove(AuthToken, GameID, new CMove(start, end, p));
         }
         else{
             wsFacade.makeMove(AuthToken, GameID, new CMove(start, end));
         }
         return "Move Sent to server";
+    }
+
+    //Turns a string column into its int value
+    private int getCol(String in){
+        int Col = -1000;
+        switch(in){ //Watch Offset Here
+            case "a" -> Col = 1;
+            case "b" -> Col = 2;
+            case "c" -> Col = 3;
+            case "d" -> Col = 4;
+            case "e" -> Col = 5;
+            case "f" -> Col = 6;
+            case "g" -> Col = 7;
+            case "h" -> Col = 8;
+        }
+        return Col;
     }
 
     public String resign(String... params) throws Exception{

@@ -109,8 +109,9 @@ public class WebSocketFacade extends Endpoint {
         sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }
 
-    public void leaveGame(String... params){
-
+    public void leaveGame(String AuthToken, int GameID) throws ResponseException{
+        var commandMSG = new LeaveCommand(AuthToken, GameID); //1. Create command message
+        sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }
 
     public void resignGame(String... params){
