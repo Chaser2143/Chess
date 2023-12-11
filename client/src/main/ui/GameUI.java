@@ -46,7 +46,7 @@ public class GameUI implements GameHandler {
                 case "redraw" -> redraw();
                 case "leave" -> leave();
                 case "makemove" -> makeMove(params);
-                case "resign" -> resign(params);
+                case "resign" -> resign();
                 case "showmoves" -> showMoves(params);
                 case "quit" -> "quit";
                 default -> help();
@@ -59,14 +59,14 @@ public class GameUI implements GameHandler {
     /**
      * Communicates with the web socket to join as an observer
      */
-    public void joinAsObserver(String Authtoken, int gameID) throws ResponseException{
+    public void joinAsObserver(String AuthToken, int gameID) throws ResponseException{
         wsFacade.joinObserver(AuthToken, gameID);
     }
 
     /**
      * Communicates with the web socket to join as a player
      */
-    public void joinAsPlayer(String Authtoken, int gameID, ChessGame.TeamColor team) throws ResponseException{
+    public void joinAsPlayer(String AuthToken, int gameID, ChessGame.TeamColor team) throws ResponseException{
         wsFacade.joinPlayer(AuthToken, gameID, team);
     }
 
@@ -95,7 +95,7 @@ public class GameUI implements GameHandler {
      */
     public String leave() throws ResponseException{
         wsFacade.leaveGame(AuthToken, GameID);
-        return "Leave Repl Here";
+        return "quit";
     }
 
     public String makeMove(String... params) throws ResponseException{
@@ -149,9 +149,10 @@ public class GameUI implements GameHandler {
         return Col;
     }
 
-    public String resign(String... params) throws Exception{
+    public String resign() throws Exception{
         assertPlaying();
-        return null;
+        wsFacade.resignGame(AuthToken, GameID);
+        return "quit";
     }
 
     public String showMoves(String... params) throws ResponseException{

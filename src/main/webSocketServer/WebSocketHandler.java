@@ -38,7 +38,7 @@ public class WebSocketHandler {
         switch (UGC.getCommandType()) {//Determine message type & Route to services
             case JOIN_PLAYER -> services.joinPlayer(sessions, session, new Gson().fromJson(commandMSGJson, JoinPlayerCommand.class));
             case JOIN_OBSERVER -> services.joinObserver(sessions, session, new Gson().fromJson(commandMSGJson, JoinObserverCommand.class));
-            case RESIGN -> services.resignGame(new Gson().fromJson(commandMSGJson, ResignCommand.class));
+            case RESIGN -> services.resignGame(sessions, session, new Gson().fromJson(commandMSGJson, ResignCommand.class));
             case LEAVE -> services.leaveGame(sessions, session, new Gson().fromJson(commandMSGJson, LeaveCommand.class));
             case MAKE_MOVE -> makeMoveDeserializer(sessions, session, commandMSGJson);
             default -> onError(new Exception("Unknown User Game Command Type"));

@@ -42,12 +42,12 @@ public class WebSocketServices {
             if ((AT != null) && (game != null)){
 
 //                //Make sure the spot isn't already taken
-//                if((command.getPlayerColor() == ChessGame.TeamColor.WHITE) && !game.getWhiteUsername().isEmpty()){ //We want white but its not empty
-//                    sendMessage(session, new Gson().toJson("Error: This team spot is already taken"));
-//                } else if ((command.getPlayerColor() == ChessGame.TeamColor.BLACK) && !(game.getBlackUsername().isEmpty())) {
-//                    sendMessage(session, new Gson().toJson("Error: This team spot is already taken"));
-//                }
-//                else {
+                if((command.getPlayerColor() == ChessGame.TeamColor.WHITE) && !game.getWhiteUsername().equals(AT.getUsername())){ //We want white and the http server didnt give it to us
+                    sendMessage(session, new Gson().toJson("Error: This team spot is already taken"));
+                } else if ((command.getPlayerColor() == ChessGame.TeamColor.BLACK) && !(game.getBlackUsername().equals(AT.getUsername()))) { //We want black and the http server didnt give it to us
+                    sendMessage(session, new Gson().toJson("Error: This team spot is already taken"));
+                }
+                else {
                     //Continue On
                     sessions.addSessionToGame(game.getGameID(), AT.getUsername(), session); //Basically is just adding you to the session list
                     LoadGameCommand LGC = new LoadGameCommand(game.getGame(), "Loaded Game");
@@ -59,10 +59,11 @@ public class WebSocketServices {
 
                     //Server sends a Notification message to all other clients in that game informing them the root client joined as an observer.
                     broadcastMessage(game.getGameID(), new Gson().toJson(NC), AT.getUsername());//Broadcast the notification out
-//                }
+                }
             }
             else{ //Error Sent
-                sendMessage(session, new Gson().toJson("Error: GameID or Auth Token not valid"));
+                ErrorCommand EC = new ErrorCommand("Error : GameID or Auth Token not valid");
+                sendMessage(session, new Gson().toJson(EC));
             }
 
             connection.commit(); //Commit the transaction
@@ -121,7 +122,8 @@ public class WebSocketServices {
                 broadcastMessage(game.getGameID(), new Gson().toJson(NC), AT.getUsername());//Broadcast the notification out
             }
             else{ //Error Sent
-                sendMessage(session, new Gson().toJson("Error: GameID or Auth Token not valid"));
+                ErrorCommand EC = new ErrorCommand("Error : GameID or Auth Token not valid");
+                sendMessage(session, new Gson().toJson(EC));
             }
 
             connection.commit(); //Commit the transaction
@@ -199,7 +201,8 @@ public class WebSocketServices {
                 }
             }
             else{ //Error Sent
-                sendMessage(session, new Gson().toJson("Error: GameID or Auth Token not valid"));
+                ErrorCommand EC = new ErrorCommand("Error : GameID or Auth Token not valid");
+                sendMessage(session, new Gson().toJson(EC));
             }
 
             connection.commit(); //Commit the transaction
@@ -260,7 +263,8 @@ public class WebSocketServices {
                 broadcastMessage(game.getGameID(), new Gson().toJson(NC), AT.getUsername());//Broadcast the notification out
             }
             else{ //Error Sent
-                sendMessage(session, new Gson().toJson("Error: GameID or Auth Token not valid"));
+                ErrorCommand EC = new ErrorCommand("Error : GameID or Auth Token not valid");
+                sendMessage(session, new Gson().toJson(EC));
             }
 
             connection.commit(); //Commit the transaction
@@ -289,5 +293,69 @@ public class WebSocketServices {
 
     }
 
-    public void resignGame(ResignCommand command){}
+    public void resignGame(WebSocketSessions sessions, Session session, ResignCommand command){
+        //Always check if they were playing, and if so, remove them
+        Connection connection = null;
+        try {
+            //Initialize a new connection
+            connection = Server.DB.getConnection();
+
+            connection.setAutoCommit(false); //Enable rollback possibility
+
+            //Set this connection in all DAOs
+            AuthDAO.getInstance().setConnection(connection);
+            GameDAO.getInstance().setConnection(connection);
+
+            //Validate by checking the game exists and the Authtoken is valid
+            Game game = GameDAO.getInstance().getGame(command.getGameID());
+            AuthToken AT = AuthDAO.getInstance().getAuthToken(command.getAuthString());
+            if ((AT != null) && (game != null)){
+                //Remove them from playing the game (set to null)
+                if(AT.getUsername().equals(game.getWhiteUsername())){ //They were playing White
+                    game.setWhiteUsername(null);
+                    GameDAO.getInstance().updateGameTeam(true, null, game.getGameID());
+                }
+                if(AT.getUsername().equals(game.getBlackUsername())){ //They were playing Black
+                    game.setBlackUsername(null);
+                    GameDAO.getInstance().updateGameTeam(false, null, game.getGameID());
+                }
+                game.setOver(true); //Set the game to over
+                GameDAO.getInstance().updateGame(game.getGameID(), game.getGame()); //Update in DB
+                //Broadcast notification that they left
+                NotificationCommand NC = new NotificationCommand(AT.getUsername() + " just resigned from the game");
+                broadcastMessage(game.getGameID(), new Gson().toJson(NC), null);//Broadcast the notification out
+
+                //Remove them from the sessions. (Do this at the end so we can send them a notification too)
+                sessions.removeSession(session);
+            }
+            else{ //Error Sent
+                ErrorCommand EC = new ErrorCommand("Error : GameID or Auth Token not valid");
+                sendMessage(session, new Gson().toJson(EC));
+            }
+
+            connection.commit(); //Commit the transaction
+
+            //Close the connection
+            connection.close();
+
+            //Set all the connections in the DAO's to null
+            AuthDAO.getInstance().setConnection(null);
+            GameDAO.getInstance().setConnection(null);
+
+        }
+        catch(Exception exception){
+            try {
+                if (connection != null) {
+                    connection.rollback(); //Rollback transaction if something failed
+                }
+            }
+            catch(Exception e) {
+                //Do nothing, the next response will cover this too
+                Server.logger.severe(e.getMessage());
+            }
+            //This would be a response with an error
+            Server.logger.severe(exception.toString());
+        }
+
+    }
 }
