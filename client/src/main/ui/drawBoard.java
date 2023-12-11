@@ -25,32 +25,34 @@ public class drawBoard {
         alternate = true;
         out.print(ERASE_SCREEN);
 
-        //Pass in the board to both of these eventually
+        //Pass in the board to both of these eventually -- Super ghetto, board is kinda messed up but I think it may be playable
         if(whiteDirection) {
-            drawWhite(out, board);
+//            drawWhite(out, board);
+            drawBlack(out, board);
         }
         else {
-            drawBlack(out, board);
+//            drawBlack(out, board);
+            drawWhite(out, board);
         }
 
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_WHITE);
     }
 
-    private static void drawBlack(PrintStream out, CBoard board){
+    private static void drawWhite(PrintStream out, CBoard board){
         String[] headers = { " a ", " b ", " c ", " d ", " e ", " f ", " g ", " h " };
 
         drawHeaders(out, headers);
 
-        drawBlackTicTacToeBoard(out, board);
+        drawWhiteTicTacToeBoard(out, board);
     }
 
-    private static void drawWhite(PrintStream out, CBoard board){
+    private static void drawBlack(PrintStream out, CBoard board){
         String[] headers = { " h ", " g ", " f ", " e ", " d ", " c ", " b ", " a " };
 
         drawHeaders(out, headers);
 
-        drawWhiteTicTacToeBoard(out, board);
+        drawBlackTicTacToeBoard(out, board);
     }
 
     private static void drawHeaders(PrintStream out, String[] headers) {
@@ -156,18 +158,21 @@ public class drawBoard {
         ChessPiece p = null;
 
         if(!whitePerspective) {
-            p = board.getPiece(new CPosition(row + 1, col + 1));
+            p = board.getPiece(new CPosition(8-row, 8-col));
+//            p = board.getPiece(new CPosition(row + 1, col + 1));
         }
         else{
-            p = board.getPiece(new CPosition(8-row, 8-col));
+            p = board.getPiece(new CPosition(1+row, 1+col));
+//            p = board.getPiece(new CPosition(8-row, 8-col));
+//            System.out.println("White piece :" + p.getPieceType() + " at position (1+)row : " + row + "(1+)col : " + col);
         }
 
         if(p != null){ //We have something to print
             if(p.getTeamColor() == ChessGame.TeamColor.WHITE){
-                out.print(SET_TEXT_COLOR_BLUE); //Set their color!
+                out.print(SET_TEXT_COLOR_RED); //Set their color!
             }
             else{
-                out.print(SET_TEXT_COLOR_RED);
+                out.print(SET_TEXT_COLOR_BLUE);
             }
 
             switch (p.getPieceType()){

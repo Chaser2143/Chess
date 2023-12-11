@@ -1,5 +1,17 @@
+tests and client incompatibility? (teamColor, etc)
+makeMove
+
+
+
+
+
+
 Send a notification back to user on error (invalid input)
 
 if you do anything wrong you get kicked/ban hammered from the game... lol
 
 Move positions and corresponding board reality (display vs whats actually up) is off, so you get kicked on your moves.
+
+Black can make a move when it is not their turn
+
+Errors bubble back to my regular repl, not my GameUIRepl

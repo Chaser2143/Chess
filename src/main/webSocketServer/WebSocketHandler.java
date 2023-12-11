@@ -65,12 +65,14 @@ public class WebSocketHandler {
     public static void broadcastMessage(int gameID, String message, String username) throws IOException{
         //Right now this will send to everyone - Will need to fix later
         var s = sessions.getSessionsForGame(gameID);
-        for (var c : s.values()){
-            if(c.isOpen()) {
-                sendMessage(c, message);
+        for(var c : s.keySet()){ //Iterate through the keys
+            if(s.get(c).isOpen()) {
+                if(!c.equals(username)) {
+                    sendMessage(s.get(c), message);
+                }
             }
             else{
-                sessions.removeSession(c);
+                sessions.removeSession(s.get(c));
             }
         }
     }

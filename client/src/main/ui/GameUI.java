@@ -27,7 +27,7 @@ public class GameUI implements GameHandler {
     public GameUI(String AuthToken, String UserName, String Team, int GameID){
         this.AuthToken = AuthToken;
         this.UserName = UserName;
-        this.Team = Team;
+        this.Team = Team.toLowerCase();
         this.GameID = GameID;
         try {
             wsFacade = new WebSocketFacade(this); //Has a WebSocketFacade
@@ -82,7 +82,10 @@ public class GameUI implements GameHandler {
      * Redraws the chess board upon the user’s request.
      */
     public String redraw() throws ResponseException{
-        drawBoard.main((CBoard) cachedGame.getBoard(), Objects.equals(Team, "WHITE") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+        drawBoard.main((CBoard) cachedGame.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+
+        System.out.println("Please use specific notation makeMove <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+        System.out.println("White is Red.");
         return "Redrawing Board.";
     }
 
@@ -96,12 +99,14 @@ public class GameUI implements GameHandler {
 
     public String makeMove(String... params) throws ResponseException{
         assertPlaying();
+        assertTurn();
+
         if(params.length != 4 && params.length != 5){ //4 is regular, 5 is with promotion
             throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
         }
 
         int startCol;
-        switch(params[0]){ //Watch Offset Here
+        switch (params[0]) { //Watch Offset Here
             case "a" -> startCol = 1;
             case "b" -> startCol = 2;
             case "c" -> startCol = 3;
@@ -151,7 +156,7 @@ public class GameUI implements GameHandler {
         else{
             wsFacade.makeMove(AuthToken, GameID, new CMove(start, end));
         }
-        return null;
+        return "Move Sent to server";
     }
 
     public String resign(String... params) throws Exception{
@@ -185,8 +190,10 @@ public class GameUI implements GameHandler {
     @Override
     public void updateGame(CGame game) {
         System.out.println("Board received in GameUI");
-        drawBoard.main((CBoard) game.getBoard(), Objects.equals(Team, "WHITE") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+        drawBoard.main((CBoard) game.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, "")); //Draw in white direction if true, else black
         this.cachedGame = game; //Save cached game
+        System.out.println("Please use specific notation: makeMove <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+        System.out.println("White is Red.");
     }
 
     @Override
@@ -196,7 +203,14 @@ public class GameUI implements GameHandler {
 
     private void assertPlaying() throws ResponseException {
         if (Team.isEmpty()) {
-            throw new ResponseException(400, "You must sign in");
+            throw new ResponseException(400, "You must be playing to make a move.");
+        }
+    }
+
+    private void assertTurn() throws ResponseException {
+        var boardTeamTurn = cachedGame.getTeamTurn().toString().toLowerCase();
+        if (!boardTeamTurn.equals(Team)) {
+            throw new ResponseException(400, "It is not your turn.");
         }
     }
 }

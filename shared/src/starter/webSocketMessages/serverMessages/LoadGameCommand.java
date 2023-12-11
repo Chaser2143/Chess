@@ -7,10 +7,12 @@ import chess.CGame;
  */
 public class LoadGameCommand extends ServerMessage{
     private final CGame game;
+    private final String message;
 
-    public LoadGameCommand(CGame game) {
+    public LoadGameCommand(CGame game, String message) {
         super(ServerMessageType.LOAD_GAME);
         this.game = game;
+        this.message = message;
     }
 
     public CGame getGame() {
