@@ -11,7 +11,6 @@ public class Game {
     private String blackUsername;
     private String gameName;
     private CGame game;
-    private boolean isOver = false; //Marks if the game is over or not
 
     /**
      * Constructor for the game
@@ -26,20 +25,6 @@ public class Game {
         this.blackUsername = blackUsername;
         this.gameName = gameName;
         this.game = new CGame();
-    }
-
-    /**
-     * Returns a bool of if the game is over or not
-     */
-    public boolean gameStatus(){
-        return isOver;
-    }
-
-    /**
-     * Change the status of the game
-     */
-    public void setOver(boolean status){
-        this.isOver = status;
     }
 
     /**

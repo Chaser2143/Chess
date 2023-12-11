@@ -6,6 +6,7 @@ import java.util.Collection;
 public class CGame implements ChessGame{
     TeamColor teamTurn;
     ChessBoard board;
+    private boolean isOver = false;
 
     public CGame(){
         //Initializes a new Chess Game
@@ -14,6 +15,17 @@ public class CGame implements ChessGame{
         board.resetBoard();
         setBoard(board); //Set up the board
 
+    }
+
+    /**
+     * Returns a bool of if the game is over or not
+     */
+    public boolean gameStatus(){
+        return isOver;
+    }
+
+    public void setOver(boolean status){
+        isOver = status;
     }
 
     @Override
