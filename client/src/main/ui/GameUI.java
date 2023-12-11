@@ -99,8 +99,18 @@ public class GameUI implements GameHandler {
     }
 
     public String makeMove(String... params) throws ResponseException{
-        assertPlaying();
-        assertTurn();
+        //Figure out what team we're playing for
+        ChessGame.TeamColor t = null;
+        if(Team.isEmpty()){
+            t = null;
+        }
+        else if(Objects.equals(Team, "white")){
+            t = ChessGame.TeamColor.WHITE;
+        }
+        else{
+            t = ChessGame.TeamColor.BLACK;
+        }
+
 
         if(params.length != 4 && params.length != 5){ //4 is regular, 5 is with promotion
             throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
@@ -125,10 +135,10 @@ public class GameUI implements GameHandler {
 
                 default -> throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
             }
-            wsFacade.makeMove(AuthToken, GameID, new CMove(start, end, p));
+            wsFacade.makeMove(AuthToken, GameID, new CMove(start, end, p), t);
         }
         else{
-            wsFacade.makeMove(AuthToken, GameID, new CMove(start, end));
+            wsFacade.makeMove(AuthToken, GameID, new CMove(start, end), t);
         }
         return "Move Sent to server";
     }

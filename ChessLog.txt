@@ -1978,3 +1978,50 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T22:47:30.246204900Z</date>
+  <millis>1702334850246</millis>
+  <nanos>204900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>webSocketServer.WebSocketServices</class>
+  <method>joinPlayer</method>
+  <thread>39</thread>
+  <message>java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "models.Game.getBlackUsername()" is null</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T23:00:24.505371900Z</date>
+  <millis>1702335624505</millis>
+  <nanos>371900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>webSocketServer.WebSocketServices</class>
+  <method>joinPlayer</method>
+  <thread>45</thread>
+  <message>java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "models.Game.getBlackUsername()" is null</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T23:05:46.513177900Z</date>
+  <millis>1702335946513</millis>
+  <nanos>177900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>webSocketServer.WebSocketServices</class>
+  <method>joinPlayer</method>
+  <thread>39</thread>
+  <message>java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "models.Game.getBlackUsername()" is null</message>
+</record>

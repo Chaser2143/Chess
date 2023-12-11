@@ -29,6 +29,13 @@ public class Game {
     }
 
     /**
+     * Returns a bool of if the game is over or not
+     */
+    public boolean gameStatus(){
+        return isOver;
+    }
+
+    /**
      * Change the status of the game
      */
     public void setOver(boolean status){

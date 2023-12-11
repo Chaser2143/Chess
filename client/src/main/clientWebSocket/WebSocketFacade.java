@@ -104,8 +104,9 @@ public class WebSocketFacade extends Endpoint {
         sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }
 
-    public void makeMove(String authToken, Integer gameID, CMove Move) throws ResponseException{
-        var commandMSG = new MakeMoveCommand(authToken, gameID, Move); //1. Create command message
+    public void makeMove(String authToken, Integer gameID, CMove Move, ChessGame.TeamColor team) throws ResponseException{
+
+        var commandMSG = new MakeMoveCommand(authToken, gameID, Move, team); //1. Create command message
         sendMessage(new Gson().toJson(commandMSG)); //2. Send message to server
     }
 

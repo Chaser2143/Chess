@@ -40,14 +40,17 @@ public class WebSocketServices {
             Game game = GameDAO.getInstance().getGame(command.getGameID());
             AuthToken AT = AuthDAO.getInstance().getAuthToken(command.getAuthString());
             if ((AT != null) && (game != null)){
-
 //                //Make sure the spot isn't already taken
                 if((command.getPlayerColor() == ChessGame.TeamColor.WHITE) && !game.getWhiteUsername().equals(AT.getUsername())){ //We want white and the http server didnt give it to us
-                    sendMessage(session, new Gson().toJson("Error: This team spot is already taken"));
+                    sendMessage(session, new Gson().toJson(new ErrorCommand("Error: This team spot is already taken")));
+                    return;
                 } else if ((command.getPlayerColor() == ChessGame.TeamColor.BLACK) && !(game.getBlackUsername().equals(AT.getUsername()))) { //We want black and the http server didnt give it to us
-                    sendMessage(session, new Gson().toJson("Error: This team spot is already taken"));
-                }
-                else {
+                    sendMessage(session, new Gson().toJson(new ErrorCommand("Error: This team spot is already taken")));
+                    return;
+                } else if (command.getPlayerColor() == null) {
+                    sendMessage(session, new Gson().toJson(new ErrorCommand("Error: You must give a team to join a game")));
+                    return;
+                } else {
                     //Continue On
                     sessions.addSessionToGame(game.getGameID(), AT.getUsername(), session); //Basically is just adding you to the session list
                     LoadGameCommand LGC = new LoadGameCommand(game.getGame(), "Loaded Game");
@@ -173,6 +176,23 @@ public class WebSocketServices {
             Game game = GameDAO.getInstance().getGame(command.getGameID());
             AuthToken AT = AuthDAO.getInstance().getAuthToken(command.getAuthString());
             if ((AT != null) && (game != null)){
+                //Make move for opponent
+                if(command.getTeam() != game.getGame().getTeamTurn()){
+                    sendMessage(session, new Gson().toJson(new ErrorCommand("Error: It is not your turn")));
+                    return;
+                }
+                //Make move observer
+                if(command.getTeam() == null){
+                    sendMessage(session, new Gson().toJson(new ErrorCommand("Error: Observers cannot make moves")));
+                    return;
+                }
+                //Make move game over
+                if(game.gameStatus()){
+                    sendMessage(session, new Gson().toJson(new ErrorCommand("Error: Game is over, no more moves can be made")));
+                    return;
+                }
+
+
                 var procGame = game.getGame();
 
                 //Make move will already check if it is a valid move
