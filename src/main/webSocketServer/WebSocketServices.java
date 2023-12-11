@@ -342,6 +342,20 @@ public class WebSocketServices {
             Game game = GameDAO.getInstance().getGame(command.getGameID());
             AuthToken AT = AuthDAO.getInstance().getAuthToken(command.getAuthString());
             if ((AT != null) && (game != null)){
+
+                if(game.getGame().gameStatus()){ //If the game is already over
+                    ErrorCommand EC = new ErrorCommand("Error : You cannot resign, Game already over.");
+                    sendMessage(session, new Gson().toJson(EC));
+                    return;
+                }
+
+                if((!AT.getUsername().equals(game.getWhiteUsername()) && (!AT.getUsername().equals(game.getBlackUsername())))){
+                    //They were an observer
+                    ErrorCommand EC = new ErrorCommand("Error : Observers cannot resign.");
+                    sendMessage(session, new Gson().toJson(EC));
+                    return;
+                }
+
                 //Remove them from playing the game (set to null)
                 if(AT.getUsername().equals(game.getWhiteUsername())){ //They were playing White
                     GameDAO.getInstance().updateGameTeam(true, null, game.getGameID());
