@@ -227,6 +227,18 @@ public class WebSocketServices {
                     //We also want to broadcast out the new board to everyone
                     broadcastMessage(game.getGameID(), new Gson().toJson(LGC), AT.getUsername());
 
+                    var oppositeTeam = (t == ChessGame.TeamColor.WHITE ? ChessGame.TeamColor.BLACK : ChessGame.TeamColor.WHITE);
+                    if(game.getGame().isInCheckmate(oppositeTeam)){
+                        broadcastMessage(game.getGameID(), new Gson().toJson(new NotificationCommand(oppositeTeam + " is now in checkmate. Game over.")), null);
+                        game.getGame().setOver(true); //Set the game to over
+                        GameDAO.getInstance().updateGame(game.getGameID(), game.getGame()); //Update in DB
+                        return;
+                    }
+                    else if(game.getGame().isInCheck(oppositeTeam)){ //Send notification to all for check
+                        broadcastMessage(game.getGameID(), new Gson().toJson(new NotificationCommand(oppositeTeam + " is now in check.")), null);
+                        return;
+                    }
+
 
                 } catch(InvalidMoveException e){
                     sendMessage(session, new Gson().toJson(new ErrorCommand("Error: Move is not valid. Please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>")));//Notify the root user the move was not valid
