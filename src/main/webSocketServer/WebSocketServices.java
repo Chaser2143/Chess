@@ -273,6 +273,10 @@ public class WebSocketServices {
         }
     }
 
+    /**
+     * If a player is leaving, than the game is updated to remove the root client. Game is updated in the database.
+     * Server sends a Notification message to all other clients in that game informing them that the root client left. This applies to both players and observers.
+     */
     public void leaveGame(WebSocketSessions sessions, Session session, LeaveCommand command){
         //Always check if they were playing, and if so, remove them
         Connection connection = null;
@@ -337,6 +341,10 @@ public class WebSocketServices {
 
     }
 
+    /**
+     * Server marks the game as over (no more moves can be made). Game is updated in the database.
+     * Server sends a Notification message to all clients in that game informing them that the root client left. This applies to both players and observers.
+     */
     public void resignGame(WebSocketSessions sessions, Session session, ResignCommand command){
         //Always check if they were playing, and if so, remove them
         Connection connection = null;

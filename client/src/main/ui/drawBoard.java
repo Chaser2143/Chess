@@ -23,34 +23,28 @@ public class drawBoard {
 
 
     public static void main(CBoard board, Boolean whiteDirection, Collection<ChessMove> validMoves) {
-        if(validMoves == null) {
+        if(validMoves == null) { //Regular draw/redraw case
             var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
             alternate = true;
             out.print(ERASE_SCREEN);
 
-            //Pass in the board to both of these eventually -- Super ghetto, board is kinda messed up but I think it may be playable
             if (whiteDirection) {
-//            drawWhite(out, board);
                 drawBlack(out, board);
             } else {
-//            drawBlack(out, board);
                 drawWhite(out, board);
             }
 
             out.print(SET_BG_COLOR_BLACK);
             out.print(SET_TEXT_COLOR_WHITE);
         }
-        else{
+        else{ //Used exclusively for showmoves
             var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
             alternate = true;
             out.print(ERASE_SCREEN);
 
-            //Pass in the board to both of these eventually -- Super ghetto, board is kinda messed up but I think it may be playable
             if (whiteDirection) {
-//            drawWhite(out, board);
                 drawBlack(out, board, validMoves);
             } else {
-//            drawBlack(out, board);
                 drawWhite(out, board, validMoves);
             }
 
@@ -255,12 +249,9 @@ public class drawBoard {
 
         if(!whitePerspective) {
             p = board.getPiece(new CPosition(8-row, 8-col));
-//            p = board.getPiece(new CPosition(row + 1, col + 1));
         }
         else{
             p = board.getPiece(new CPosition(1+row, 1+col));
-//            p = board.getPiece(new CPosition(8-row, 8-col));
-//            System.out.println("White piece :" + p.getPieceType() + " at position (1+)row : " + row + "(1+)col : " + col);
         }
 
         if(p != null){ //We have something to print
