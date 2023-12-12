@@ -2102,3 +2102,31 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-12T00:42:18.903590900Z</date>
+  <millis>1702341738903</millis>
+  <nanos>590900</nanos>
+  <sequence>0</sequence>
+  <logger>ChessLog</logger>
+  <level>SEVERE</level>
+  <class>webSocketServer.WebSocketServices</class>
+  <method>makeMove</method>
+  <thread>37</thread>
+  <message>com.mysql.cj.jdbc.exceptions.MySQLTransactionRollbackException: Lock wait timeout exceeded; try restarting transaction</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>

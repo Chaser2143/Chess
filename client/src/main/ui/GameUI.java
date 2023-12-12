@@ -82,7 +82,7 @@ public class GameUI implements GameHandler {
      * Redraws the chess board upon the user’s request.
      */
     public String redraw() throws ResponseException{
-        drawBoard.main((CBoard) cachedGame.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+        drawBoard.main((CBoard) cachedGame.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, ""), null); //Draw in white direction if true, else black
 
         System.out.println("Please use specific notation makeMove <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
         System.out.println("White is Red.");
@@ -166,8 +166,14 @@ public class GameUI implements GameHandler {
     }
 
     public String showMoves(String... params) throws ResponseException{
-        assertPlaying();
-        return null;
+        if(params.length != 2){ //4 is regular, 5 is with promotion
+            throw new ResponseException(400, "Invalid Input, please use specific notation <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
+        }
+        int startCol = getCol(params[0]);
+        int startRow = Integer.valueOf(params[1]);
+        CPosition start = new CPosition(startRow, startCol);
+        drawBoard.main((CBoard) cachedGame.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, ""), cachedGame.validMoves(start));
+        return "Board drawn with highlighted moves";
     }
 
     public String help() {
@@ -183,7 +189,7 @@ public class GameUI implements GameHandler {
                 leave - leave the current game
                 makemove <startColumn> <startRow> <endColumn> <endRow> - moves the given piece to this row and column
                 resign - forfeit the game
-                showmoves <piece> <column> <row> - highlights the legal moves for a given piece
+                showmoves <column> <row> - highlights the legal moves for a given piece
                 help - with possible commands
                 """;
     }
@@ -191,7 +197,7 @@ public class GameUI implements GameHandler {
     @Override
     public void updateGame(CGame game) {
         System.out.println("Board received in GameUI");
-        drawBoard.main((CBoard) game.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, "")); //Draw in white direction if true, else black
+        drawBoard.main((CBoard) game.getBoard(), Objects.equals(Team, "white") || Objects.equals(Team, ""), null); //Draw in white direction if true, else black
         this.cachedGame = game; //Save cached game
         System.out.println("Please use specific notation: makeMove <startColumn> <startRow> <endColumn> <endRow> <BLANK|Promotion>");
         System.out.println("White is Red.");
